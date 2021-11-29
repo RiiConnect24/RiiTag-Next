@@ -26,7 +26,7 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 
 ## Deploy
 
-1. Copy .env to .env.production.local and fill it in
+1. Copy `.env` to `.env.production.local` and fill it in according to the table below
 2. `npm ci --production`
 3. `npm run prod:migrate`
 4. `npm run prod:build`
