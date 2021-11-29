@@ -32,6 +32,8 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 4. `npm run prod:build`
 5. `./node_modules/.bin/next start -p PORT`
 
+In the "`deploy`" folder you can find configuration files for NGINX, Caddy and Systemd.
+
 ### OAuth Setup
 
 #### Discord

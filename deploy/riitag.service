@@ -1,0 +1,16 @@
+[Unit]
+Description=RiiTag
+
+[Service]
+ExecStart=node ./node_modules/.bin/next start -p 20100
+Restart=always
+User=riitag
+Group=riitag
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/srv/http/riitag.example.com/riitag
+StandardOutput=append:/var/log/www/riitag/common.log
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
