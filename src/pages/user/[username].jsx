@@ -50,12 +50,6 @@ function ProfilePage({ user, isLoggedIn }) {
       <NextSeo
         title={user.name_on_riitag}
         description={`See what ${user.name_on_riitag} has played`}
-        additionalLinkTags={[
-          {
-            rel: 'icon',
-            href: `${ENV.BASE_URL}/logo.png`,
-          },
-        ]}
         openGraph={{
           images: [
             {

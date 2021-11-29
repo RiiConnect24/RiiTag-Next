@@ -25,6 +25,12 @@ function App({ Component, pageProps }) {
           titleTemplate="RiiTag | %s"
           defaultTitle="RiiTag"
           description="RiiTag is a customizable gamertag for the Wii."
+          additionalLinkTags={[
+            {
+              rel: 'icon',
+              href: `${ENV.BASE_URL}/favicon.ico`,
+            },
+          ]}
           openGraph={{
             type: 'website',
             locale: 'en',
