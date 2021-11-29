@@ -2,7 +2,7 @@
 Description=RiiTag
 
 [Service]
-ExecStart=node ./node_modules/.bin/next start -p 20100
+ExecStart=node ./node_modules/.bin/next start -p 20010
 Restart=always
 User=riitag
 Group=riitag
