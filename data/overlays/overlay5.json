@@ -1,0 +1,59 @@
+{
+  "name": "Bottom Bar Light",
+  "author": "dhtdht020",
+  "id": 5,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay5.png",
+  "max_covers": 8,
+  "cover_start_x": 80,
+  "cover_start_y": 10,
+  "cover_increment_x": 120,
+  "cover_increment_y": 0,
+  "username": {
+    "font_family": "RodinNTLG",
+    "font_size": 72,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "x": -36,
+    "y": 293
+  },
+  "flag": {
+    "x": 820,
+    "y": 280
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 890,
+    "y": 280
+  },
+  "coin_count": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "bold",
+    "font_color": "#1d1d1d",
+    "x": 910,
+    "y": 287,
+    "padded": true,
+    "max": 99999
+  },
+  "friend_code": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#FFFFFF",
+    "x": -13,
+    "y": 373
+  },
+  "avatar": {
+    "x": 1074,
+    "y": 146,
+    "size": 128
+  },
+  "mii": {
+    "x": -28,
+    "y": 103,
+    "size": 170
+  },
+  "enabled": true
+}

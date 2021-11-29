@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  id                  Int      @id @default(autoincrement())
+  user_id             Int
+  provider_id         String   @db.VarChar(255)
+  provider_account_id String   @db.VarChar(255)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @default(now()) @updatedAt
+  user                user     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([provider_id, provider_account_id], name: "provider_id_provider_account_id")
+  @@index([user_id], map: "FK_accounts_users")
+  @@index([provider_account_id], map: "provider_account_id")
+  @@index([provider_id], map: "provider_id")
+}
+
+model game {
+  game_pk      Int       @id @default(autoincrement()) @db.UnsignedInt
+  game_id      String    @db.VarChar(50)
+  console      String    @db.VarChar(9)
+  name         String?   @db.VarChar(255)
+  playcount    Int       @default(1) @db.UnsignedInt
+  first_played DateTime  @default(now())
+  last_played  DateTime  @default(now()) @updatedAt
+  playlog      playlog[]
+
+  @@unique([game_id, console], map: "game_id_console")
+  @@index([console], map: "console")
+  @@index([game_id], map: "game_id")
+  @@index([playcount], map: "playcount")
+}
+
+model playlog {
+  playlog_id Int      @id @default(autoincrement()) @db.UnsignedInt
+  user_id    Int
+  game_pk    Int      @db.UnsignedInt
+  played_on  DateTime @default(now())
+  game       game     @relation(fields: [game_pk], references: [game_pk], onUpdate: NoAction, map: "FK_playlog_game")
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_playlog_user")
+
+  @@index([game_pk], map: "game_pk")
+  @@index([played_on], map: "played_on")
+  @@index([user_id], map: "user_id")
+}
+
+model sys {
+  key   String @id @db.VarChar(50)
+  value String @db.Text
+}
+
+model user {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique @db.VarChar(50)
+  role           String    @default("user") @db.VarChar(25)
+  name_on_riitag String?   @db.VarChar(255)
+  image          String?   @db.VarChar(255)
+  randkey        String?   @unique @db.VarChar(200)
+  coins          Int       @default(0) @db.UnsignedInt
+  cover_region   String    @default("EN") @db.VarChar(6)
+  cover_type     String    @default("cover3D") @db.VarChar(10)
+  comment        String?   @db.VarChar(50)
+  overlay        String    @default("overlay1") @db.VarChar(20)
+  background     String    @default("riiconnect241.png") @db.VarChar(120)
+  flag           String    @default("rc24") @db.VarChar(20)
+  coin           String    @default("mario") @db.VarChar(20)
+  font           String    @default("default") @db.VarChar(50)
+  show_avatar    Boolean   @default(false)
+  show_mii       Boolean   @default(false)
+  mii_type       String    @default("guest") @db.VarChar(10)
+  mii_data       String?   @db.VarChar(512)
+  cmoc_entry_no  String?   @db.VarChar(12)
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now()) @updatedAt
+  accounts       account[]
+  playlog        playlog[]
+}

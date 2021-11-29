@@ -1,0 +1,10 @@
+{
+    "family": "Splatfont",
+    "styles": [
+        {
+            "file": "splatfont.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

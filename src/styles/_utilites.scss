@@ -1,0 +1,18 @@
+.contain-content {
+  contain: content;
+}
+
+.resizable-none {
+  resize: none;
+}
+
+.text-editor {
+  max-height: 400px;
+  min-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  li p {
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "family": "RodinNTLG",
+    "styles": [
+        {
+            "file": "RodinNTLG/normal.ttf",
+            "weight": "normal",
+            "style": "normal"
+        },
+        {
+            "file": "RodinNTLG/bold.ttf",
+            "weight": "bold",
+            "style": "normal"
+        },
+        {
+            "file": "RodinNTLG/light.ttf",
+            "weight": "light",
+            "style": "normal"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "family": "NintendoU",
+    "styles": [
+        {
+            "file": "nintendou.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

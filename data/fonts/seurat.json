@@ -1,0 +1,10 @@
+{
+    "family": "Seurat",
+    "styles": [
+        {
+            "file": "seurat.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

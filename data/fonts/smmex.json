@@ -1,0 +1,10 @@
+{
+    "family": "SMMExtended",
+    "styles": [
+        {
+            "file": "supermariomakerextended.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

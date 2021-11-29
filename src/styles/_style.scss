@@ -1,0 +1,35 @@
+html,
+body {
+  height: 100%;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  isolation: isolate;
+}
+
+img:hover {
+  box-shadow: 0 0 16px #18b6ed;
+  transition: ease-in-out 0.1s;
+}
+
+.no-shadow:hover {
+  box-shadow: none;
+}
+
+.bg-secondary .text-muted a {
+  color: #bababa;
+}
+
+.nav-pills .nav-link {
+  color: #fff;
+}
+
+.carousel-caption {
+  left: 0;
+  position: relative;
+  top: 0;
+  color: #343a40;
+}

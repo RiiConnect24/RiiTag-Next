@@ -1,0 +1,10 @@
+{
+    "family": "NintendoLabo",
+    "styles": [
+        {
+            "file": "nintendolabo.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

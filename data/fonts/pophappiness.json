@@ -1,0 +1,10 @@
+{
+    "family": "PopHappiness",
+    "styles": [
+        {
+            "file": "pophappiness.ttf",
+            "weight": "normal",
+            "style": "normal"
+        }
+    ]
+}

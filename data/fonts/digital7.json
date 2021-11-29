@@ -1,0 +1,15 @@
+{
+    "family": "digital7",
+    "styles": [
+        {
+            "file": "digital7/normal.ttf",
+            "weight": "normal",
+            "style": "normal"
+        },
+        {
+            "file": "digital7/italic.ttf",
+            "weight": "italic",
+            "style": "normal"
+        }
+    ]
+}
