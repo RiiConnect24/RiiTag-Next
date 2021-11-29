@@ -34,6 +34,12 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 
 In the "`deploy`" folder you can find configuration files for NGINX, Caddy and Systemd.
 
+### Update
+
+1. `git pull`
+2. `npm run prod:migrate`
+3. `npm run prod:build`
+
 ### OAuth Setup
 
 #### Discord
