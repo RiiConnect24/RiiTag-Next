@@ -3,13 +3,17 @@ import path from 'node:path';
 import readline from 'node:readline';
 import prisma from '@/lib/db';
 import { DATA } from '@/lib/constants/filePaths';
+import { exists } from '@/lib/utils/fileUtils';
 
 export async function getGameNameFromTitlesTxt(txtname, gameId) {
+  const filepath = path.resolve(DATA.GAMETDB, txtname);
+
+  if (!(await exists(filepath))) {
+    return null;
+  }
+
   gameId = gameId.toUpperCase();
-  const fileStream = fs.createReadStream(
-    path.resolve(DATA.GAMETDB, txtname),
-    'utf-8'
-  );
+  const fileStream = fs.createReadStream(filepath, 'utf-8');
 
   const linereader = readline.createInterface({
     input: fileStream,
