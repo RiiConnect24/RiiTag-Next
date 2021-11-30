@@ -57,17 +57,19 @@ async function getRiiTagChannel(request, response) {
         .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
         .send({ error: 'Error while creating WAD.' });
     } finally {
-      try {
-        fs.promises.rm(workdir, { maxRetries: 3, recursive: true });
-      } catch {
-        logger.error(`Error while deleting ${workdir}`);
-      }
       if (file !== null) {
         try {
           file.close();
         } catch {
           // shrug
         }
+      }
+      try {
+        if (await exists(workdir)) {
+          await fs.promises.rm(workdir, { maxRetries: 3, recursive: true });
+        }
+      } catch {
+        logger.error(`Error while deleting ${workdir}`);
       }
     }
   }
