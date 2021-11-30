@@ -75,7 +75,7 @@ function IndexPage({ userCount, randomUsers }) {
 
       {isLoading === false ? (
         <Row>
-          <Col className="d-flex justify-content-center gap-1">
+          <Col className="d-flex gap-1 flex-column flex-sm-row align-items-center justify-content-center">
             {user?.username === undefined && (
               <>
                 <form method="POST" action="/api/auth/login/discord">
