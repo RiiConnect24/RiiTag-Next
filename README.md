@@ -14,6 +14,7 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 
 - [NodeJS](https://nodejs.org/) v16+
 - MySQL or MariaDB database
+- [Sharpii .NET Core](https://github.com/TheShadowEevee/Sharpii-NetCore/releases) in `PATH` as `sharpii`
 - Active internet connection
 
 ## Developing
