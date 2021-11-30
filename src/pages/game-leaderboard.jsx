@@ -1,4 +1,4 @@
-import { Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import safeJsonStringify from 'safe-json-stringify';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
@@ -69,21 +69,32 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
           url: `${ENV.BASE_URL}/game-leaderboard?page=${currentPage}`,
         }}
       />
-      <Row className="mb-4 row-cols-1 row-cols-xl-3 row-cols-md-2 g-4">
-        {games.map((game, index) => (
-          <GameLeaderboardCard
-            key={game.game_pk}
-            game={game}
-            position={limit * (currentPage - 1) + index + 1}
-          />
-        ))}
-      </Row>
 
-      <Pagination
-        currentPage={currentPage - 1}
-        handlePageClick={handlePageClick}
-        totalPages={total}
-      />
+      {games.length === 0 ? (
+        <Row>
+          <Col className="text-center">
+            <p className="h2">No games played yet!</p>
+          </Col>
+        </Row>
+      ) : (
+        <>
+          <Row className="mb-4 row-cols-1 row-cols-xl-3 row-cols-md-2 g-4">
+            {games.map((game, index) => (
+              <GameLeaderboardCard
+                key={game.game_pk}
+                game={game}
+                position={limit * (currentPage - 1) + index + 1}
+              />
+            ))}
+          </Row>
+
+          <Pagination
+            currentPage={currentPage - 1}
+            handlePageClick={handlePageClick}
+            totalPages={total}
+          />
+        </>
+      )}
     </Container>
   );
 }
