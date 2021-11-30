@@ -7,6 +7,7 @@ import prisma from '@/lib/db';
 import PrivateKeyCard from '@/components/account/PrivateKeyCard';
 import OAuthAccountsCard from '@/components/account/OAuthAccountsCard';
 import AccountCard from '@/components/account/AccountCard';
+import ENV from '@/lib/constants/environmentVariables';
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
@@ -42,7 +43,12 @@ export const getServerSideProps = withSession(async ({ req }) => {
 function AccountPage({ accountInfo }) {
   return (
     <Container>
-      <NextSeo title="Account" />
+      <NextSeo
+        title="Account"
+        openGraph={{
+          url: `${ENV.BASE_URL}/account`,
+        }}
+      />
       <Row>
         <Col lg={6}>
           <OAuthAccountsCard accounts={accountInfo.accounts} />

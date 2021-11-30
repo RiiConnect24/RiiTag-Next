@@ -17,6 +17,7 @@ import { BACKGROUNDS } from '@/lib/constants/forms/backgrounds';
 import GeneralCard from '@/components/edit/GeneralCard';
 import FontCard from '@/components/edit/FontCard';
 import ImagesCard from '@/components/edit/ImagesCard';
+import ENV from '@/lib/constants/environmentVariables';
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
@@ -155,7 +156,12 @@ function EditPage({ tagInfo }) {
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Container>
-            <NextSeo title="Edit RiiTag" />
+            <NextSeo
+              title="Edit RiiTag"
+              openGraph={{
+                url: `${ENV.BASE_URL}/edit`,
+              }}
+            />
             <Button
               className="rounded-circle shadow position-fixed"
               disabled={isSubmitting}

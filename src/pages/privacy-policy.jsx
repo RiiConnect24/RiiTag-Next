@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { NextSeo } from 'next-seo';
 import prisma from '@/lib/db';
 import styles from '@/styles/modules/editor-text.module.scss';
+import ENV from '@/lib/constants/environmentVariables';
 
 export async function getStaticProps() {
   const privacyPolicy = await prisma.sys.findUnique({
@@ -24,7 +25,12 @@ export async function getStaticProps() {
 function PrivacyPolicyPage({ privacyPolicy }) {
   return (
     <Container>
-      <NextSeo title="Privacy Policy" />
+      <NextSeo
+        title="Privacy Policy"
+        openGraph={{
+          url: `${ENV.BASE_URL}/privacy-policy`,
+        }}
+      />
       <Row>
         <Col>
           <h1>Privacy Policy</h1>

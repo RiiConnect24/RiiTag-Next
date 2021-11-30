@@ -2,11 +2,17 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import styles from '@/styles/modules/credits.module.scss';
+import ENV from '@/lib/constants/environmentVariables';
 
 function CreditsPage() {
   return (
     <Container>
-      <NextSeo title="Credits" />
+      <NextSeo
+        title="Credits"
+        openGraph={{
+          url: `${ENV.BASE_URL}/credits`,
+        }}
+      />
       <Row className="mb-3">
         <Col xs={9}>
           <p className="h2">Without these people, RiiTag would not exist:</p>

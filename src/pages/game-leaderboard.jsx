@@ -1,7 +1,6 @@
 import { Container, Row } from 'react-bootstrap';
 import safeJsonStringify from 'safe-json-stringify';
 import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { NextSeo } from 'next-seo';
@@ -66,6 +65,9 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
         title="Leaderboard"
         description="See what people have played the most while connected to their RiiTag!"
         canonical={`${ENV.BASE_URL}/game-leaderboard?page=${currentPage}`}
+        openGraph={{
+          url: `${ENV.BASE_URL}/game-leaderboard?page=${currentPage}`,
+        }}
       />
       <Row className="mb-4 row-cols-1 row-cols-xl-3 row-cols-md-2 g-4">
         {games.map((game, index) => (

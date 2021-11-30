@@ -52,6 +52,7 @@ function ProfilePage({ user, isLoggedIn }) {
         title={user.name_on_riitag}
         description={`See what ${user.name_on_riitag} has played`}
         openGraph={{
+          url: `${ENV.BASE_URL}/user/${user.username}`,
           images: [
             {
               url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(

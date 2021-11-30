@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { NextSeo } from 'next-seo';
 import prisma from '@/lib/db';
 import styles from '@/styles/modules/editor-text.module.scss';
+import ENV from '@/lib/constants/environmentVariables';
 
 export async function getStaticProps() {
   const tos = await prisma.sys.findUnique({
@@ -22,7 +23,12 @@ export async function getStaticProps() {
 function TosPage({ tos }) {
   return (
     <Container>
-      <NextSeo title="Terms of Service" />
+      <NextSeo
+        title="Terms of Service"
+        openGraph={{
+          url: `${ENV.BASE_URL}/tos`,
+        }}
+      />
       <Row>
         <Col>
           <h1>Terms of Service</h1>

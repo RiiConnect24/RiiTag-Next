@@ -1,9 +1,10 @@
-import { Card, Col, Container, Row, Tabs } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { NextSeo } from 'next-seo';
 import { withSession } from '@/lib/iron-session';
 import prisma from '@/lib/db';
 import EditYourMiiCard from '@/components/mii/EditYourMiiCard';
+import ENV from '@/lib/constants/environmentVariables';
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
@@ -34,7 +35,12 @@ export const getServerSideProps = withSession(async ({ req }) => {
 function MiiPage({ miiInfo }) {
   return (
     <Container>
-      <NextSeo title="Edit Mii" />
+      <NextSeo
+        title="Edit Mii"
+        openGraph={{
+          url: `${ENV.BASE_URL}/mii`,
+        }}
+      />
       <Row>
         <Col>
           <EditYourMiiCard miiInfo={miiInfo} />

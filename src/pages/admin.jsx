@@ -6,6 +6,7 @@ import prisma from '@/lib/db';
 import GeneralAdministrationCard from '@/components/admin/GeneralAdministrationCard';
 import PrivacyPolicyCard from '@/components/admin/PrivacyPolicyCard';
 import TermsOfServiceCard from '@/components/admin/TermsOfServiceCard';
+import ENV from '@/lib/constants/environmentVariables';
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
@@ -55,7 +56,12 @@ export const getServerSideProps = withSession(async ({ req }) => {
 function AdminPage({ systemInfo }) {
   return (
     <Container>
-      <NextSeo title="Admin" />
+      <NextSeo
+        title="Admin"
+        openGraph={{
+          url: `${ENV.BASE_URL}/admin`,
+        }}
+      />
       <Row>
         <Col>
           <GeneralAdministrationCard />
