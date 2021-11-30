@@ -62,15 +62,6 @@ function ProfilePage({ user, isLoggedIn }) {
               alt: `RiiTag of ${user.name_on_riitag}`,
               type: 'image/png',
             },
-            {
-              url: `${ENV.BASE_URL}/${user.username}/tag.png?${new Date(
-                user.updated_at
-              ).getTime()}`,
-              width: 400,
-              height: 150,
-              alt: `RiiTag of ${user.name_on_riitag}`,
-              type: 'image/png',
-            },
           ],
           profile: {
             username: user.name_on_riitag,
