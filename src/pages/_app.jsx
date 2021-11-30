@@ -28,7 +28,7 @@ function App({ Component, pageProps }) {
           additionalLinkTags={[
             {
               rel: 'icon',
-              href: `${ENV.BASE_URL}/favicon.ico`,
+              href: `${ENV.BASE_URL}/img/favicon.ico`,
             },
           ]}
           openGraph={{
