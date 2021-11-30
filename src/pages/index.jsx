@@ -1,6 +1,5 @@
 import {
   Button,
-  Carousel,
   Col,
   Container,
   OverlayTrigger,
@@ -18,11 +17,12 @@ import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import prisma from '@/lib/db';
+import RiiTagCarousel from '@/components/index/RiiTagCarousel';
 
 export async function getStaticProps() {
   const userCount = await prisma.user.count();
   const randomUsers = await prisma.$queryRaw`
-      SELECT user.username, user.name_on_riitag
+      SELECT user.username, user.name_on_riitag, user.updated_at
       FROM user
       WHERE user.coins > 10
       ORDER BY RAND()
@@ -135,25 +135,7 @@ function IndexPage({ userCount, randomUsers }) {
       {randomUsers.length > 0 && (
         <Row className="text-center">
           <Col>
-            <Carousel variant="dark" fade>
-              {randomUsers.map((randomUser) => (
-                <Carousel.Item key={randomUser.username}>
-                  <img
-                    className="d-block w-75 mx-auto mt-2"
-                    alt={`RiiTag of ${randomUser.username}`}
-                    src={`/${randomUser.username}/tag.max.png`}
-                  />
-                  <Carousel.Caption className="mb-3">
-                    <p className="h4">
-                      RiiTag of{' '}
-                      <Link href={`/user/${randomUser.username}`}>
-                        {randomUser.name_on_riitag}
-                      </Link>
-                    </p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              ))}
-            </Carousel>
+            <RiiTagCarousel randomUsers={randomUsers} />
           </Col>
         </Row>
       )}
