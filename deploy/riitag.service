@@ -7,6 +7,9 @@ Restart=always
 User=riitag
 Group=riitag
 Environment=NODE_ENV=production
+# Following line is optional, but needed when riitag is a system user
+# w/o a home directory
+Environment=DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/sharpii
 WorkingDirectory=/srv/http/riitag.example.com/riitag
 StandardOutput=append:/var/log/www/riitag/common.log
 StandardError=inherit
