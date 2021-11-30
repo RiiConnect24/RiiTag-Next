@@ -9,7 +9,7 @@ function RiiTagCarousel({ randomUsers }) {
         <Carousel.Item key={randomUser.username}>
           <img
             className="d-block w-75 mx-auto mt-2"
-            alt={`RiiTag of ${randomUser.username}`}
+            alt={`RiiTag of ${randomUser.name_on_riitag}`}
             src={`/${randomUser.username}/tag.max.png?${randomUser.updated_at}`}
           />
           <Carousel.Caption className="mb-3">
