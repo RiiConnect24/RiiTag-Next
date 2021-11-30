@@ -51,7 +51,7 @@ function IndexPage({ userCount, randomUsers }) {
 
   return (
     <Container>
-      <NextSeo title="Start" />
+      <NextSeo />
       <Row>
         <Col className="text-center">
           <h1>Welcome to RiiTag!</h1>

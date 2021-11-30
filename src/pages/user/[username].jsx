@@ -22,6 +22,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       image: true,
       name_on_riitag: true,
       created_at: true,
+      updated_at: true,
       overlay: true,
       background: true,
       coin: true,
@@ -53,7 +54,9 @@ function ProfilePage({ user, isLoggedIn }) {
         openGraph={{
           images: [
             {
-              url: `${ENV.BASE_URL}/${user.username}/tag.max.png`,
+              url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(
+                user.updated_at
+              ).getTime()}`,
               width: 1200,
               height: 450,
               alt: `RiiTag of ${user.name_on_riitag}`,
@@ -68,7 +71,11 @@ function ProfilePage({ user, isLoggedIn }) {
       <Row>
         <Col lg={7}>
           <div className="mb-3">
-            <RiiTag username={user.username} name={user.name_on_riitag} />
+            <RiiTag
+              username={user.username}
+              name={user.name_on_riitag}
+              updated_at={user.updated_at}
+            />
           </div>
 
           {isLoggedIn && <ShowYourTagCard username={user.username} />}
