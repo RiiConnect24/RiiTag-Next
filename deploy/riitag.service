@@ -11,7 +11,7 @@ Environment=NODE_ENV=production
 # w/o a home directory
 Environment=DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/sharpii
 WorkingDirectory=/srv/http/riitag.example.com/riitag
-StandardOutput=append:/var/log/www/riitag/common.log
+StandardOutput=append:/var/log/node/riitag/common.log
 StandardError=inherit
 
 [Install]
