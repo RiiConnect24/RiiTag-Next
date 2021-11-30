@@ -48,11 +48,14 @@ async function exportData(request, response) {
         },
         playlog: {
           select: {
-            game_id: true,
-            console: true,
-            playcount: true,
-            first_played: true,
-            last_played: true,
+            played_on: true,
+            game: {
+              select: {
+                game_id: true,
+                console: true,
+                name: true,
+              },
+            },
           },
         },
       },
