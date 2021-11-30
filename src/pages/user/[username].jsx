@@ -54,6 +54,15 @@ function ProfilePage({ user, isLoggedIn }) {
         openGraph={{
           images: [
             {
+              url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(
+                user.updated_at
+              ).getTime()}`,
+              width: 1200,
+              height: 450,
+              alt: `RiiTag of ${user.name_on_riitag}`,
+              type: 'image/png',
+            },
+            {
               url: `${ENV.BASE_URL}/${user.username}/tag.png?${new Date(
                 user.updated_at
               ).getTime()}`,
