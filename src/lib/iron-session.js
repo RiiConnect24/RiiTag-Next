@@ -9,6 +9,7 @@ const sessionOptions = {
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
   },
 };
 
