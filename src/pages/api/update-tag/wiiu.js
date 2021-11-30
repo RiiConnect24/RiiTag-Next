@@ -26,7 +26,7 @@ const limiter = rateLimit({
  * Endpoint examples:
  * Cemu: /wiiu?key=dev&origin=Cemu&gameTID=SUPER%20MARIO%203D%20WORLD
  * Wii U: /wiiu?key=dev&gameTID=00050000101C9500
- * Wii U with VC Inject: /wiiu?key=dev&gameTID=0005000252535050
+ * Wii U with VC Inject: /wiiu?key=dev&game=0005000252535050
  */
 async function addWiiUGame(request, response) {
   const { key, origin, game } = request.query;
