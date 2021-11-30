@@ -15,7 +15,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      tos: isBlank(tos) ? tos.value : '<i>No TOS defined...</i>',
+      tos: isBlank(tos?.value) ? '<i>No TOS defined...</i>' : tos.value,
     },
     revalidate: 1,
   };

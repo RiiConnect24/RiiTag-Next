@@ -15,9 +15,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      privacyPolicy: isBlank(privacyPolicy)
-        ? privacyPolicy.value
-        : '<i>No Privacy Policy defined...</i>',
+      privacyPolicy: isBlank(privacyPolicy?.value)
+        ? '<i>No Privacy Policy defined...</i>'
+        : privacyPolicy.value,
     },
     revalidate: 1,
   };
