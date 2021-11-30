@@ -4,6 +4,7 @@ import { NextSeo } from 'next-seo';
 import prisma from '@/lib/db';
 import styles from '@/styles/modules/editor-text.module.scss';
 import ENV from '@/lib/constants/environmentVariables';
+import { isBlank } from '@/lib/utils/utils';
 
 export async function getStaticProps() {
   const tos = await prisma.sys.findUnique({
@@ -14,7 +15,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      tos: tos ? tos.value : '<i>No TOS defined...</i>',
+      tos: isBlank(tos) ? tos.value : '<i>No TOS defined...</i>',
     },
     revalidate: 1,
   };

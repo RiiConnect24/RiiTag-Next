@@ -4,6 +4,7 @@ import { NextSeo } from 'next-seo';
 import prisma from '@/lib/db';
 import styles from '@/styles/modules/editor-text.module.scss';
 import ENV from '@/lib/constants/environmentVariables';
+import { isBlank } from '@/lib/utils/utils';
 
 export async function getStaticProps() {
   const privacyPolicy = await prisma.sys.findUnique({
@@ -14,7 +15,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      privacyPolicy: privacyPolicy
+      privacyPolicy: isBlank(privacyPolicy)
         ? privacyPolicy.value
         : '<i>No Privacy Policy defined...</i>',
     },
