@@ -73,7 +73,7 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
       {games.length === 0 ? (
         <Row>
           <Col className="text-center">
-            <p className="h2">No games played yet!</p>
+            <p className="h2">No games were played yet!</p>
           </Col>
         </Row>
       ) : (

@@ -21,12 +21,10 @@ function AppFooter() {
             <a className="text-muted">Credits</a>
           </Link>
         </Col>
-        {ENV.STAGING === 'true' ? (
+        {ENV.STAGING === 'true' && (
           <Col className="text-danger">
             This is a PREVIEW. Data may be deleted at any time!
           </Col>
-        ) : (
-          ''
         )}
         <Col className="text-muted text-end">
           <Link href="/privacy-policy">
