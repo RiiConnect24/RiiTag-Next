@@ -115,6 +115,18 @@ function GeneralCard({ values, errors, handleChange }) {
                 onChange={handleChange}
                 checked={values.showMii}
               />
+              <Form.Text className="text-muted">
+                You can edit it your Mii on the &quot;
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                <a
+                  href="/mii"
+                  target="_blank"
+                  title="Open 'Edit Mii' page in a new tab"
+                >
+                  Edit Mii
+                </a>
+                &quot; page.
+              </Form.Text>
             </Form.Group>
           </Col>
         </Row>
