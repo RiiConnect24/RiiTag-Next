@@ -6,7 +6,7 @@
   },
   "license": "AGPL-3.0-only",
   "scripts": {
-    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && next lint",
     "dev:start": "next dev",
     "dev:db-create-migration": "dotenv -e .env.development.local prisma migrate dev",
     "dev:db-reset": "dotenv -e .env.development.local prisma db push --force-reset --accept-data-loss",
