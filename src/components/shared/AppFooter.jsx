@@ -30,7 +30,7 @@ function AppFooter() {
           <Link href="/privacy-policy">
             <a className="text-muted">Privacy Policy</a>
           </Link>{' '}
-          -
+          -{' '}
           <Link href="/tos">
             <a className="text-muted">Terms of Service</a>
           </Link>{' '}
