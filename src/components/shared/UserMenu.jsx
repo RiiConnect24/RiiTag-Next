@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCog,
-  faGamepad,
   faImage,
   faKey,
   faPen,

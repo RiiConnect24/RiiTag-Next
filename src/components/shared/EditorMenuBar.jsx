@@ -24,6 +24,7 @@ import { useCallback } from 'react';
 function EditorMenuBar({ editor }) {
   const addLink = useCallback(() => {
     const previousUrl = editor.getAttributes('link').href;
+    // eslint-disable-next-line no-alert
     const url = window.prompt('Enter URL:', previousUrl);
 
     // cancelled
