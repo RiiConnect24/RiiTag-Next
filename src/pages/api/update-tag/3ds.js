@@ -3,7 +3,6 @@ import rateLimit from '@/lib/rate-limit';
 import ENV from '@/lib/constants/environmentVariables';
 import HTTP_CODE from '@/lib/constants/httpStatusCodes';
 import { isBlank } from '@/lib/utils/utils';
-import prisma from '@/lib/db';
 import {
   get3DSGameIdByNameAndRegion,
   get3DSGameName,

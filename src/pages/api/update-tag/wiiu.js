@@ -5,7 +5,6 @@ import ENV from '@/lib/constants/environmentVariables';
 import { nc } from '@/lib/routing';
 import { isBlank } from '@/lib/utils/utils';
 import HTTP_CODE from '@/lib/constants/httpStatusCodes';
-import prisma from '@/lib/db';
 import {
   getWiiGameName,
   getWiiUGameIdByNameAndRegion,
