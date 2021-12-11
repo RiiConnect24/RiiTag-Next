@@ -6,8 +6,13 @@ function AppFooter() {
   return (
     <Container fluid className="mt-auto py-2 bg-secondary">
       <Row>
-        <Col className="text-muted text-start">
-          &copy; 2020 - {new Date().getFullYear()}&nbsp;
+        <Col className="text-start">
+          <Link href="/about">
+            <a className="text-muted">
+              &copy; 2020 - {new Date().getFullYear()}
+            </a>
+          </Link>
+          &nbsp;
           <a
             className="text-muted"
             href="https://rc24.xyz"

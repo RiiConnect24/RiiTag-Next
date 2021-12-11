@@ -7,6 +7,7 @@ import GeneralAdministrationCard from '@/components/admin/GeneralAdministrationC
 import PrivacyPolicyCard from '@/components/admin/PrivacyPolicyCard';
 import TermsOfServiceCard from '@/components/admin/TermsOfServiceCard';
 import ENV from '@/lib/constants/environmentVariables';
+import AboutCard from '@/components/admin/AboutCard';
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
@@ -46,6 +47,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
   });
 
   const systemInfo = {
+    about: data.find((x) => x.key === 'about')?.value || '',
     privacyPolicy: data.find((x) => x.key === 'privacy-policy')?.value || '',
     tos: data.find((x) => x.key === 'tos')?.value || '',
   };
@@ -73,6 +75,11 @@ function AdminPage({ systemInfo }) {
         </Col>
         <Col lg={6}>
           <TermsOfServiceCard tos={systemInfo.tos} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <AboutCard about={systemInfo.about} />
         </Col>
       </Row>
     </Container>

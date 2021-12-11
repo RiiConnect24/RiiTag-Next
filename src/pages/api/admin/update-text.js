@@ -4,7 +4,7 @@ import prisma from '@/lib/db';
 import { isBlank } from '@/lib/utils/utils';
 import logger from '@/lib/logger';
 
-const validPaths = Object.freeze(['privacy-policy', 'tos']);
+const validPaths = Object.freeze(['about', 'privacy-policy', 'tos']);
 
 async function updateText(request, response) {
   const { text, path } = request.body;
