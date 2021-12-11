@@ -1,8 +1,8 @@
 import HTTP_CODE from '@/lib/constants/httpStatusCodes';
 import { ncWithSession } from '@/lib/routing';
 import ENV from '@/lib/constants/environmentVariables';
-import prisma from '@/lib/db';
 import logger from '@/lib/logger';
+import { getRandKeyByUsername } from '@/lib/utils/databaseUtils';
 
 const createTagXML = (key) =>
   `<?xml version="1.0" encoding="UTF-8"?><Tag URL="${ENV.BASE_URL}/wii?game={ID6}&amp;key={KEY}" Key="${key}"/>`;
@@ -15,14 +15,7 @@ async function wiinnertag(request, response) {
   }
 
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        username,
-      },
-      select: {
-        randkey: true,
-      },
-    });
+    const user = await getRandKeyByUsername(username);
 
     response.setHeader('Content-Type', 'application/xml');
     return response.status(HTTP_CODE.OK).send(createTagXML(user.randkey));

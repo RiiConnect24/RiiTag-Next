@@ -3,6 +3,7 @@ import HTTP_CODE from '@/lib/constants/httpStatusCodes';
 import prisma from '@/lib/db';
 import { isBlank } from '@/lib/utils/utils';
 import logger from '@/lib/logger';
+import { userIsAdmin } from '@/lib/utils/databaseUtils';
 
 const validPaths = Object.freeze(['about', 'privacy-policy', 'tos']);
 
@@ -22,16 +23,7 @@ async function updateText(request, response) {
       .send({ error: 'Invalid data' });
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      username,
-    },
-    select: {
-      role: true,
-    },
-  });
-
-  if (user.role !== 'admin') {
+  if (!(await userIsAdmin(username))) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)
       .json({ error: 'Unauthorized' });

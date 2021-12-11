@@ -4,7 +4,7 @@ import HTTP_CODE from '@/lib/constants/httpStatusCodes';
 import logger from '@/lib/logger';
 import { saveFile } from '@/lib/utils/fileUtils';
 import { DATA } from '@/lib/constants/filePaths';
-import prisma from '@/lib/db';
+import { userIsAdmin } from '@/lib/utils/databaseUtils';
 
 async function download(txtname) {
   const url = `https://www.gametdb.com/${txtname}.txt?LANG=ORIG`;
@@ -29,16 +29,7 @@ async function updateGameTdb(request, response) {
       .json({ error: 'Unauthorized' });
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      username,
-    },
-    select: {
-      role: true,
-    },
-  });
-
-  if (user.role !== 'admin') {
+  if (!(await userIsAdmin(username))) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)
       .json({ error: 'Unauthorized' });

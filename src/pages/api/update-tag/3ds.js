@@ -12,6 +12,7 @@ import {
 import CONSOLE from '@/lib/constants/console';
 import { makeBanner } from '@/lib/riitag/banner';
 import logger from '@/lib/logger';
+import { getUserByRandKey } from '@/lib/utils/databaseUtils';
 
 const limiter = rateLimit({
   interval: ENV.IS_DEV ? 1 : 60_000, // 60 Seconds
@@ -39,11 +40,7 @@ async function add3dsGame(request, response) {
       .json({ error: 'Rate limit exceeded' });
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      randkey: key,
-    },
-  });
+  const user = await getUserByRandKey(key);
 
   if (!user) {
     return response.status(HTTP_CODE.UNAUTHORIZED).send({
