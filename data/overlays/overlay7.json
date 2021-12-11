@@ -1,76 +1,76 @@
 {
-    "name": "Flat Dark",
-    "author": "bendevnull",
-    "id": 7,
-    "width": 1200,
-    "height": 450,
-    "overlay_img": "overlay7.png",
-    "max_covers": 8,
-    "cover_start_x": 80,
-    "cover_start_y": 110,
-    "cover_increment_x": 120,
-    "cover_increment_y": 0,
-    "username": {
-        "font_family": "RodinNTLG",
-        "font_size": 48,
-        "font_style": "normal",
-        "font_color": "#ffffff",
-        "x": 50,
-        "y": 8
-    },
-    "flag": {
-        "x": 15,
-        "y": 2
-    },
-    "coin_icon": {
-        "img": "mario",
-        "x": 620,
-        "y": 2
-    },
-    "coin_count": {
-        "font_family": "NintendoU",
-        "font_size": 44,
-        "font_style": "normal",
-        "font_color": "#323232",
-        "force_font": "true",
-        "x": 644,
-        "y": 10,
-        "max": 999999
-    },
-    "friend_code": {
-        "font_family": "RodinNTLG",
-        "font_size": 40,
-        "font_style": "normal",
-        "font_color": "#ffffff",
-        "force_font": "true",
-        "x": 597,
-        "y": 388
-    },
-    "avatar": {
-        "x": 1054,
-        "y": 17,
-        "size": 128,
-        "background": "overlay7_holder.png",
-        "background_x": 1044,
-        "background_y": 8
-    },
-    "mii": {
-        "x": -2,
-        "y": 274,
-        "size": 170,
-        "background": "overlay7_holder.png",
-        "background_x": 8,
-        "background_y": 297
-    },
-    "draw_order": [
-        "overlay",
-        "covers",
-        "flag",
-        "coin",
-        "avatar",
-        "username",
-        "coin_count",
-        "friend_code"
-    ],
-    "enabled": true
+  "name": "Flat Dark",
+  "author": "bendevnull",
+  "id": 7,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay7.png",
+  "max_covers": 8,
+  "cover_start_x": 80,
+  "cover_start_y": 110,
+  "cover_increment_x": 120,
+  "cover_increment_y": 0,
+  "username": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "x": 50,
+    "y": 8
+  },
+  "flag": {
+    "x": 15,
+    "y": 2
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 620,
+    "y": 2
+  },
+  "coin_count": {
+    "font_family": "NintendoU",
+    "font_size": 44,
+    "font_style": "normal",
+    "font_color": "#323232",
+    "force_font": "true",
+    "x": 644,
+    "y": 10,
+    "max": 999999
+  },
+  "friend_code": {
+    "font_family": "RodinNTLG",
+    "font_size": 40,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "force_font": "true",
+    "x": 597,
+    "y": 388
+  },
+  "avatar": {
+    "x": 1054,
+    "y": 17,
+    "size": 128,
+    "background": "overlay7_holder.png",
+    "background_x": 1044,
+    "background_y": 8
+  },
+  "mii": {
+    "x": -2,
+    "y": 274,
+    "size": 170,
+    "background": "overlay7_holder.png",
+    "background_x": 8,
+    "background_y": 297
+  },
+  "draw_order": [
+    "overlay",
+    "covers",
+    "flag",
+    "coin",
+    "avatar",
+    "username",
+    "coin_count",
+    "friend_code"
+  ],
+  "enabled": true
 }

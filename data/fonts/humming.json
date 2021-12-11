@@ -1,10 +1,10 @@
 {
-    "family": "Humming",
-    "styles": [
-        {
-            "file": "humming.ttf",
-            "weight": "normal",
-            "style": "normal"
-        }
-    ]
+  "family": "Humming",
+  "styles": [
+    {
+      "file": "humming.ttf",
+      "weight": "normal",
+      "style": "normal"
+    }
+  ]
 }

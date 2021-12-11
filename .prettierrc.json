@@ -2,10 +2,7 @@
   "quoteProps": "consistent",
   "overrides": [
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.js", "*.jsx"],
       "options": {
         "singleQuote": true
       }
