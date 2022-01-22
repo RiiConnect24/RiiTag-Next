@@ -24,6 +24,7 @@ async function exportData(request, response) {
 
     try {
       await fs.promises.rm(path.resolve(CACHE.AVATAR, `${username}.png`));
+      await fs.promises.rm(path.resolve(CACHE.MIIS, `${username}.png`));
       await fs.promises.rm(path.resolve(CACHE.TAGS, `${username}.png`));
       await fs.promises.rm(path.resolve(CACHE.TAGS, `${username}.max.png`));
       await fs.promises.rm(path.resolve(CACHE.WADS, username), {

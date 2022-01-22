@@ -292,6 +292,17 @@ export async function makeBanner(user) {
           }
         }
         break;
+      case 'upload':
+        miiPath = path.resolve(CACHE.MIIS, `${user.username}.png`);
+        if (!(await exists(miiPath))) {
+          try {
+            const mii = await getMiiFromHexData(user.mii_data);
+            await saveFile(miiPath, mii);
+          } catch {
+            miiPath = PUBLIC.UNKNOWN_MII;
+          }
+        }
+        break;
       default:
         throw new Error('Unsupported Mii Type.');
     }

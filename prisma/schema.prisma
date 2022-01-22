@@ -75,7 +75,7 @@ model user {
   show_avatar    Boolean   @default(false)
   show_mii       Boolean   @default(false)
   mii_type       String    @default("guest") @db.VarChar(10)
-  mii_data       String?   @db.VarChar(512)
+  mii_data       String?   @db.VarChar(8192)
   cmoc_entry_no  String?   @db.VarChar(12)
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now()) @updatedAt

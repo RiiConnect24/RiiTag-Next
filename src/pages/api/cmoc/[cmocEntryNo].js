@@ -24,25 +24,20 @@ async function getCmocMii(request, response) {
   }
 
   const filepath = path.resolve(CACHE.CMOC_MIIS, `${cmocEntryNo}.png`);
-  if (await exists(filepath)) {
-    response.setHeader('Content-Type', 'image/png');
-    setFileHeaders(response, `${cmocEntryNo}.png`);
-    return response
-      .status(HTTP_CODE.OK)
-      .send(await fs.promises.readFile(filepath));
-  }
-
-  try {
-    const miiHexData = await getMiiHexDataFromCMOC(cmocEntryNo);
-    const mii = await getMiiFromHexData(miiHexData);
-    await saveFile(filepath, mii);
-  } catch (error) {
-    logger.error(error);
-    response.setHeader('Content-Type', 'image/png');
-    setFileHeaders(response, 'unknown.png');
-    return response
-      .status(HTTP_CODE.NOT_FOUND)
-      .send(await fs.promises.readFile(PUBLIC.UNKNOWN_MII));
+  if (!(await exists(filepath))) {
+    // Download first
+    try {
+      const miiHexData = await getMiiHexDataFromCMOC(cmocEntryNo);
+      const mii = await getMiiFromHexData(miiHexData);
+      await saveFile(filepath, mii);
+    } catch (error) {
+      logger.error(error);
+      response.setHeader('Content-Type', 'image/png');
+      setFileHeaders(response, 'unknown.png');
+      return response
+        .status(HTTP_CODE.NOT_FOUND)
+        .send(await fs.promises.readFile(PUBLIC.UNKNOWN_MII));
+    }
   }
 
   response.setHeader('Content-Type', 'image/png');

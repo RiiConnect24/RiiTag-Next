@@ -10,6 +10,7 @@ export const CACHE = Object.freeze({
   AVATAR: path.resolve(CACHE_PATH, 'avatar'),
   CMOC_MIIS: path.resolve(CACHE_PATH, 'mii', 'cmoc'),
   COVER: path.resolve(CACHE_PATH, 'cover'),
+  MIIS: path.resolve(CACHE_PATH, 'mii', 'user'),
   TAGS: path.resolve(CACHE_PATH, 'tags'),
   WADS: path.resolve(CACHE_PATH, 'wads'),
 });
