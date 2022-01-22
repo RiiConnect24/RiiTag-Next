@@ -145,7 +145,6 @@ function EditYourMiiCard({ miiInfo }) {
             handleChange,
             handleBlur,
             setFieldValue,
-            setFieldError,
             handleSubmit,
             isSubmitting,
           }) => (

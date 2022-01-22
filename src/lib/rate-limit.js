@@ -23,6 +23,7 @@ const rateLimit = (options) => {
           isRateLimited ? 0 : limit - currentUsage
         );
 
+        // eslint-disable-next-line no-promise-executor-return
         return isRateLimited ? reject() : resolve();
       }),
   };

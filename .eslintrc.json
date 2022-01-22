@@ -63,6 +63,8 @@
     "unicorn/no-array-for-each": "off",
     "unicorn/no-array-reduce": "off",
     "unicorn/no-null": "off",
+    "unicorn/no-useless-promise-resolve-reject": "off",
+    "unicorn/prefer-json-parse-buffer": "off",
     "unicorn/prevent-abbreviations": [
       "error",
       {

@@ -117,7 +117,6 @@ function GeneralCard({ values, errors, handleChange }) {
               />
               <Form.Text className="text-muted">
                 You can edit it your Mii on the &quot;
-                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a
                   href="/mii"
                   target="_blank"
