@@ -49,6 +49,7 @@
     "formidable": "2.0.1",
     "formik": "2.2.9",
     "iron-session": "6.0.5",
+    "js-cookie": "3.0.1",
     "lru-cache": "6.0.0",
     "next": "12.0.9",
     "next-connect": "0.11.0",

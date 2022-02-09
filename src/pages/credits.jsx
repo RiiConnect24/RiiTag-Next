@@ -49,7 +49,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
   return { props: { name_on_riitag: accountInfo.name_on_riitag } };
 });
 
-function CreditsPage({ accountInfo }) {
+function CreditsPage({ name_on_riitag }) {
   return (
     <Container>
       <NextSeo
@@ -117,7 +117,7 @@ function CreditsPage({ accountInfo }) {
             <Contributor name="twosecslater">
               Created U-Tag, the RiiTag plugin for Wii U
             </Contributor>
-            <Contributor name={(accountInfo.name_on_riitag !== "You" ? `${accountInfo.name_on_riitag} (You)` : 'You')}>
+            <Contributor name={(name_on_riitag !== "You" ? `${name_on_riitag} (You)` : 'You')}>
               For using RiiTag!
             </Contributor>
           </ul>
@@ -144,7 +144,7 @@ function CreditsPage({ accountInfo }) {
 }
 
 CreditsPage.propTypes = {
-  accountInfo: PropTypes.object.isRequired,
+  name_on_riitag: PropTypes.string.isRequired,
 };
 
 export default CreditsPage;
