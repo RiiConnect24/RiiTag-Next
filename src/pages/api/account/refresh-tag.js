@@ -1,6 +1,7 @@
 import HTTP_CODE from "@/lib/constants/httpStatusCodes";
 import { makeBanner } from "@/lib/riitag/banner";
 import logger from "@/lib/logger";
+import prisma from "@/lib/db";
 import { ncWithSession } from "@/lib/routing";
 
 async function refreshTag(request, response) {

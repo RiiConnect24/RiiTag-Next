@@ -35,6 +35,7 @@
   "reportUnusedDisableDirectives": true,
   "rules": {
     "@next/next/no-img-element": "off",
+    "import/no-unresolved": "off",
     "camelcase": "off",
     "no-restricted-syntax": "off",
     "jsx-a11y/anchor-is-valid": "off",

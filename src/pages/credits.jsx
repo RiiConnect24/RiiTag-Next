@@ -1,11 +1,11 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
+import PropTypes from 'prop-types';
 import styles from '@/styles/modules/credits.module.scss';
 import ENV from '@/lib/constants/environmentVariables';
 import { withSession } from '@/lib/iron-session';
 import prisma from '@/lib/db';
-import PropTypes from 'prop-types';
 
 import ExternalLink from '@/components/shared/ExternalLink';
 import Contributor from '@/components/credits/Contributor';
@@ -81,7 +81,7 @@ function CreditsPage({ accountInfo }) {
             <Contributor name="dhtdht020">
               Created several RiiTag overlays,
               provided some of the backgrounds,
-              and created RiiTag's iconic logo
+              and created RiiTag&apos;s iconic logo
             </Contributor>
             <Contributor name="DismissedGuy">
               Created RiiTag-RPC for Discord
@@ -106,7 +106,7 @@ function CreditsPage({ accountInfo }) {
               Creator and owner of GameTDB; the database of games that RiiTag uses
             </Contributor>
             <Contributor name="Matthe815">
-              Additional developer and encyclopedia for the project{Math.floor(Math.random() * 100000) == 1 ? ' (and dominating the entire world!)' : ''}
+              Additional developer and encyclopedia for the project{Math.floor(Math.random() * 100_000) === 1 ? ' (and dominating the entire world!)' : ''}
             </Contributor>
             <Contributor name="ShadowPuppet">
               Created DUTag (no longer available), which heavily inspired RiiTag

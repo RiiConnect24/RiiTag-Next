@@ -1,35 +1,31 @@
 import YouTube from 'react-youtube';
 import { Button } from 'react-bootstrap';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 
 export default class CreditsMusic extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(properties) {
+        super(properties);
         this.state = {
-            videoId: props.videoId,
+            videoId: properties.videoId,
             playing: true,
             player: null,
             hidden: false,
         }
     }
 
-    pause() {
-        this.state.player.stopVideo();
-        this.setState({
-            videoId: this.props.getMusic()
-        });
-    }
-
     onClick = async () => {
+        const { player, playing } = this.state;
+
         this.setState({
-            playing: !this.state.playing,
+            playing: !playing,
         });
-        this.state.playing ? this.state.player.playVideo() : this.pause();
-        if (this.state.playing) {
-            toast.success(`Now playing: ${this.state.player.getVideoData().title}`);
+        playing ? player.playVideo() : this.pause();
+        if (playing) {
+            toast.success(`Now playing: ${player.getVideoData().title}`);
         }
     }
 
@@ -45,11 +41,22 @@ export default class CreditsMusic extends React.Component {
         });
     }
 
+    pause() {
+        const { player } = this.state;
+        const { getMusic } = this.props;
+
+        player.stopVideo();
+        this.setState({
+            videoId: getMusic()
+        });
+    }
+
     render() {
+        const { videoId, playing, hidden } = this.state;
         return (
             <div>
                 <YouTube 
-                    videoId={this.state.videoId}
+                    videoId={videoId}
                     opts={{
                         height: '0',
                         width: '0',
@@ -73,12 +80,16 @@ export default class CreditsMusic extends React.Component {
                         height: 70,
                         fontSize: '2rem',
                         zIndex: 99,
-                        visibility: this.state.hidden ? 'hidden' : 'visible',
+                        visibility: hidden ? 'hidden' : 'visible',
                     }}
                 >
-                    {this.state.playing ? <FontAwesomeIcon icon={faPlay} /> : <FontAwesomeIcon icon={faStop} />}
+                    {playing ? <FontAwesomeIcon icon={faPlay} /> : <FontAwesomeIcon icon={faStop} />}
                 </Button>
             </div>
         )
     }
+}
+
+CreditsMusic.propTypes = {
+    getMusic: PropTypes.func.isRequired,
 }

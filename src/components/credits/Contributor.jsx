@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import NameWithLink from "@/components/credits/NameWithLink";
 
 export default function Contributor({ name, link, children }) {
@@ -9,3 +10,13 @@ export default function Contributor({ name, link, children }) {
         </li>
     );
 }
+
+Contributor.propTypes = {
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string,
+    children: PropTypes.node.isRequired,
+};
+
+Contributor.defaultProps = {
+    link: undefined,
+};
