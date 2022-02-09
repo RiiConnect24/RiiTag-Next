@@ -269,6 +269,19 @@ export async function makeBanner(user) {
   if (user.show_avatar && overlay.avatar) {
     try {
       const avatarPath = await getAvatar(user.username, user.image);
+      
+      if (overlay.avatar.background) {
+        await context.drawImage(
+          await Canvas.loadImage(
+            path.resolve(PUBLIC.OVERLAY_IMAGE, overlay.avatar.background)
+          ),
+          overlay.avatar.background_x,
+          overlay.avatar.background_y,
+          overlay.avatar.background_width,
+          overlay.avatar.background_height
+        )
+      }
+
       await context.drawImage(
         await Canvas.loadImage(avatarPath),
         overlay.avatar.x,
@@ -325,6 +338,19 @@ export async function makeBanner(user) {
       logger.error(`Mii ${user.mii_data}.png does not exist`);
       miiPath = PUBLIC.UNKNOWN_MII;
     }
+
+    if (overlay.mii.background) {
+      await context.drawImage(
+        await Canvas.loadImage(
+          path.resolve(PUBLIC.OVERLAY_IMAGE, overlay.avatar.background)
+        ),
+        overlay.mii.background_x,
+        overlay.mii.background_y,
+        overlay.mii.background_width,
+        overlay.mii.background_height
+      )
+    }
+
     await context.drawImage(
       await Canvas.loadImage(miiPath),
       overlay.mii.x,
