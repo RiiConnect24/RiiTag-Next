@@ -32,3 +32,6 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Code Style
+        run: npm run prettier
