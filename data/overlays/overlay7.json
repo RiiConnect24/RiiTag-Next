@@ -43,6 +43,7 @@
     "font_style": "normal",
     "font_color": "#ffffff",
     "force_font": "true",
+    "align": "right",
     "x": 597,
     "y": 388
   },

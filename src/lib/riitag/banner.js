@@ -46,9 +46,22 @@ function getFont(overlay, user, type) {
   return defaultFont;
 }
 
-async function drawText(context, font, size, style, color, text, x, y) {
+/**
+ * 
+ * @param {CanvasRenderingContext2D} context 
+ * @param {*} font 
+ * @param {*} size 
+ * @param {*} style 
+ * @param {*} color 
+ * @param {*} text 
+ * @param {*} x 
+ * @param {*} y 
+ * @param {*} align 
+ */
+async function drawText(context, font, size, style, color, text, x, y, align) {
   context.font = `${style} ${size}px ${font}`;
   context.fillStyle = color;
+  context.textAlign = align || 'left';
   context.fillText(text, size + x, size + y);
 }
 
@@ -235,7 +248,8 @@ export async function makeBanner(user) {
       overlay.friend_code.font_color,
       user.comment,
       overlay.friend_code.x,
-      overlay.friend_code.y
+      overlay.friend_code.y,
+      overlay.friend_code.align || undefined,
     );
   }
 
