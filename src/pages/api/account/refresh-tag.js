@@ -3,6 +3,13 @@ import { makeBanner } from "@/lib/riitag/banner";
 import logger from "@/lib/logger";
 import prisma from "@/lib/db";
 import { ncWithSession } from "@/lib/routing";
+import rateLimit from "@/lib/rate-limit";
+import ENV from "@/lib/constants/environmentVariables";
+
+const limiter = rateLimit({
+    interval: ENV.IS_DEV ? 1 : 30_000, // 30 Seconds
+    uniqueTokenPerInterval: 500, // Max 500 users per second
+  });
 
 async function refreshTag(request, response) {
     const username = request.session?.username;
@@ -18,6 +25,14 @@ async function refreshTag(request, response) {
             username,
         }
     });
+
+    try {
+        await limiter.check(response, 3, username);
+      } catch {
+        return response
+          .status(HTTP_CODE.TOO_MANY_REQUESTS)
+          .json({ error: 'Rate limit exceeded' });
+      }
 
     try {
         await makeBanner(user);
