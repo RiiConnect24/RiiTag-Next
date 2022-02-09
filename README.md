@@ -39,8 +39,9 @@ In the "`deploy`" folder you can find configuration files for NGINX, Caddy and S
 ### Update
 
 1. `git pull`
-2. `npm run prod:migrate`
-3. `npm run prod:build`
+2. `npm ci --production`
+3. `npm run prod:migrate`
+4. `npm run prod:build`
 
 ### OAuth Setup
 
