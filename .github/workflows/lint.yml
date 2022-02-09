@@ -2,6 +2,7 @@ name: Lint
 
 on:
   - push
+  - pull_request
   - workflow_dispatch
 
 jobs:
@@ -31,3 +32,6 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Code Style
+        run: npm run prettier
