@@ -31,6 +31,6 @@ async function refreshTag(request, response) {
     return response.status(HTTP_CODE.OK).json({ success: true });
 }
 
-const handler = ncWithSession().get(refreshTag);
+const handler = ncWithSession().post(refreshTag);
 
 export default handler;

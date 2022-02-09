@@ -4,7 +4,6 @@ import { NextSeo } from 'next-seo';
 import styles from '@/styles/modules/credits.module.scss';
 import ENV from '@/lib/constants/environmentVariables';
 import { withSession } from '@/lib/iron-session';
-import safeJsonStringify from 'safe-json-stringify';
 import prisma from '@/lib/db';
 import PropTypes from 'prop-types';
 
@@ -33,9 +32,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
   if (!username) {
     return {
       props: {
-        accountInfo: {
-          name_on_riitag: "You",
-        }
+        name_on_riitag: "You",
       }
     };
   }
@@ -49,7 +46,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
     },
   });
 
-  return { props: { accountInfo: JSON.parse(safeJsonStringify(accountInfo)) } };
+  return { props: { name_on_riitag: accountInfo.name_on_riitag } };
 });
 
 function CreditsPage({ accountInfo }) {

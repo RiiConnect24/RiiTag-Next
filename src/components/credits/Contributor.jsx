@@ -1,17 +1,11 @@
-import ExternalLink from "@/components/shared/ExternalLink";
+import NameWithLink from "@/components/credits/NameWithLink";
 
-export default function Contributor(props) {
+export default function Contributor({ name, link, children }) {
     return (
         <li>
             <strong>
-                {props.link ? <NameWithLink name={props.name} link={props.link} /> : props.name}
-            </strong>: {props.children}
+                {link ? <NameWithLink name={name} link={link} /> : name}
+            </strong>: {children}
         </li>
-    );
-}
-
-function NameWithLink(props) {
-    return (
-      <ExternalLink link={props.link}>{props.name}</ExternalLink>
     );
 }

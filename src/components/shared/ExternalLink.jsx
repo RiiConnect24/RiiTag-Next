@@ -1,7 +1,7 @@
-export default function ExternalLink(props) {
+export default function ExternalLink({ link, children }) {
     return (
-      <a href={props.link} target="_blank" rel="external noopener noreferrer">
-        {props.children}
+      <a href={link} target="_blank" rel="external noopener noreferrer">
+        {children}
       </a>
     );
 }

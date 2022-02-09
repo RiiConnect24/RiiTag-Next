@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 export default function RefreshTagButton() {
     const refresh = async () => {
         const response = await fetch('/api/account/refresh-tag', {
-            method: 'GET',
+            method: 'POST',
         });
 
         if (response.status === 200) {
