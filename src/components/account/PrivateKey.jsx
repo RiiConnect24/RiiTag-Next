@@ -8,6 +8,7 @@ import {
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
+import ENV from '@/lib/constants/environmentVariables';
 
 function PrivateKey({ randkey, toggleModal }) {
   const [show, setShow] = useState(false);
@@ -33,7 +34,7 @@ function PrivateKey({ randkey, toggleModal }) {
       </Row>
 
       <Row>
-        <div className="d-flex gap-1 justify-content-between">
+        <div className="d-flex gap-4 justify-content-between">
           <Button variant="primary" onClick={() => setShow(!show)}>
             <FontAwesomeIcon
               className="me-1"
@@ -41,6 +42,8 @@ function PrivateKey({ randkey, toggleModal }) {
             />
             {show ? 'Hide' : 'Show'}
           </Button>{' '}
+          {/* Copying to clipboard does NOT work on HTTP, only HTTPS */}
+          { ENV.BASE_URL.startsWith("https://") ? 
           <Button variant={copySuccess ? 'success' : 'light'} onClick={copy}>
             <FontAwesomeIcon
               className="me-1"
@@ -48,6 +51,7 @@ function PrivateKey({ randkey, toggleModal }) {
             />
             {copySuccess ? 'Copied!' : 'Copy'}
           </Button>
+          : <></> }
           <Button variant="danger" onClick={toggleModal}>
             Reset Key
           </Button>

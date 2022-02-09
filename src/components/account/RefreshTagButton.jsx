@@ -1,10 +1,7 @@
-import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
 
 export default function RefreshTagButton() {
-    // const [refreshUrl, setRefreshUrl] = useState('#');
-
     const refresh = async () => {
         const response = await fetch('/api/account/refresh-tag', {
             method: 'GET',
