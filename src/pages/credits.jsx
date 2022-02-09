@@ -64,6 +64,9 @@ function CreditsPage() {
               <strong>fledge68</strong>: Added RiiTag support to WiiFlow Lite
             </li>
             <li>
+              <strong>HEYimHeroic</strong>: Created mii2studio, and did a lot of work for the Mii implementation
+            </li>
+            <li>
               <strong>Larsenv</strong>: Main developer of project, director
             </li>
             <li>
