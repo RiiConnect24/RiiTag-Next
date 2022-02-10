@@ -8,21 +8,6 @@ import { withSession } from '@/lib/iron-session';
 import prisma from '@/lib/db';
 import Contributor from '@/components/credits/Contributor';
 
-const musicList = [
-  'XI12BK9VC3U', // SM64
-  'txe5UbkbqK0', // MK64
-  '87UysJxGiso', // PM64
-  'wvls_xrms3Q', // PMCS
-  'yZGQXG7Vy1I', // SMG
-  'V2-LgaXCnco', // SMS
-  'gZTAaJucWYY', // SMO
-  '2DRwPEvJrA8', // MK8
-];
-
-function getRandomCreditsMusic() {
-  return musicList[Math.floor(Math.random() * musicList.length)];
-}
-
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username;
 
@@ -148,10 +133,6 @@ function CreditsPage({ name_on_riitag }) {
           <p className="h3">Thank You!</p>
         </Col>
       </Row>
-      {/* <CreditsMusic */}
-      {/*  videoId={getRandomCreditsMusic()} */}
-      {/*  getMusic={getRandomCreditsMusic} */}
-      {/* /> */}
     </Container>
   );
 }
