@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ConfirmationModal from '@/components/shared/ConfirmationModal';
 
 const updateGameTdb = () => {
-  toast.promise(fetch('/api/admin/update-gametdb', { method: 'GET' }), {
+  toast.promise(fetch('/api/admin/update-gametdb', { method: 'POST' }), {
     pending: 'Updating GameTDB titles...',
     success: {
       render({ data, toastProps }) {

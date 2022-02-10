@@ -44,6 +44,6 @@ async function updateGameTdb(request, response) {
   return response.status(HTTP_CODE.OK).send('OK!');
 }
 
-const handler = ncWithSession().get(updateGameTdb);
+const handler = ncWithSession().post(updateGameTdb);
 
 export default handler;
