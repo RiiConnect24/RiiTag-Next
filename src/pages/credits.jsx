@@ -6,21 +6,18 @@ import styles from '@/styles/modules/credits.module.scss';
 import ENV from '@/lib/constants/environmentVariables';
 import { withSession } from '@/lib/iron-session';
 import prisma from '@/lib/db';
-
-import ExternalLink from '@/components/shared/ExternalLink';
 import Contributor from '@/components/credits/Contributor';
-import CreditsMusic from '@/components/credits/CreditsMusic';
 
 const musicList = [
-  "XI12BK9VC3U", // SM64
-  "txe5UbkbqK0", // MK64
-  "87UysJxGiso", // PM64
-  "wvls_xrms3Q", // PMCS
-  "yZGQXG7Vy1I", // SMG
-  "V2-LgaXCnco", // SMS
-  "gZTAaJucWYY", // SMO
-  "2DRwPEvJrA8", // MK8
-]
+  'XI12BK9VC3U', // SM64
+  'txe5UbkbqK0', // MK64
+  '87UysJxGiso', // PM64
+  'wvls_xrms3Q', // PMCS
+  'yZGQXG7Vy1I', // SMG
+  'V2-LgaXCnco', // SMS
+  'gZTAaJucWYY', // SMO
+  '2DRwPEvJrA8', // MK8
+];
 
 function getRandomCreditsMusic() {
   return musicList[Math.floor(Math.random() * musicList.length)];
@@ -32,8 +29,8 @@ export const getServerSideProps = withSession(async ({ req }) => {
   if (!username) {
     return {
       props: {
-        name_on_riitag: "You",
-      }
+        name_on_riitag: 'You',
+      },
     };
   }
 
@@ -75,12 +72,11 @@ function CreditsPage({ name_on_riitag }) {
               Completely rewrote RiiTag, and revived version 2.0 (RiiTag-Next)
             </Contributor>
             <Contributor name="daileon">
-              Created Wiinnertag (no longer available),
-              which heavily inspired RiiTag
+              Created Wiinnertag (no longer available), which heavily inspired
+              RiiTag
             </Contributor>
             <Contributor name="dhtdht020">
-              Created several RiiTag overlays,
-              provided some of the backgrounds,
+              Created several RiiTag overlays, provided some of the backgrounds,
               and created RiiTag&apos;s iconic logo
             </Contributor>
             <Contributor name="DismissedGuy">
@@ -88,36 +84,50 @@ function CreditsPage({ name_on_riitag }) {
             </Contributor>
             <Contributor name="DLEDeviant">
               Created the font&nbsp;
-              <ExternalLink link="https://www.deviantart.com/dledeviant/art/Nintendo-U-Version-3-595000916">
+              <a
+                href="https://www.deviantart.com/dledeviant/art/Nintendo-U-Version-3-595000916"
+                target="_blank"
+                rel="external noopener noreferrer"
+              >
                 Nintendo U Version 3
-              </ExternalLink>
+              </a>
               , one of the selectable fonts.
             </Contributor>
             <Contributor name="feldge68">
               Added RiiTag support to WiiFlow Lite
             </Contributor>
             <Contributor name="HEYimHeroic">
-              Created mii2studio, and did a lot of work for the Mii implementation
+              Created mii2studio, and did a lot of work for the Mii
+              implementation
             </Contributor>
             <Contributor name="Larsenv">
               The founder of RiiConnect24
             </Contributor>
             <Contributor name="Lustar">
-              Creator and owner of GameTDB; the database of games that RiiTag uses
+              Creator and owner of GameTDB; the database of games that RiiTag
+              uses
             </Contributor>
             <Contributor name="Matthe815">
-              Additional developer and encyclopedia for the project{Math.floor(Math.random() * 100_000) === 1 ? ' (and dominating the entire world!)' : ''}
+              Additional developer and encyclopedia for the project
+              {Math.floor(Math.random() * 100_000) === 1
+                ? ' (and dominating the entire world!)'
+                : ''}
             </Contributor>
             <Contributor name="ShadowPuppet">
               Created DUTag (no longer available), which heavily inspired RiiTag
             </Contributor>
             <Contributor name="TheShadowEevee">
-              Additional developer of the project, and added Cemu and Citra support
+              Additional developer of the project, and added Cemu and Citra
+              support
             </Contributor>
             <Contributor name="twosecslater">
               Created U-Tag, the RiiTag plugin for Wii U
             </Contributor>
-            <Contributor name={(name_on_riitag !== "You" ? `${name_on_riitag} (You)` : 'You')}>
+            <Contributor
+              name={
+                name_on_riitag !== 'You' ? `${name_on_riitag} (You)` : 'You'
+              }
+            >
               For using RiiTag!
             </Contributor>
           </ul>
@@ -138,13 +148,20 @@ function CreditsPage({ name_on_riitag }) {
           <p className="h3">Thank You!</p>
         </Col>
       </Row>
-      <CreditsMusic videoId={getRandomCreditsMusic()} getMusic={getRandomCreditsMusic} />
+      {/* <CreditsMusic */}
+      {/*  videoId={getRandomCreditsMusic()} */}
+      {/*  getMusic={getRandomCreditsMusic} */}
+      {/* /> */}
     </Container>
   );
 }
 
 CreditsPage.propTypes = {
-  name_on_riitag: PropTypes.string.isRequired,
+  name_on_riitag: PropTypes.string,
+};
+
+CreditsPage.defaultProps = {
+  name_on_riitag: 'You',
 };
 
 export default CreditsPage;

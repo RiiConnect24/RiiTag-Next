@@ -9,8 +9,8 @@ export default function AccountCard() {
       <Card.Header className="h5">RiiTag Account</Card.Header>
       <Card.Body>
         <div className="d-flex gap-1 flex-column flex-sm-row">
-          <ExportButton />
           <RefreshTagButton />
+          <ExportButton />
           <DeleteAccountButton />
         </div>
       </Card.Body>

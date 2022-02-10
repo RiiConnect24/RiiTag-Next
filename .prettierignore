@@ -37,3 +37,4 @@ yarn-error.log*
 # Prettierignore-specific
 data
 package-lock.json
+.vscode

@@ -35,3 +35,12 @@ img:hover {
   top: 0;
   color: #343a40;
 }
+
+.modal-content {
+  background-color: $dark;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: $gray-700;
+}

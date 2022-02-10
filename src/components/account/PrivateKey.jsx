@@ -42,16 +42,20 @@ function PrivateKey({ randkey, toggleModal }) {
             />
             {show ? 'Hide' : 'Show'}
           </Button>{' '}
-          {/* Copying to clipboard does NOT work on HTTP, only HTTPS */}
-          { ENV.BASE_URL.startsWith("https://") && 
-          <Button variant={copySuccess ? 'success' : 'light'} onClick={copy}>
-            <FontAwesomeIcon
-              className="me-1"
-              icon={copySuccess ? faCheck : faCopy}
-            />
-            {copySuccess ? 'Copied!' : 'Copy'}
-          </Button>}
-          
+          {/* Copying to clipboard does NOT work on HTTP, only HTTPS + localhost */}
+          {ENV.BASE_URL.startsWith('https://') ||
+            (ENV.IS_DEV && (
+              <Button
+                variant={copySuccess ? 'success' : 'light'}
+                onClick={copy}
+              >
+                <FontAwesomeIcon
+                  className="me-1"
+                  icon={copySuccess ? faCheck : faCopy}
+                />
+                {copySuccess ? 'Copied!' : 'Copy'}
+              </Button>
+            ))}
           <Button variant="danger" onClick={toggleModal}>
             Reset Key
           </Button>

@@ -18,12 +18,12 @@ function ConfirmationModal({
 
   return (
     <Modal fullscreen="sm-down" show={show} onHide={toggleModal}>
-      <Modal.Header closeButton>
+      <Modal.Header closeButton closeVariant="white">
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={toggleModal}>
+        <Button variant="light" onClick={toggleModal}>
           {cancelText}
         </Button>
         <Button variant={confirmVariant} onClick={onConfirm}>
