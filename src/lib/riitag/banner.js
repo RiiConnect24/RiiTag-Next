@@ -47,16 +47,16 @@ function getFont(overlay, user, type) {
 }
 
 /**
- * 
- * @param {CanvasRenderingContext2D} context 
- * @param {*} font 
- * @param {*} size 
- * @param {*} style 
- * @param {*} color 
- * @param {*} text 
- * @param {*} x 
- * @param {*} y 
- * @param {*} align 
+ *
+ * @param {CanvasRenderingContext2D} context
+ * @param {*} font
+ * @param {*} size
+ * @param {*} style
+ * @param {*} color
+ * @param {*} text
+ * @param {*} x
+ * @param {*} y
+ * @param {*} align
  */
 async function drawText(context, font, size, style, color, text, x, y, align) {
   context.font = `${style} ${size}px ${font}`;
@@ -249,7 +249,7 @@ export async function makeBanner(user) {
       user.comment,
       overlay.friend_code.x,
       overlay.friend_code.y,
-      overlay.friend_code.align || undefined,
+      overlay.friend_code.align || undefined
     );
   }
 
@@ -269,7 +269,7 @@ export async function makeBanner(user) {
   if (user.show_avatar && overlay.avatar) {
     try {
       const avatarPath = await getAvatar(user.username, user.image);
-      
+
       if (overlay.avatar.background) {
         await context.drawImage(
           await Canvas.loadImage(
@@ -279,7 +279,7 @@ export async function makeBanner(user) {
           overlay.avatar.background_y,
           overlay.avatar.background_width,
           overlay.avatar.background_height
-        )
+        );
       }
 
       await context.drawImage(
@@ -348,7 +348,7 @@ export async function makeBanner(user) {
         overlay.mii.background_y,
         overlay.mii.background_width,
         overlay.mii.background_height
-      )
+      );
     }
 
     await context.drawImage(
