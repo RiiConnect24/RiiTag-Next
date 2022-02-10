@@ -15,6 +15,7 @@ import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
+import CookieConsent from '@/components/index/CookieConsent';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import prisma from '@/lib/db';
 import RiiTagCarousel from '@/components/index/RiiTagCarousel';
@@ -139,6 +140,7 @@ function IndexPage({ userCount, randomUsers }) {
           </Col>
         </Row>
       )}
+      <CookieConsent />
     </Container>
   );
 }

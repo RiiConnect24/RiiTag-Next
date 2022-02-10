@@ -168,7 +168,7 @@ function EditPage({ tagInfo }) {
               type="submit"
               variant="success"
               style={{
-                bottom: '5%',
+                bottom: '7%',
                 right: '5%',
                 width: 70,
                 height: 70,

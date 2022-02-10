@@ -35,3 +35,5 @@ yarn-error.log*
 
 # IDE
 .idea
+.vscode/Contributor.code-snippets
+.vscode/settings.json

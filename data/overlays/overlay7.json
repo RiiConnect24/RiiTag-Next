@@ -43,7 +43,8 @@
     "font_style": "normal",
     "font_color": "#ffffff",
     "force_font": "true",
-    "x": 597,
+    "align": "end",
+    "x": 1077,
     "y": 388
   },
   "avatar": {
@@ -52,7 +53,9 @@
     "size": 128,
     "background": "overlay7_holder.png",
     "background_x": 1044,
-    "background_y": 8
+    "background_y": 8,
+    "background_width": 148,
+    "background_height": 148
   },
   "mii": {
     "x": -2,
@@ -60,7 +63,9 @@
     "size": 170,
     "background": "overlay7_holder.png",
     "background_x": 8,
-    "background_y": 297
+    "background_y": 297,
+    "background_width": 148,
+    "background_height": 148
   },
   "draw_order": [
     "overlay",

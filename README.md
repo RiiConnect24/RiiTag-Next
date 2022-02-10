@@ -23,7 +23,7 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 2. `npm i`
 3. Copy `.env` to `.env.development.local` and fill it in (at least `DATABASE_URL` and `IRON_SECRET`, see table below)
 4. `npm run dev:db-reset`
-5. `npm run start`
+5. `npm run dev:start`
 6. If you have changed the db scheme, create a migration with `npm run dev:db-create-migration`
 
 ## Deploy

@@ -25,7 +25,7 @@ export default function GeneralAdministrationCard() {
   const toggleModal = () => setShow(!show);
 
   return (
-    <Card className="mb-3" bg="light" text="dark">
+    <Card className="mb-3" bg="secondary" text="light">
       <ConfirmationModal
         title="Update GameTDB Titles?"
         confirmText="Update GameTDB Titles"
