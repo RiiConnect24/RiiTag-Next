@@ -3,7 +3,7 @@ import LRU from 'lru-cache';
 const rateLimit = (options) => {
   const tokenCache = new LRU({
     max: Number.parseInt(options.uniqueTokenPerInterval || 500, 10),
-    maxAge: Number.parseInt(options.interval || 60_000, 10),
+    ttl: Number.parseInt(options.interval || 60_000, 10),
   });
 
   return {
