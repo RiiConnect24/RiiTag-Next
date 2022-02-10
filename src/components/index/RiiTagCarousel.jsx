@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 function RiiTagCarousel({ randomUsers }) {
   return (
-    <Carousel variant="dark" fade>
+    <Carousel variant="light" fade>
       {randomUsers.map((randomUser) => (
         <Carousel.Item key={randomUser.username}>
           <img
@@ -12,7 +12,7 @@ function RiiTagCarousel({ randomUsers }) {
             alt={`RiiTag of ${randomUser.name_on_riitag}`}
             src={`/${randomUser.username}/tag.max.png?${randomUser.updated_at}`}
           />
-          <Carousel.Caption className="mb-3">
+          <Carousel.Caption className="mb-3 text-light">
             <p className="h4">
               RiiTag of{' '}
               <Link href={`/user/${randomUser.username}`}>
