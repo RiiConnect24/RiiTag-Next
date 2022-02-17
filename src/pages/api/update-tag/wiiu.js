@@ -69,7 +69,7 @@ async function addWiiUGame(request, response) {
   gameTID = gameTID.toUpperCase();
 
   const wiiuIds = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'wiiu.json'), 'utf-8')
+    await fs.promises.readFile(path.resolve(DATA.IDS, 'wiiu.json'), 'utf8')
   );
   let gameConsole = CONSOLE.WII_U;
   let id6 = wiiuIds[gameTID];
@@ -78,7 +78,7 @@ async function addWiiUGame(request, response) {
   if (!id6) {
     // Not found, likely a VC inject
     const wiiVCIds = JSON.parse(
-      await fs.promises.readFile(path.resolve(DATA.IDS, 'wiiVC.json'), 'utf-8')
+      await fs.promises.readFile(path.resolve(DATA.IDS, 'wiiVC.json'), 'utf8')
     );
     id6 = wiiVCIds[gameTID];
     if (!id6) {

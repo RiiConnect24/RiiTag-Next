@@ -27,7 +27,7 @@ function RiiTagCarousel({ randomUsers }) {
 }
 
 RiiTagCarousel.propTypes = {
-  randomUsers: PropTypes.object.isRequired,
+  randomUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default RiiTagCarousel;

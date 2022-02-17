@@ -13,7 +13,7 @@ export async function getGameNameFromTitlesTxt(txtname, gameId) {
   }
 
   gameId = gameId.toUpperCase();
-  const fileStream = fs.createReadStream(filepath, 'utf-8');
+  const fileStream = fs.createReadStream(filepath, 'utf8');
 
   const linereader = readline.createInterface({
     input: fileStream,
@@ -45,7 +45,7 @@ export async function getWiiUGameName(gameId) {
 
 export async function get3DSGameIdByNameAndRegion(gameName, region) {
   const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf-8')
+    await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
   );
 
   const foundIds = ids[gameName];
@@ -135,7 +135,7 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
 
 export async function getWiiUGameIdByNameAndRegion(gameName, region) {
   const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'cemu.json'), 'utf-8')
+    await fs.promises.readFile(path.resolve(DATA.IDS, 'cemu.json'), 'utf8')
   );
 
   const gameRegionsArray = ids[gameName];

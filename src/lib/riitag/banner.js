@@ -17,7 +17,7 @@ async function loadFonts() {
   await Promise.all(
     fontJsons.map(async (fontJson) => {
       const font = JSON.parse(
-        await fs.promises.readFile(path.resolve(DATA.FONTS, fontJson), 'utf-8')
+        await fs.promises.readFile(path.resolve(DATA.FONTS, fontJson), 'utf8')
       );
 
       font.styles.map(async (fontStyle) => {
@@ -90,7 +90,7 @@ export async function makeBanner(user) {
   if (!(await exists(overlayPath))) {
     throw new Error(`Overlay ${user.overlay}.json does not exist`);
   }
-  const overlay = JSON.parse(await fs.promises.readFile(overlayPath, 'utf-8'));
+  const overlay = JSON.parse(await fs.promises.readFile(overlayPath, 'utf8'));
 
   const covStartX = overlay.cover_start_x;
   let covStartY = overlay.cover_start_y;
