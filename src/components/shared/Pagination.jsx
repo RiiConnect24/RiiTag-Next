@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 function Pagination({ currentPage, totalPages, handlePageClick }) {
   return (
     <ReactPaginate
-      containerClassName="pagination justify-content-center"
+      containerClassName="pagination justify-content-center flex-wrap"
+      breakClassName="page-item"
+      breakLinkClassName="page-link"
       pageClassName="page-item"
       pageLinkClassName="page-link"
       activeClassName="active"
