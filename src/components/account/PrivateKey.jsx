@@ -10,6 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ENV from '@/lib/constants/environmentVariables';
 
+// Copying to clipboard does NOT work on HTTP, only HTTPS + localhost
+const canCopy = ENV.BASE_URL.startsWith('https://') || ENV.IS_DEV;
+
 function PrivateKey({ randkey, toggleModal }) {
   const [show, setShow] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -42,20 +45,15 @@ function PrivateKey({ randkey, toggleModal }) {
             />
             {show ? 'Hide' : 'Show'}
           </Button>{' '}
-          {/* Copying to clipboard does NOT work on HTTP, only HTTPS + localhost */}
-          {ENV.BASE_URL.startsWith('https://') ||
-            (ENV.IS_DEV && (
-              <Button
-                variant={copySuccess ? 'success' : 'light'}
-                onClick={copy}
-              >
-                <FontAwesomeIcon
-                  className="me-1"
-                  icon={copySuccess ? faCheck : faCopy}
-                />
-                {copySuccess ? 'Copied!' : 'Copy'}
-              </Button>
-            ))}
+          {canCopy && (
+            <Button variant={copySuccess ? 'success' : 'light'} onClick={copy}>
+              <FontAwesomeIcon
+                className="me-1"
+                icon={copySuccess ? faCheck : faCopy}
+              />
+              {copySuccess ? 'Copied!' : 'Copy'}
+            </Button>
+          )}
           <Button variant="danger" onClick={toggleModal}>
             Reset Key
           </Button>
