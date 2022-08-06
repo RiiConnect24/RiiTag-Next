@@ -69,14 +69,14 @@ function ShowYourTagCard({ username }) {
               text={`[CENTER][URL='${ENV.BASE_URL}/user/##USERID##'][IMG]${ENV.BASE_URL}/##USERID##/##TAG##[/IMG][/URL][/CENTER]`}
             />
           </Tab>
-          <Tab eventKey="gbatemp" title="GBATemp">
+          <Tab eventKey="gbatemp" title="GBAtemp">
             <EmbedText
               max={max}
               username={username}
               text={`[CENTER][URL='${ENV.BASE_URL}/user/##USERID##'][IMG]${ENV.BASE_URL}/click.png[/IMG][/URL][/CENTER]`}
             />
             <p className="text-warning">
-              <strong>NOTE:</strong> You RiiTag can&apos;t be shown on GBATemp
+              <strong>NOTE:</strong> You RiiTag can&apos;t be shown on GBAtemp, this is a link to view your RiiTag.
             </p>
           </Tab>
           <Tab eventKey="url" title="URL">
