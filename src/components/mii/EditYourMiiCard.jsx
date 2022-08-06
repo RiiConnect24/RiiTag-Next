@@ -36,7 +36,7 @@ function EditYourMiiCard({ miiInfo }) {
               values.cmocEntryNo.replaceAll('-', '').length !== 12
             ) {
               errors.cmocEntryNo =
-                'Entry number must be exactly 12 characters (without dashes)';
+                'Entry Number must be exactly 12 numbers long (ignoring dashes).';
             }
 
             if (values.miiType === MII_TYPE.UPLOAD) {

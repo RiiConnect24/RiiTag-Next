@@ -5,7 +5,7 @@ export async function getMiiHexDataFromCMOC(entryNo) {
   entryNo = entryNo.replaceAll('-', '');
   if (entryNo.length !== 12 || Number.isNaN(entryNo) === true) {
     throw new Error(
-      'Entry Number must be exactly 12 characters long (without dashes).'
+      'Entry Number must be exactly 12 numbers long (ignoring dashes).'
     );
   }
 
