@@ -169,7 +169,7 @@ export async function getWiiUGameIdByNameAndRegion(gameName, region) {
   }
 
   // USA and Fallback
-  return gameRegions.USA ? gameRegions.USA : null;
+  return gameRegions.USA ?? null;
 }
 
 export async function updateRiiTag(user, gameId, gameName, gameConsole) {
