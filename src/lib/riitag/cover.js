@@ -109,14 +109,39 @@ export async function getCover(gameConsole, coverType, gameId, region) {
     coverType = COVER_TYPE.CART;
   }
 
-  if (region !== getGameRegion(gameConsole, gameId)) {
+  const gameRegion = getGameRegion(gameConsole, gameId);
+
+  if (region !== gameRegion) {
     try {
       // User-provided region that's not the same from the game
       // (e.g. japanese cover for korean game)
+      logger.debug(
+        "Cover DL: User-provided region doesn't match game's region"
+      );
+
+      // US games
+      if (gameRegion === 'US') {
+        logger.debug('Cover DL: Game region is US -> using US!');
+        region = 'US';
+      }
+
+      // Japanese games
+      if (gameRegion === 'JA') {
+        logger.debug('Cover DL: Game region is JA -> using JA!');
+        region = 'JA';
+      }
+
+      // Korean games
+      if (gameRegion === 'KO') {
+        logger.debug('Cover DL: Game region is KO -> using KO!');
+        region = 'KO';
+      }
+
       return await downloadCover(gameConsole, coverType, region, gameId);
     } catch {
       try {
         // Now we try the default cover-region (e.g. korea for korean game)
+        logger.debug("Cover DL: Trying default region for game's region");
         return await downloadCover(
           gameConsole,
           coverType,
@@ -126,9 +151,11 @@ export async function getCover(gameConsole, coverType, gameId, region) {
       } catch {
         try {
           // Fallback to EN
+          logger.debug('Cover DL: Falling back to EN');
           return await downloadCover(gameConsole, coverType, 'EN', gameId);
         } catch {
           // Fallback to US
+          logger.debug('Cover DL: Falling back to US');
           return downloadCover(gameConsole, coverType, 'US', gameId);
         }
       }
@@ -136,13 +163,16 @@ export async function getCover(gameConsole, coverType, gameId, region) {
   } else {
     try {
       // Default region for game
+      logger.debug('Cover DL: Default region for game');
       return await downloadCover(gameConsole, coverType, region, gameId);
     } catch {
       try {
         // Fallback to EN
+        logger.debug('Cover DL: Falling back to EN');
         return await downloadCover(gameConsole, coverType, 'EN', gameId);
       } catch {
         // Fallback to US
+        logger.debug('Cover DL: Falling back to US');
         return downloadCover(gameConsole, coverType, 'US', gameId);
       }
     }
