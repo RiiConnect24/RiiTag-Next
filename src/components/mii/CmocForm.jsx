@@ -17,7 +17,7 @@ function CmocForm({ value, handleChange, handleBlur, error, touched }) {
       />
       <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
       <Form.Text className="text-muted">
-        You can browse all Miis from the Check Mii Out Channel on
+        You can browse all Miis from the Check Mii Out Channel on 
         <a
           href="https://mii.rc24.xyz/"
           rel="noopener noreferrer"
