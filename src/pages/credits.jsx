@@ -80,12 +80,8 @@ function CreditsPage({ name_on_riitag }) {
             <Contributor name="fledge68">
               Added RiiTag support to WiiFlow Lite
             </Contributor>
-            <Contributor name="Genwald">
-              Mii support
-            </Contributor>
-            <Contributor name="HEYimHeroic">
-              Mii support
-            </Contributor>
+            <Contributor name="Genwald">Mii support</Contributor>
+            <Contributor name="HEYimHeroic">Mii support</Contributor>
             <Contributor name="jaames">
               Figured out how to decrypt Mii QR codes
             </Contributor>
@@ -102,9 +98,7 @@ function CreditsPage({ name_on_riitag }) {
                 ? ' (and dominating the entire world!)'
                 : ''}
             </Contributor>
-            <Contributor name="PF2M">
-              Mii support
-            </Contributor>
+            <Contributor name="PF2M">Mii support</Contributor>
             <Contributor name="ShadowPuppet">
               Created DUTag (no longer available), which heavily inspired RiiTag
             </Contributor>
