@@ -16,6 +16,10 @@ export const COINS = Object.freeze([
     label: 'Fortnite V-Bucks',
   },
   {
+    value: 'justdance',
+    label: 'Just Dance Mojo',
+  },
+  {
     value: 'mario',
     label: 'Mario Coin (2D)',
   },
