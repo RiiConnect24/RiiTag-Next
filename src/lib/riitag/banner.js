@@ -155,7 +155,7 @@ export async function makeBanner(user) {
         logEntry.game.console,
         coverType,
         logEntry.game.game_id,
-        user.cover_region
+        "US" ? logEntry.game.game_id.charAt(3) == "E" : user.cover_region
       )
     );
 

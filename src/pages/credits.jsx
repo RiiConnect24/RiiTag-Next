@@ -48,21 +48,20 @@ function CreditsPage({ name_on_riitag }) {
               Added RiiTag support to the RiiConnect24 Bot
             </Contributor>
             <Contributor name="bendevnull">
-              Lead developer and designer of RiiTag
+              One of the main developers and designers of RiiTag
             </Contributor>
             <Contributor name="blackb0x">
               Added official RiiTag support to his modification of USB Loader GX
             </Contributor>
             <Contributor name="Brawl345" link="https://wiidatabase.de">
-              Completely rewrote RiiTag, and revived version 2.0 (RiiTag-Next)
+              Completely rewrote RiiTag into version 2.0 (RiiTag-Next)
             </Contributor>
             <Contributor name="daileon">
               Created Wiinnertag (no longer available), which heavily inspired
               RiiTag
             </Contributor>
             <Contributor name="dhtdht020">
-              Created several RiiTag overlays, provided some of the backgrounds,
-              and created RiiTag&apos;s iconic logo
+              Created some of the RiiTag overlays
             </Contributor>
             <Contributor name="DismissedGuy">
               Created RiiTag-RPC for Discord
@@ -78,31 +77,39 @@ function CreditsPage({ name_on_riitag }) {
               </a>
               , one of the selectable fonts.
             </Contributor>
-            <Contributor name="feldge68">
+            <Contributor name="fledge68">
               Added RiiTag support to WiiFlow Lite
             </Contributor>
+            <Contributor name="Genwald">
+              Mii support
+            </Contributor>
             <Contributor name="HEYimHeroic">
-              Created mii2studio, and did a lot of work for the Mii
-              implementation
+              Mii support
+            </Contributor>
+            <Contributor name="jaames">
+              Figured out how to decrypt Mii QR codes
             </Contributor>
             <Contributor name="Larsenv">
-              The founder of RiiConnect24
+              One of the main developers of the project and brought it to life
             </Contributor>
             <Contributor name="Lustar">
               Creator and owner of GameTDB; the database of games that RiiTag
-              uses
+              uses, also came up with the name RiiTag
             </Contributor>
             <Contributor name="Matthe815">
-              Additional developer and encyclopedia for the project
+              Additional for the project
               {Math.floor(Math.random() * 100_000) === 1
                 ? ' (and dominating the entire world!)'
                 : ''}
+            </Contributor>
+            <Contributor name="PF2M">
+              Mii support
             </Contributor>
             <Contributor name="ShadowPuppet">
               Created DUTag (no longer available), which heavily inspired RiiTag
             </Contributor>
             <Contributor name="TheShadowEevee">
-              Additional developer of the project, and added Cemu and Citra
+              Additional developer of the project, and helped add Cemu and Citra
               support
             </Contributor>
             <Contributor name="twosecslater">
