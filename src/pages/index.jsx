@@ -18,6 +18,7 @@ import { NextSeo } from 'next-seo';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import prisma from '@/lib/db';
 import RiiTagCarousel from '@/components/index/RiiTagCarousel';
+import safeJsonStringify from 'safe-json-stringify';
 
 export async function getStaticProps() {
   const userCount = await prisma.user.count();
@@ -30,7 +31,10 @@ export async function getStaticProps() {
   `;
 
   return {
-    props: { userCount, randomUsers },
+    props: {
+      userCount,
+      randomUsers: JSON.parse(safeJsonStringify(randomUsers)),
+    },
     revalidate: 10,
   };
 }
