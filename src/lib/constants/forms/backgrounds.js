@@ -293,7 +293,6 @@ export const BACKGROUNDS = Object.freeze([
   'wii4.png',
   'wii5.png',
   'wii6.png',
-  'wiimenu1.png',
   'wiisportsresort.png',
   'wildkratts1.png',
   'wildkratts2.png',
