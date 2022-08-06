@@ -1028,8 +1028,48 @@ export const FLAGS = Object.freeze([
     label: 'Zimbabwe',
   },
   {
+    value: 'asexual',
+    label: 'Asexual',
+  },
+  {
+    value: 'bisexual',
+    label: 'Bisexual',
+  },
+  {
+    value: 'cemu',
+    label: 'Cemu',
+  },
+  {
+    value: 'cfgusbloader',
+    label: 'CFG USB Loader',
+  },
+  {
+    value: 'citra',
+    label: 'Citra',
+  },
+  {
+    value: 'discord',
+    label: 'Discord',
+  },
+  {
+    value: 'dolphin',
+    label: 'Dolphin',
+  },
+  {
+    value: 'genderfluid',
+    label: 'Genderfluid',
+  },
+  {
     value: 'kidonia',
     label: 'Kidonia',
+  },
+  {
+    value: 'lesbian',
+    label: 'Lesbian',
+  },
+  {
+    value: 'nonbinary',
+    label: 'Non-binary',
   },
   {
     value: 'pan',
@@ -1046,6 +1086,22 @@ export const FLAGS = Object.freeze([
   {
     value: 'trans',
     label: 'Transgender',
+  },
+  {
+    value: 'usbloadergx',
+    label: 'USB Loader GX',
+  },
+  {
+    value: 'wii',
+    label: 'Wii',
+  },
+  {
+    value: 'wiiflow',
+    label: 'WiiFlow',
+  },
+  {
+    value: 'wiiu',
+    label: 'Wii U',
   },
 ]);
 
