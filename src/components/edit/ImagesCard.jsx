@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
-import { Card, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Form, Row } from 'react-bootstrap';
 import { createOptionNodes } from '@/lib/utils/utils';
 import { OVERLAYS } from '@/lib/constants/forms/overlays';
 import { FLAGS } from '@/lib/constants/forms/flags';
 import { COINS } from '@/lib/constants/forms/coins';
 import { BACKGROUNDS } from '@/lib/constants/forms/backgrounds';
+import SelectModal from '@/components/edit/SelectModal';
+import { Field } from 'formik';
+import SelectCoinModal from '@/components/edit/SelectCoinModal';
 
-const overlays = createOptionNodes(OVERLAYS);
 const flags = createOptionNodes(FLAGS);
-const coins = createOptionNodes(COINS);
 
-const backgrounds = BACKGROUNDS.map((background) => (
-  <option key={background}>{background}</option>
-));
+const backgrounds = BACKGROUNDS.map((background) => ({
+  value: background,
+  label: background,
+}));
 
 function ImagesCard({ values, errors, handleChange }) {
   return (
@@ -21,26 +23,25 @@ function ImagesCard({ values, errors, handleChange }) {
       <Card.Body>
         <Row className="mb-3">
           <Col md={5}>
-            <Form.Group className="mb-3" controlId="overlay">
-              <Form.Label>Overlay</Form.Label>
-              <Form.Select
-                required
-                placeholder="Overlay"
-                name="overlay"
-                onChange={handleChange}
-                value={values.overlay}
-                isInvalid={!!errors.overlay}
-              >
-                {overlays}
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                {errors.overlay}
-              </Form.Control.Feedback>
-              <Form.Text className="text-muted">
+            <p>Overlay</p>
+            <SelectModal
+              btnTitle="Select Overlay"
+              title="Select an overlay"
+              img={(value) => `/img/overlay/${value}.png`}
+              name="overlay"
+              options={OVERLAYS}
+            />
+            <p>
+              <small className="text-muted">
                 This is the overlay that will be shown above the image and will
                 contain your info.
-              </Form.Text>
-            </Form.Group>
+              </small>
+            </p>
+            {errors.overlay && (
+              <Alert className="mt-2 p-2" variant="danger">
+                {errors.overlay}
+              </Alert>
+            )}
           </Col>
           <Col md={7}>
             <img
@@ -53,22 +54,19 @@ function ImagesCard({ values, errors, handleChange }) {
 
         <Row className="mb-3">
           <Col md={5}>
-            <Form.Group className="mb-3" controlId="background">
-              <Form.Label>Background</Form.Label>
-              <Form.Select
-                required
-                placeholder="Background"
-                name="background"
-                onChange={handleChange}
-                value={values.background}
-                isInvalid={!!errors.background}
-              >
-                {backgrounds}
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
+            <p>Background</p>
+            <SelectModal
+              btnTitle="Select Background"
+              title="Select a background"
+              img={(value) => `/img/background/${value}`}
+              name="background"
+              options={backgrounds}
+            />
+            {errors.background && (
+              <Alert className="mt-2 p-2" variant="danger">
                 {errors.background}
-              </Form.Control.Feedback>
-            </Form.Group>
+              </Alert>
+            )}
           </Col>
           <Col md={7}>
             <img
@@ -80,6 +78,27 @@ function ImagesCard({ values, errors, handleChange }) {
         </Row>
 
         <Row className="mb-3">
+          <Col md={5}>
+            <p>Coin</p>
+            <Field name="coin" component={SelectCoinModal} options={COINS} />
+            {errors.coin && (
+              <Alert className="mt-2 p-2" variant="danger">
+                {errors.coin}
+              </Alert>
+            )}
+          </Col>
+          {values.coin !== 'default' && (
+            <Col md={7}>
+              <img
+                alt="Coin Preview"
+                className="img-fluid mx-auto d-block no-shadow mt-3"
+                src={`/img/coin/${values.coin}.png`}
+              />
+            </Col>
+          )}
+        </Row>
+
+        <Row>
           <Col md={5}>
             <Form.Group className="mb-3" controlId="flag">
               <Form.Label>Flag</Form.Label>
@@ -105,36 +124,6 @@ function ImagesCard({ values, errors, handleChange }) {
               src={`/img/flag/${values.flag}.png`}
             />
           </Col>
-        </Row>
-
-        <Row>
-          <Col md={5}>
-            <Form.Group className="mb-3" controlId="coin">
-              <Form.Label>Coin</Form.Label>
-              <Form.Select
-                required
-                placeholder="Coin"
-                name="coin"
-                onChange={handleChange}
-                value={values.coin}
-                isInvalid={!!errors.coin}
-              >
-                {coins}
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                {errors.coin}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          {values.coin !== 'default' && (
-            <Col md={7}>
-              <img
-                alt="Coin Preview"
-                className="img-fluid mx-auto d-block no-shadow mt-3"
-                src={`/img/coin/${values.coin}.png`}
-              />
-            </Col>
-          )}
         </Row>
       </Card.Body>
     </Card>
