@@ -118,15 +118,6 @@ export async function makeBanner(user) {
   }
   await context.drawImage(await Canvas.loadImage(bgPath), 0, 0);
 
-  // Overlay
-  await context.drawImage(
-    await Canvas.loadImage(
-      path.resolve(PUBLIC.OVERLAY_IMAGE, overlay.overlay_img)
-    ),
-    0,
-    0
-  );
-
   // Covers
   const playlog = await prisma.playlog.findMany({
     where: {
@@ -202,6 +193,15 @@ export async function makeBanner(user) {
       covCurrentY += covIncY;
     }, Promise.resolve());
   }
+
+  // Overlay
+  await context.drawImage(
+    await Canvas.loadImage(
+      path.resolve(PUBLIC.OVERLAY_IMAGE, overlay.overlay_img)
+    ),
+    0,
+    0
+  );
 
   // Flag
   const flagPath = path.resolve(PUBLIC.FLAG, `${user.flag}.png`);
