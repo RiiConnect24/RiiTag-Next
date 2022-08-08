@@ -53,7 +53,7 @@ function ImagesCard({ values, errors, handleChange }) {
         </Row>
 
         <Row className="mb-3">
-          <Col md={5}>
+          <Col md={5} className="mb-3">
             <p>Background</p>
             <SelectModal
               btnTitle="Select Background"
