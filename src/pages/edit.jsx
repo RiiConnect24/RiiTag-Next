@@ -186,11 +186,7 @@ function EditPage({ tagInfo }) {
                   handleChange={handleChange}
                 />
 
-                <FontCard
-                  values={values}
-                  errors={errors}
-                  handleChange={handleChange}
-                />
+                <FontCard values={values} errors={errors} />
               </Col>
 
               <Col lg={6}>
