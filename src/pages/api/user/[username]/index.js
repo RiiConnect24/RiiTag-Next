@@ -1,7 +1,8 @@
 import HTTP_CODE from '@/lib/constants/httpStatusCodes';
 import { nc } from '@/lib/routing';
 import prisma from '@/lib/db';
-import { MII_TYPE } from '@/lib/constants/miiType';
+import ENV from '@/lib/constants/environmentVariables';
+import { getGameRegion } from '@/lib/riitag/cover';
 
 async function getUserByUsername(request, response) {
   const { username } = request.query;
@@ -39,34 +40,34 @@ async function getUserByUsername(request, response) {
     take: 10,
   });
 
-  const lastPlayed =
-    playlog !== null
-      ? [
-          `${playlog[0].game.console}-${playlog[0].game.game_id}`,
-          new Date(playlog[0].played_on).getTime(),
-        ]
-      : null;
+  let lastPlayed = null;
+  if (playlog !== null && playlog.length > 0) {
+    const lastGame = playlog[0];
+    lastPlayed = {
+      game_id: lastGame.game.game_id,
+      console: lastGame.game.console,
+      region: getGameRegion(lastGame.game.console, lastGame.game.game_id),
+      cover_url: `${ENV.BASE_URL}/api/cover/${lastGame.game.console}/${lastGame.game.game_id}`,
+      time: new Date(playlog[0].played_on).getTime(),
+    };
+  }
 
   const json = {
-    name: user.name_on_riitag,
-    id: user.username,
-    games: playlog.map(({ game }) => `${game.console}-${game.game_id}`),
-    coins: user.coins,
-    friend_code: user.comment,
-    region: user.flag,
-    overlay: user.overlay,
-    bg: user.background,
-    avatar: user.image,
-    coin: user.coin,
-    lastplayed: lastPlayed,
-    useavatar: user.show_avatar,
-    covertype: user.cover_type,
-    coverregion: user.cover_region,
-    font: user.font,
-    usemii: user.show_mii,
-    miitype: user.mii_type,
-    miidata: user.mii_data,
-    cmocentryno: user.mii_type === MII_TYPE.CMOC ? user.cmoc_entry_no : null,
+    user: {
+      name: user.name_on_riitag,
+      id: user.username,
+    },
+    tag_url: {
+      normal: `${ENV.BASE_URL}/${user.username}/tag.png`,
+      max: `${ENV.BASE_URL}/${user.username}/tag.max.png`,
+    },
+    game_data: {
+      last_played: lastPlayed,
+      games:
+        playlog !== null && playlog.length > 0
+          ? playlog.map(({ game }) => `${game.console}-${game.game_id}`)
+          : [],
+    },
   };
 
   return response.status(HTTP_CODE.OK).json(json);

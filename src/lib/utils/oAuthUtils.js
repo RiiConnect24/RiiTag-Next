@@ -2,7 +2,7 @@ import Twitter from 'twitter-lite';
 import ENV from '@/lib/constants/environmentVariables';
 import prisma from '@/lib/db';
 
-export const LOGIN_ERROR_URI = `${process.env.NEXT_PUBLIC_BASE_URL}/?error=1`;
+export const LOGIN_ERROR_URI = `${ENV.BASE_URL}/?error=1`;
 
 export async function linkAccount(provider_id, provider_account_id, username) {
   await prisma.account.create({
