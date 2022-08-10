@@ -48,7 +48,7 @@ async function getUserByUsername(request, response) {
       console: lastGame.game.console,
       region: getGameRegion(lastGame.game.console, lastGame.game.game_id),
       cover_url: `${ENV.BASE_URL}/api/cover/${lastGame.game.console}/${lastGame.game.game_id}`,
-      time: new Date(playlog[0].played_on).getTime(),
+      time: Math.round(new Date(playlog[0].played_on).getTime() / 1000),
     };
   }
 
