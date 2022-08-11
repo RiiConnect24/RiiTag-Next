@@ -2,8 +2,18 @@
   "family": "Seurat",
   "styles": [
     {
-      "file": "seurat.ttf",
+      "file": "Seurat/normal.ttf",
       "weight": "normal",
+      "style": "normal"
+    },
+    {
+      "file": "Seurat/bold.ttf",
+      "weight": "bold",
+      "style": "normal"
+    },
+    {
+      "file": "Seurat/light.ttf",
+      "weight": "light",
       "style": "normal"
     }
   ]

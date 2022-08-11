@@ -1,0 +1,10 @@
+{
+  "family": "BabyPop",
+  "styles": [
+    {
+      "file": "babypop.ttf",
+      "weight": "normal",
+      "style": "normal"
+    }
+  ]
+}

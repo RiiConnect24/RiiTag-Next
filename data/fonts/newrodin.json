@@ -1,0 +1,20 @@
+{
+  "family": "NewRodin",
+  "styles": [
+    {
+      "file": "NewRodin/normal.ttf",
+      "weight": "normal",
+      "style": "normal"
+    },
+    {
+      "file": "NewRodin/bold.ttf",
+      "weight": "bold",
+      "style": "normal"
+    },
+    {
+      "file": "NewRodin/light.ttf",
+      "weight": "light",
+      "style": "normal"
+    }
+  ]
+}
