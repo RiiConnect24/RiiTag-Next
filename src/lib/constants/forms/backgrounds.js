@@ -71,6 +71,7 @@ export const BACKGROUNDS = Object.freeze([
   'gamecube7.png',
   'garfield1.png',
   'geometrydash1.png',
+  'GOODFORTUNE.png',
   'gradient1.png',
   'granddad1.png',
   'habbohotel1.png',

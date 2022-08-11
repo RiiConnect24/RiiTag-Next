@@ -59,6 +59,10 @@ export const COINS = Object.freeze([
     value: 'zelda',
     label: 'Zelda Rupee',
   },
+  {
+    value: 'rhythmheaven',
+    label: 'Rhythm Heaven (DS) Tutorial Coin',
+  },
 ]);
 
 export const isValidCoin = (value) =>
