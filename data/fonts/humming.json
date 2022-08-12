@@ -2,18 +2,8 @@
   "family": "Humming",
   "styles": [
     {
-      "file": "Humming/normal.ttf",
+      "file": "humming.ttf",
       "weight": "normal",
-      "style": "normal"
-    },
-    {
-      "file": "Humming/bold.ttf",
-      "weight": "bold",
-      "style": "normal"
-    },
-    {
-      "file": "Humming/light.ttf",
-      "weight": "light",
       "style": "normal"
     }
   ]

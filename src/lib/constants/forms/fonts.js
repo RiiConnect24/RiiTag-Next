@@ -43,10 +43,6 @@ export const FONTS = Object.freeze([
     value: 'Splatfont2',
     label: 'Splatfont 2',
   },
-  {
-    value: 'WarioWare',
-    label: 'WarioWare',
-  },
 ]);
 
 export const isValidFont = (value) =>
