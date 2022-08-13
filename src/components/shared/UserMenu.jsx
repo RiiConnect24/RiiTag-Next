@@ -1,4 +1,4 @@
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Nav, NavDropdown, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,6 +9,7 @@ import {
   faSignOutAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import { isBlank } from '@/lib/utils/utils';
@@ -31,7 +32,14 @@ function UserMenu() {
   }
 
   if (isError || user === null || isBlank(user.username)) {
-    return <Navbar.Text>Not logged in</Navbar.Text>;
+    return (
+      <form method="POST" action="/api/auth/login/discord">
+        <Button variant="success" size="md" type="submit">
+          <FontAwesomeIcon className="me-2" icon={faDiscord} />
+          Login
+        </Button>
+      </form>
+    );
   }
 
   return (
