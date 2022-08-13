@@ -9,11 +9,11 @@ import {
   faSignOutAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import { isBlank } from '@/lib/utils/utils';
 import useRouterRefresh from '../../hooks/useRefreshRoute';
-import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 function UserMenu() {
   const { user, isLoading, isError, mutate } = useInfo();
