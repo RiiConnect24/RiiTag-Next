@@ -1,11 +1,4 @@
-import {
-  Button,
-  Col,
-  Container,
-  OverlayTrigger,
-  Row,
-  Tooltip,
-} from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
@@ -83,19 +76,10 @@ function IndexPage({ userCount, randomUsers }) {
             {user?.username === undefined && (
               <>
                 <form method="POST" action="/api/auth/login/discord">
-                  <OverlayTrigger
-                    placement="bottom"
-                    overlay={
-                      <Tooltip id="other-accounts-soon-tooltip">
-                        More login providers are coming soon!
-                      </Tooltip>
-                    }
-                  >
-                    <Button variant="success" size="lg" type="submit">
-                      <FontAwesomeIcon className="me-2" icon={faDiscord} />
-                      Login with Discord
-                    </Button>
-                  </OverlayTrigger>
+                  <Button variant="success" size="lg" type="submit">
+                    <FontAwesomeIcon className="me-2" icon={faDiscord} />
+                    Login with Discord
+                  </Button>
                 </form>{' '}
               </>
             )}
