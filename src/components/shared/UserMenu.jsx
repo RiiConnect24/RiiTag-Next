@@ -47,15 +47,12 @@ function UserMenu() {
       <NavDropdown
         align="end"
         title={
-          <span className="ms-auto">
-            <img
-              className="me-1"
-              style={{ width: 25, height: 25 }}
-              src={user.image}
-              alt="User Avatar"
-            />
-            {user.name_on_riitag}
-          </span>
+          <img
+            className="me-1 ms-auto"
+            style={{ width: 25, height: 25 }}
+            src={user.image}
+            alt="User Avatar"
+          />
         }
       >
         <Link href={`/user/${user.username}`} passHref>
