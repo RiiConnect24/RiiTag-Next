@@ -176,18 +176,18 @@ export async function makeBanner(user) {
 
       await (consoleType === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC
         ? // 3DS Cartridges need to be made smaller
-          context.drawImage(
-            await Canvas.loadImage(coverPath),
-            covCurrentX,
-            covCurrentY + inc,
-            160,
-            160
-          )
+        context.drawImage(
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc,
+          160,
+          160
+        )
         : context.drawImage(
-            await Canvas.loadImage(coverPath),
-            covCurrentX,
-            covCurrentY + inc
-          ));
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc
+        ));
 
       covCurrentX += covIncX;
       covCurrentY += covIncY;
@@ -296,7 +296,7 @@ export async function makeBanner(user) {
 
   // Mii
   if (user.show_mii && overlay.mii) {
-    let miiPath = PUBLIC.UNKNOWN_MII;
+    let miiPath = PUBLIC.BLANK_MII;
 
     switch (user.mii_type) {
       case 'guest':
@@ -315,7 +315,7 @@ export async function makeBanner(user) {
             const mii = await getMiiFromHexData(miiHexData);
             await saveFile(miiPath, mii);
           } catch {
-            miiPath = PUBLIC.UNKNOWN_MII;
+            miiPath = PUBLIC.BLANK_MII;
           }
         }
         break;
@@ -326,7 +326,7 @@ export async function makeBanner(user) {
             const mii = await getMiiFromHexData(user.mii_data);
             await saveFile(miiPath, mii);
           } catch {
-            miiPath = PUBLIC.UNKNOWN_MII;
+            miiPath = PUBLIC.BLANK_MII;
           }
         }
         break;
@@ -336,7 +336,7 @@ export async function makeBanner(user) {
 
     if (!(await exists(miiPath))) {
       logger.error(`Mii ${user.mii_data}.png does not exist`);
-      miiPath = PUBLIC.UNKNOWN_MII;
+      miiPath = PUBLIC.BLANK_MII;
     }
 
     if (overlay.mii.background) {
