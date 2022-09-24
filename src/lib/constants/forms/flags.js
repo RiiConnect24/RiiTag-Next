@@ -516,6 +516,10 @@ export const FLAGS = Object.freeze([
     label: 'Kyrgyzstan',
   },
   {
+    value: 'kur',
+    label: 'Kurdistan',
+  },
+  {
     value: 'la',
     label: 'Laos',
   },
