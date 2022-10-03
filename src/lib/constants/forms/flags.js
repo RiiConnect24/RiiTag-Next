@@ -1092,6 +1092,10 @@ export const FLAGS = Object.freeze([
     label: 'Transgender',
   },
   {
+    value: 'pirate',
+    label: 'Pirate',
+  },
+  {
     value: 'usbloadergx',
     label: 'USB Loader GX',
   },

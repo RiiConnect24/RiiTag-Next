@@ -23,6 +23,7 @@ function SelectCoinModal({ options, field, form }) {
           <Modal.Title>Select a coin</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p><b>NOTE:</b> Coins are used to indicate how many games you have played. You cannot spend your coins.</p>
           <Row xs={4} className="g-3">
             {options.map((option, index) => (
               <Col key={index}>
