@@ -1,7 +1,8 @@
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import ConfirmationModal from '@/components/shared/ConfirmationModal';
+import RefreshTagForm from '@/components/admin/RefreshTagForm';
 
 const updateGameTdb = () => {
   toast.promise(fetch('/api/admin/update-gametdb', { method: 'POST' }), {
@@ -39,9 +40,16 @@ export default function GeneralAdministrationCard() {
       </ConfirmationModal>
       <Card.Header className="h5">General Administration Tasks</Card.Header>
       <Card.Body>
-        <Button variant="primary" onClick={toggleModal}>
-          Update GameTDB Titles
-        </Button>
+        <Row>
+          <Col className="mb-3" md={6}>
+            <Button variant="primary" onClick={toggleModal}>
+              Update GameTDB Titles
+            </Button>
+          </Col>
+          <Col md={6}>
+            <RefreshTagForm />
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );

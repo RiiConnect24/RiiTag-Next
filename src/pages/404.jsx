@@ -14,7 +14,7 @@ export default function Error404() {
 
       <Row>
         <Col className="text-center">
-          <p>This site was not found.</p>
+          <p>This page was not found.</p>
         </Col>
       </Row>
 

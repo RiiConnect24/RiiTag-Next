@@ -11,6 +11,14 @@ export async function getRandKeyByUsername(username) {
   });
 }
 
+export async function getUserByUsername(username) {
+  return prisma.user.findUnique({
+    where: {
+      username,
+    },
+  });
+}
+
 export async function getUserByRandKey(randkey) {
   return prisma.user.findUnique({
     where: {

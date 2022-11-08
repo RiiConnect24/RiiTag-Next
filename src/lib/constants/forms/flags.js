@@ -516,6 +516,10 @@ export const FLAGS = Object.freeze([
     label: 'Kyrgyzstan',
   },
   {
+    value: 'kur',
+    label: 'Kurdistan',
+  },
+  {
     value: 'la',
     label: 'Laos',
   },
@@ -1086,6 +1090,10 @@ export const FLAGS = Object.freeze([
   {
     value: 'trans',
     label: 'Transgender',
+  },
+  {
+    value: 'pirate',
+    label: 'Pirate',
   },
   {
     value: 'usbloadergx',

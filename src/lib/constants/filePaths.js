@@ -17,6 +17,7 @@ export const CACHE = Object.freeze({
 
 export const PUBLIC = Object.freeze({
   BACKGROUND: path.resolve(IMG_PATH, 'background'),
+  BLANK_MII: path.resolve(IMG_PATH, 'miis', 'guests', 'blank.png'),
   COIN: path.resolve(IMG_PATH, 'coin'),
   FLAG: path.resolve(IMG_PATH, 'flag'),
   GUEST_MIIS: path.resolve(IMG_PATH, 'miis', 'guests'),
