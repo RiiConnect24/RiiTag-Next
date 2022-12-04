@@ -1,0 +1,59 @@
+{
+  "name": "Unlimited Light",
+  "author": "Ryuto Setsujin",
+  "id": 2,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay9.png",
+  "max_covers": 8,
+  "cover_start_x": 80,
+  "cover_start_y": 110,
+  "cover_increment_x": 120,
+  "cover_increment_y": 0,
+  "username": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#000000",
+    "x": 48,
+    "y": 17
+  },
+  "flag": {
+    "x": 15,
+    "y": 10
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 864,
+    "y": 10
+  },
+  "coin_count": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "bold",
+    "font_color": "#ffffff",
+    "x": 902,
+    "y": 16,
+    "padded": true,
+    "max": 9999999
+  },
+  "friend_code": {
+    "font_family": "RodinNTLG",
+    "font_size": 36,
+    "font_style": "normal",
+    "font_color": "#000000",
+    "x": -13,
+    "y": 387
+  },
+  "avatar": {
+    "x": 1063,
+    "y": 250,
+    "size": 128
+  },
+  "mii": {
+    "x": -25,
+    "y": 208,
+    "size": 170
+  },
+  "enabled": true
+}
