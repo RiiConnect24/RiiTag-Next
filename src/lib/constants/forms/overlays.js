@@ -27,6 +27,14 @@ export const OVERLAYS = Object.freeze([
     value: 'overlay7',
     label: 'Flat Dark',
   },
+  {
+    value: 'overlay8',
+    label: 'Unlimited Dark',
+  },
+  {
+    value: 'overlay9',
+    label: 'Unlimited Light',
+  },
 ]);
 
 export const isValidOverlay = (value) =>

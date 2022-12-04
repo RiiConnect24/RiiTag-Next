@@ -1,0 +1,69 @@
+{
+  "name": "Unlimited Dark",
+  "author": "Ryuto Setsujin",
+  "id": 1,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay8.png",
+  "max_covers": 8,
+  "cover_start_x": 80,
+  "cover_start_y": 110,
+  "cover_increment_x": 120,
+  "cover_increment_y": 0,
+  "username": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "x": 48,
+    "y": 17
+  },
+  "flag": {
+    "x": 15,
+    "y": 10
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 864,
+    "y": 10
+  },
+  "coin_count": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "bold",
+    "font_color": "#1d1d1d",
+    "x": 903,
+    "y": 18,
+    "padded": true,
+    "max": 9999999
+  },
+  "friend_code": {
+    "font_family": "RodinNTLG",
+    "font_size": 36,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "x": -13,
+    "y": 387
+  },
+  "avatar": {
+    "x": 1063,
+    "y": 250,
+    "size": 128
+  },
+  "mii": {
+    "x": -25,
+    "y": 208,
+    "size": 170
+  },
+  "draw_order": [
+    "overlay",
+    "covers",
+    "flag",
+    "coin",
+    "avatar",
+    "username",
+    "coin_count",
+    "friend_code"
+  ],
+  "enabled": true
+}
