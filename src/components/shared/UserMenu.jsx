@@ -55,7 +55,7 @@ function UserMenu() {
           />
         }
       >
-        <Link href={`/user/${user.username}`} passHref>
+        <Link href={`/user/${user.username}`} passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className="me-2" icon={faUser} />
             <span>Profile</span>
@@ -67,14 +67,14 @@ function UserMenu() {
         {/*    <span>Playlog</span> */}
         {/*  </NavDropdown.Item> */}
         {/* </Link> */}
-        <Link href="/account" passHref>
+        <Link href="/account" passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className="me-2" icon={faKey} />
             <span>Account</span>
           </NavDropdown.Item>
         </Link>
         {user.role === 'admin' && (
-          <Link href="/admin" passHref>
+          <Link href="/admin" passHref legacyBehavior>
             <NavDropdown.Item>
               <FontAwesomeIcon className="me-2" icon={faCog} />
               <span>Administration</span>
@@ -82,13 +82,13 @@ function UserMenu() {
           </Link>
         )}
         <NavDropdown.Divider />
-        <Link href="/edit" passHref>
+        <Link href="/edit" passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className="me-2" icon={faPen} />
             <span>Edit RiiTag</span>
           </NavDropdown.Item>
         </Link>
-        <Link href="/mii" passHref>
+        <Link href="/mii" passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className="me-2" icon={faImage} />
             <span>Edit Mii</span>

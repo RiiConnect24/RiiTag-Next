@@ -29,10 +29,10 @@ function AppNavbar() {
         <Navbar.Toggle aria-controls="navbar" />
         <Navbar.Collapse id="navbar">
           <Nav className="me-auto">
-            <Link href="/" passHref>
+            <Link href="/" passHref legacyBehavior>
               <Nav.Link active={router.pathname === '/'}>Home</Nav.Link>
             </Link>
-            <Link href="/game-leaderboard" passHref>
+            <Link href="/game-leaderboard" passHref legacyBehavior>
               <Nav.Link active={router.pathname === '/game-leaderboard'}>
                 Leaderboard
               </Nav.Link>

@@ -7,10 +7,8 @@ function AppFooter() {
     <Container fluid className="mt-auto py-2 bg-secondary">
       <Row>
         <Col className="text-start">
-          <Link href="/about">
-            <a className="text-muted">
-              &copy; 2020 - {new Date().getFullYear()}
-            </a>
+          <Link className="text-muted" href="/about">
+            &copy; 2020 - {new Date().getFullYear()}
           </Link>
           &nbsp;
           <a
@@ -22,8 +20,8 @@ function AppFooter() {
             RiiConnect24
           </a>{' '}
           -{' '}
-          <Link href="/credits">
-            <a className="text-muted">Credits</a>
+          <Link href="/credits" className="text-muted">
+            Credits
           </Link>
         </Col>
         {ENV.STAGING === 'true' && (
@@ -32,12 +30,12 @@ function AppFooter() {
           </Col>
         )}
         <Col className="text-muted text-end">
-          <Link href="/privacy-policy">
-            <a className="text-muted">Privacy Policy</a>
+          <Link href="/privacy-policy" className="text-muted">
+            Privacy Policy
           </Link>{' '}
           -{' '}
-          <Link href="/tos">
-            <a className="text-muted">Terms of Service</a>
+          <Link href="/tos" className="text-muted">
+            Terms of Service
           </Link>{' '}
           -{' '}
           <a
