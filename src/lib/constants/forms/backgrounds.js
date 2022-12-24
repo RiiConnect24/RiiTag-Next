@@ -55,6 +55,7 @@ export const BACKGROUNDS = Object.freeze([
   'danieltigersneighborhood2.png',
   'danieltigersneighborhood3.png',
   'danieltigersneighborhood4.png',
+  'dazzling1.png',
   'dht1.png',
   'dinosaurtrain1.png',
   'discord1.png',
