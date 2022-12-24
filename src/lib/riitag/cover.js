@@ -18,48 +18,63 @@ function getExtension(coverType, gameConsole) {
 
 function getWiiGameRegion(gameId) {
   switch (gameId.charAt(3)) {
-    case 'P':
+    case 'P': {
       return 'EN';
-    case 'E':
+    }
+    case 'E': {
       return 'US';
-    case 'J':
+    }
+    case 'J': {
       return 'JA';
-    case 'K':
+    }
+    case 'K': {
       return 'KO';
-    case 'W':
+    }
+    case 'W': {
       return 'TW';
-    default:
+    }
+    default: {
       return 'EN';
+    }
   }
 }
 
 function get3DSGameRegion(gameId) {
   switch (gameId.charAt(3)) {
-    case 'P':
+    case 'P': {
       return 'EN';
-    case 'E':
+    }
+    case 'E': {
       return 'US';
-    case 'J':
+    }
+    case 'J': {
       return 'JA';
-    case 'K':
+    }
+    case 'K': {
       return 'KO';
-    case 'W':
+    }
+    case 'W': {
       return 'ZH';
-    default:
+    }
+    default: {
       return 'EN';
+    }
   }
 }
 
 // Returns the game's region from the TID
 export function getGameRegion(gameConsole, gameId) {
   switch (gameConsole) {
-    case CONSOLE.THREEDS:
+    case CONSOLE.THREEDS: {
       return get3DSGameRegion(gameId);
+    }
     case CONSOLE.WII:
-    case CONSOLE.WII_U:
+    case CONSOLE.WII_U: {
       return getWiiGameRegion(gameId);
-    default:
+    }
+    default: {
       throw new Error('Console must be one of wii, wiiu, 3ds');
+    }
   }
 }
 
@@ -111,7 +126,23 @@ export async function getCover(gameConsole, coverType, gameId, region) {
 
   const gameRegion = getGameRegion(gameConsole, gameId);
 
-  if (region !== gameRegion) {
+  if (region === gameRegion) {
+    try {
+      // Default region for game
+      logger.debug('Cover DL: Default region for game');
+      return await downloadCover(gameConsole, coverType, region, gameId);
+    } catch {
+      try {
+        // Fallback to EN
+        logger.debug('Cover DL: Falling back to EN');
+        return await downloadCover(gameConsole, coverType, 'EN', gameId);
+      } catch {
+        // Fallback to US
+        logger.debug('Cover DL: Falling back to US');
+        return downloadCover(gameConsole, coverType, 'US', gameId);
+      }
+    }
+  } else {
     try {
       // User-provided region that's not the same from the game
       // (e.g. japanese cover for korean game)
@@ -158,22 +189,6 @@ export async function getCover(gameConsole, coverType, gameId, region) {
           logger.debug('Cover DL: Falling back to US');
           return downloadCover(gameConsole, coverType, 'US', gameId);
         }
-      }
-    }
-  } else {
-    try {
-      // Default region for game
-      logger.debug('Cover DL: Default region for game');
-      return await downloadCover(gameConsole, coverType, region, gameId);
-    } catch {
-      try {
-        // Fallback to EN
-        logger.debug('Cover DL: Falling back to EN');
-        return await downloadCover(gameConsole, coverType, 'EN', gameId);
-      } catch {
-        // Fallback to US
-        logger.debug('Cover DL: Falling back to US');
-        return downloadCover(gameConsole, coverType, 'US', gameId);
       }
     }
   }

@@ -26,7 +26,7 @@ async function updateMii(request, response) {
 
   let user;
   switch (miiType) {
-    case MII_TYPE.GUEST:
+    case MII_TYPE.GUEST: {
       if (isBlank(guestMii) || !isValidGuestMii(guestMii)) {
         return response
           .status(HTTP_CODE.BAD_REQUEST)
@@ -49,7 +49,8 @@ async function updateMii(request, response) {
           .send({ error: 'Invalid data' });
       }
       break;
-    case MII_TYPE.CMOC:
+    }
+    case MII_TYPE.CMOC: {
       try {
         const miiHexData = await getMiiHexDataFromCMOC(cmocEntryNo);
         user = await prisma.user.update({
@@ -69,10 +70,12 @@ async function updateMii(request, response) {
           .send({ error: 'Invalid data' });
       }
       break;
-    default:
+    }
+    default: {
       return response
         .status(HTTP_CODE.BAD_REQUEST)
         .send({ error: 'Invalid data' });
+    }
   }
 
   if (user.show_mii === true) {

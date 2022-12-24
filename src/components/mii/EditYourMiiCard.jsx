@@ -63,14 +63,17 @@ function EditYourMiiCard({ miiInfo }) {
               };
 
               switch (values.miiType) {
-                case MII_TYPE.GUEST:
+                case MII_TYPE.GUEST: {
                   body.guestMii = values.guestMii;
                   break;
-                case MII_TYPE.CMOC:
+                }
+                case MII_TYPE.CMOC: {
                   body.cmocEntryNo = values.cmocEntryNo;
                   break;
-                default:
+                }
+                default: {
                   break;
+                }
               }
 
               // Validate CMOC entry first
@@ -169,9 +172,9 @@ function EditYourMiiCard({ miiInfo }) {
                       <img
                         alt="Mii Preview"
                         src={
-                          !errors.cmocEntryNo
-                            ? `/api/cmoc/${values.cmocEntryNo}`
-                            : '/img/miis/guests/unknown.png'
+                          errors.cmocEntryNo
+                            ? '/img/miis/guests/unknown.png'
+                            : `/api/cmoc/${values.cmocEntryNo}`
                         }
                         width={128}
                         height={128}

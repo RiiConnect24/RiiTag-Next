@@ -111,7 +111,7 @@ function CreditsPage({ name_on_riitag }) {
             </Contributor>
             <Contributor
               name={
-                name_on_riitag !== 'You' ? `${name_on_riitag} (You)` : 'You'
+                name_on_riitag === 'You' ? 'You' : `${name_on_riitag} (You)`
               }
             >
               For using RiiTag!

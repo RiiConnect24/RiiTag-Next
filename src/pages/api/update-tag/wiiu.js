@@ -75,7 +75,9 @@ async function addWiiUGame(request, response) {
   let id6 = wiiuIds[gameTID];
   let gameName;
 
-  if (!id6) {
+  if (id6) {
+    gameName = await getWiiUGameName(id6);
+  } else {
     // Not found, likely a VC inject
     const wiiVCIds = JSON.parse(
       await fs.promises.readFile(path.resolve(DATA.IDS, 'wiiVC.json'), 'utf8')
@@ -88,8 +90,6 @@ async function addWiiUGame(request, response) {
     }
     gameName = await getWiiGameName(id6);
     gameConsole = CONSOLE.WII;
-  } else {
-    gameName = await getWiiUGameName(id6);
   }
 
   try {

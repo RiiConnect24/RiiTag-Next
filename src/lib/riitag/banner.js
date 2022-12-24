@@ -176,18 +176,18 @@ export async function makeBanner(user) {
 
       await (consoleType === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC
         ? // 3DS Cartridges need to be made smaller
-        context.drawImage(
-          await Canvas.loadImage(coverPath),
-          covCurrentX,
-          covCurrentY + inc,
-          160,
-          160
-        )
+          context.drawImage(
+            await Canvas.loadImage(coverPath),
+            covCurrentX,
+            covCurrentY + inc,
+            160,
+            160
+          )
         : context.drawImage(
-          await Canvas.loadImage(coverPath),
-          covCurrentX,
-          covCurrentY + inc
-        ));
+            await Canvas.loadImage(coverPath),
+            covCurrentX,
+            covCurrentY + inc
+          ));
 
       covCurrentX += covIncX;
       covCurrentY += covIncY;
@@ -299,12 +299,13 @@ export async function makeBanner(user) {
     let miiPath = PUBLIC.BLANK_MII;
 
     switch (user.mii_type) {
-      case 'guest':
+      case 'guest': {
         if (user.mii_data !== null) {
           miiPath = path.resolve(PUBLIC.GUEST_MIIS, `${user.mii_data}.png`);
         }
         break;
-      case 'cmoc':
+      }
+      case 'cmoc': {
         miiPath = path.resolve(CACHE.CMOC_MIIS, `${user.cmoc_entry_no}.png`);
         if (!(await exists(miiPath))) {
           try {
@@ -319,7 +320,8 @@ export async function makeBanner(user) {
           }
         }
         break;
-      case 'upload':
+      }
+      case 'upload': {
         miiPath = path.resolve(CACHE.MIIS, `${user.username}.png`);
         if (!(await exists(miiPath))) {
           try {
@@ -330,8 +332,10 @@ export async function makeBanner(user) {
           }
         }
         break;
-      default:
+      }
+      default: {
         throw new Error('Unsupported Mii Type.');
+      }
     }
 
     if (!(await exists(miiPath))) {

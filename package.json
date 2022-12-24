@@ -21,15 +21,15 @@
     "global:check-dependencies": "npm-check --skip-unused"
   },
   "devDependencies": {
-    "eslint": "8.21.0",
+    "eslint": "8.30.0",
     "eslint-config-airbnb": "19.0.4",
-    "eslint-config-next": "13.1.0",
+    "eslint-config-next": "13.1.1",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-alias": "1.1.2",
-    "eslint-plugin-unicorn": "43.0.2",
-    "prettier": "2.7.1",
+    "eslint-plugin-unicorn": "45.0.2",
+    "prettier": "2.8.1",
     "prisma": "4.1.1",
-    "sass": "1.54.3"
+    "sass": "1.57.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.2",
