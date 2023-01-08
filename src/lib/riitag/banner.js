@@ -68,17 +68,15 @@ async function drawText(context, font, size, style, color, text, x, y, align) {
 export async function getAvatar(username, image) {
   const filepath = path.resolve(CACHE.AVATAR, `${username}.png`);
 
-  if (!(await exists(filepath))) {
-    logger.info('Downloading avatar', image);
-    const response = await fetch(image);
-    if (!response.ok) {
-      throw new Error(
-        `Image download failed, got HTTP error ${response.status} from: ${image}`
-      );
-    }
+  logger.info('Downloading avatar', image);
+  const response = await fetch(image);
+  if (!response.ok) {
+    throw new Error(
+      `Image download failed, got HTTP error ${response.status} from: ${image}`
+    );
+  }
 
     await saveFile(filepath, response.body);
-  }
 
   return filepath;
 }
