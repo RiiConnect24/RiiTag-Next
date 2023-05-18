@@ -21,7 +21,9 @@ export default function ExportButton() {
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       setExportUrl(blobUrl);
-      dlButton.current.click();
+      setTimeout(() => {
+        dlButton.current.click();
+      });
       toast.success('You can download your data now!');
     } else {
       toast.error('An error occured, please try again later.');
