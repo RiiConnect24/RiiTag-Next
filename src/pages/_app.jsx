@@ -27,8 +27,29 @@ function App({ Component, pageProps }) {
           description="RiiTag is a customizable gamertag for the Wii."
           additionalLinkTags={[
             {
+              rel: 'apple-touch-icon',
+              href: `${ENV.BASE_URL}/img/apple-touch-icon.ico`,
+            },
+            {
               rel: 'icon',
-              href: `${ENV.BASE_URL}/img/favicon.ico`,
+              type: 'image/png',
+              sizes: '32x32',
+              href: `${ENV.BASE_URL}/img/favicon-32x32.png`,
+            },
+            {
+              rel: 'icon',
+              type: 'image/png',
+              sizes: '16x16',
+              href: `${ENV.BASE_URL}/img/favicon-16x16.png`,
+            },
+            {
+              rel: 'manifest',
+              href: `${ENV.BASE_URL}/img/manifest.json`,
+            },
+            {
+              rel: 'mask-icon',
+              href: `${ENV.BASE_URL}/img/safari-pinned-tag.svg`,
+              color: '#5bbad5',
             },
           ]}
           openGraph={{
