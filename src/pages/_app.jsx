@@ -52,6 +52,7 @@ function App({ Component, pageProps }) {
               color: '#5bbad5',
             },
           ]}
+          themeColor="#2cb6ea"
           openGraph={{
             type: 'website',
             locale: 'en',
