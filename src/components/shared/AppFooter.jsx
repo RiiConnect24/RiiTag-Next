@@ -6,10 +6,8 @@ function AppFooter() {
   return (
     <Container fluid className="mt-auto py-2 bg-secondary">
       <Row>
-        <Col className="text-start">
-          <Link className="text-muted" href="/about">
-            &copy; 2020 - {new Date().getFullYear()}
-          </Link>
+        <Col className="text-muted text-start">
+          &copy; RiiConnect24 2020 - {new Date().getFullYear()}
           &nbsp;
           <a
             className="text-muted"
@@ -17,11 +15,14 @@ function AppFooter() {
             rel="external noopener noreferrer"
             target="_blank"
           >
-            RiiConnect24
           </a>{' '}
           -{' '}
           <Link href="/credits" className="text-muted">
             Credits
+          </Link>{' '}
+          -{' '}
+          <Link href="/about" className="text-muted">
+            About
           </Link>
         </Col>
         {ENV.STAGING === 'true' && (
@@ -40,11 +41,11 @@ function AppFooter() {
           -{' '}
           <a
             className="text-muted"
-            href="https://github.com/WiiDatabase/RiiTag-Next"
+            href="https://github.com/RiiConnect24/RiiTag-Next"
             rel="external noopener noreferrer"
             target="_blank"
           >
-            GitHub
+            Source
           </a>
         </Col>
       </Row>

@@ -53,9 +53,9 @@ function IndexPage({ userCount, randomUsers }) {
         <Col className="text-center">
           <h1>Welcome to RiiTag!</h1>
           <p className="mt-4">
-            RiiTag is a customizable gamertag for the Wii. By sharing your
-            gamertag (a dynamic image), you can show what you&apos;ve been
-            playing to your friends! You connect it to a USB Loader, and the tag
+            RiiTag is a customizable gamertag. By sharing your
+            gamertag, you can show what you&apos;ve been
+            playing to your friends! The tag
             updates on-the-fly. You need a Discord account in order to start
             using RiiTag. Covers are provided by{' '}
             <a href="https://gametdb.com/" target="_blank" rel="noreferrer">
@@ -67,67 +67,112 @@ function IndexPage({ userCount, randomUsers }) {
             </a>
             .
           </p>
+          <p className="mt-4">
+            We currently support the following platforms.
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ul>
+            <li>3DS
+              <ul>
+                <li>Citra Discord RPC</li>
+              </ul>
+            </li>
+          </ul>
+        </Col>
+        <Col>
+          <ul>
+            <li>Wii</li>
+            <ul>
+              <li>Dolphin Discord RPC</li>
+              <li>USB Loaders</li>
+              <ul>
+                <li>Configurable USB Loader</li>
+                <li>USB Loader GX</li>
+                <li>WiiFlow</li>
+              </ul>
+            </ul>
+          </ul>
+        </Col>
+        <Col>
+          <ul>
+            <li>Wii U</li>
+            <ul>
+              <li>Aroma Plugin</li>
+              <li>Cemu Discord RPC</li>
+            </ul>
+          </ul>
         </Col>
       </Row>
 
-      {isLoading === false ? (
-        <Row>
-          <Col className="d-flex gap-1 flex-column flex-sm-row align-items-center justify-content-center">
-            {user?.username === undefined && (
-              <>
-                <form method="POST" action="/api/auth/login/discord">
-                  <Button variant="success" size="lg" type="submit">
-                    <FontAwesomeIcon className="me-2" icon={faDiscord} />
-                    Login with Discord
-                  </Button>
-                </form>{' '}
-              </>
-            )}
-            <a
-              href="https://wii.guide/riitag"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <Button size="lg">
-                <FontAwesomeIcon className="me-2" icon={faQuestionCircle} />
-                Instructions
-              </Button>
-            </a>
-          </Col>
-        </Row>
-      ) : null}
+      {
+        isLoading === false ? (
+          <Row>
+            <Col className="d-flex gap-1 flex-column flex-sm-row align-items-center justify-content-center">
+              {user?.username === undefined && (
+                <>
+                  <form method="POST" action="/api/auth/login/discord">
+                    <Button variant="success" size="lg" type="submit">
+                      <FontAwesomeIcon className="me-2" icon={faDiscord} />
+                      Login with Discord
+                    </Button>
+                  </form>{' '}
+                </>
+              )}
+              <a
+                href="https://wii.guide/riitag"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Button size="lg">
+                  <FontAwesomeIcon className="me-2" icon={faQuestionCircle} />
+                  Instructions
+                </Button>
+              </a>
+            </Col>
+          </Row>
+        ) : null
+      }
 
-      {isLoading === false && user?.username === undefined && (
-        <Row className="mt-1">
-          <Col>
-            <p className="text-center">
-              If an account does not exist, it will be created. You agree to our{' '}
-              <Link href="/privacy-policy">Privacy Policy</Link> and our{' '}
-              <Link href="tos">Terms of Services</Link>.
-            </p>
-          </Col>
-        </Row>
-      )}
+      {
+        isLoading === false && user?.username === undefined && (
+          <Row className="mt-1">
+            <Col>
+              <p className="text-center">
+                If an account does not exist, it will be created. You agree to our{' '}
+                <Link href="/privacy-policy">Privacy Policy</Link> and our{' '}
+                <Link href="tos">Terms of Service</Link>.
+              </p>
+            </Col>
+          </Row>
+        )
+      }
 
-      {userCount !== 0 && (
-        <Row className="mt-2 text-center">
-          <Col>
-            <h3>
-              Join {userCount}{' '}
-              {userCount === 1 ? 'other gamer' : 'other gamers'}!
-            </h3>
-          </Col>
-        </Row>
-      )}
+      {
+        userCount !== 0 && (
+          <Row className="mt-2 text-center">
+            <Col>
+              <h3>
+                Join {userCount}{' '}
+                {userCount === 1 ? 'other gamer' : 'other gamers'}!
+              </h3>
+            </Col>
+          </Row>
+        )
+      }
 
-      {randomUsers.length > 0 && (
-        <Row className="text-center">
-          <Col>
-            <RiiTagCarousel randomUsers={randomUsers} />
-          </Col>
-        </Row>
-      )}
-    </Container>
+      {
+        randomUsers.length > 0 && (
+          <Row className="text-center">
+            <Col>
+              <RiiTagCarousel randomUsers={randomUsers} />
+            </Col>
+          </Row>
+        )
+      }
+    </Container >
   );
 }
 
