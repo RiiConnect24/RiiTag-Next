@@ -28,7 +28,7 @@ function App({ Component, pageProps }) {
           additionalLinkTags={[
             {
               rel: 'apple-touch-icon',
-              href: `${ENV.BASE_URL}/img/apple-touch-icon.ico`,
+              href: `${ENV.BASE_URL}/img/apple-touch-icon.png`,
             },
             {
               rel: 'icon',
