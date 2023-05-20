@@ -20,9 +20,9 @@ async function getRiitag(request, response) {
   });
 
   if (user === null) {
-    return response
-      .status(HTTP_CODE.NOT_FOUND)
-      .send({ error: 'User not found' });
+    response.setHeader('Content-Type', 'image/png');
+    setFileHeaders(response, `riitag-${username}.png`);
+    return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile(max ? "public/img/tag/tagnotfound.max.png" : "public/tagnotfound.png"));
   }
 
   const filepath = path.resolve(
@@ -35,9 +35,9 @@ async function getRiitag(request, response) {
       await makeBanner(user);
     } catch (error) {
       logger.error(error);
-      return response
-        .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
-        .send({ error: 'Error while creating tag.' });
+      response.setHeader('Content-Type', 'image/png');
+      setFileHeaders(response, `riitag-${username}.png`);
+      return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send(await fs.promises.readFile(max ? "public/img/tag/error.max.png" : "public/error.png"));
     }
   }
 
