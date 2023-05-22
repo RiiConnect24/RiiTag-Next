@@ -12,9 +12,15 @@ import useInfo from '@/lib/swr-hooks/useInfo';
 import prisma from '@/lib/db';
 import RiiTagCarousel from '@/components/index/RiiTagCarousel';
 import safeJsonStringify from 'safe-json-stringify';
+import { Decimal } from 'decimal.js';
 
 export async function getStaticProps() {
   const userCount = await prisma.user.count();
+  const playCountResult = await prisma.$queryRaw`
+      SELECT SUM(coins)
+      FROM user
+  `;
+  const playCount = Number(playCountResult[0]['SUM(coins)']);
   const randomUsers = await prisma.$queryRaw`
       SELECT user.username, user.name_on_riitag, user.updated_at
       FROM user
@@ -26,13 +32,14 @@ export async function getStaticProps() {
   return {
     props: {
       userCount,
+      playCount,
       randomUsers: JSON.parse(safeJsonStringify(randomUsers)),
     },
     revalidate: 10,
   };
 }
 
-function IndexPage({ userCount, randomUsers }) {
+function IndexPage({ userCount, playCount, randomUsers }) {
   const router = useRouter();
 
   const { user, isLoading } = useInfo();
@@ -67,43 +74,6 @@ function IndexPage({ userCount, randomUsers }) {
             </a>
             .
           </p>
-          <p className="mt-4">
-            We currently support the following platforms.
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <ul>
-            <li>3DS
-              <ul>
-                <li>Citra Discord RPC</li>
-              </ul>
-            </li>
-          </ul>
-        </Col>
-        <Col>
-          <ul>
-            <li>Wii</li>
-            <ul>
-              <li>Dolphin Discord RPC</li>
-              <li>USB Loaders</li>
-              <ul>
-                <li>Configurable USB Loader</li>
-                <li>USB Loader GX</li>
-                <li>WiiFlow</li>
-              </ul>
-            </ul>
-          </ul>
-        </Col>
-        <Col>
-          <ul>
-            <li>Wii U</li>
-            <ul>
-              <li>Aroma Plugin</li>
-              <li>Cemu Discord RPC</li>
-            </ul>
-          </ul>
         </Col>
       </Row>
 
@@ -156,7 +126,8 @@ function IndexPage({ userCount, randomUsers }) {
             <Col>
               <h3>
                 Join {userCount}{' '}
-                {userCount === 1 ? 'other gamer' : 'other gamers'}!
+                {userCount === 1 ? 'other gamer' : 'other gamers'} that have played games {playCount}{' '}
+                {playCount === 1 ? 'time' : 'times'}!
               </h3>
             </Col>
           </Row>
@@ -172,6 +143,40 @@ function IndexPage({ userCount, randomUsers }) {
           </Row>
         )
       }
+
+
+      <Row>
+        <h3 className="mt-4 text-center">
+          Platforms Supported
+        </h3>
+        <Row className="mt-4">
+          <Col>
+            <h5 className="text-center">3DS</h5>
+            <ul>
+              <li>Citra Discord RPC</li>
+            </ul>
+          </Col>
+          <Col>
+            <h5 className="text-center">Wii</h5>
+            <ul>
+              <li>Dolphin Discord RPC</li>
+              <li>USB Loaders</li>
+              <ul>
+                <li>Configurable USB Loader</li>
+                <li>USB Loader GX</li>
+                <li>WiiFlow</li>
+              </ul>
+            </ul>
+          </Col>
+          <Col>
+            <h5 className="text-center">Wii U</h5>
+            <ul>
+              <li>Aroma Plugin</li>
+              <li>Cemu Discord RPC</li>
+            </ul>
+          </Col>
+        </Row>
+      </Row>
     </Container >
   );
 }
