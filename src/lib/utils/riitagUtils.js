@@ -5,6 +5,16 @@ import prisma from '@/lib/db';
 import { DATA } from '@/lib/constants/filePaths';
 import { exists } from '@/lib/utils/fileUtils';
 
+function findSimilarKeys(targetKey, keys) {
+  const removePunctuation = key => key.replace(/[^\w\s]/g, '').replace(/™/g, ''); // Remove punctuation from key
+  const targetKeyWithoutPunctuation = removePunctuation(targetKey.toLowerCase());
+
+  return keys.filter(key => {
+    const keyWithoutPunctuation = removePunctuation(key.toLowerCase());
+    return keyWithoutPunctuation == targetKeyWithoutPunctuation;
+  });
+}
+
 export async function getGameNameFromTitlesTxt(txtname, gameId) {
   const filepath = path.resolve(DATA.GAMETDB, txtname);
 
@@ -48,22 +58,44 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
     await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
   );
 
-  const foundIds = ids[gameName];
+  let foundIds = ids[gameName];
   if (!foundIds) {
-    const ids = JSON.parse(
-      await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
-    );
+    const keys = Object.keys(ids);
+    const similarKeys = findSimilarKeys(gameName, keys);
 
-    const foundIds = ids[gameName];
+    for (const key of similarKeys) {
+      foundIds = ids[key];
+      if (foundIds) {
+        break;
+      }
+    }
 
     if (!foundIds) {
-      return null;
+      const ids = JSON.parse(
+        await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
+      );
+
+      const similarKeys = findSimilarKeys(gameName, Object.keys(ids));
+
+      for (const key of similarKeys) {
+        foundIds = ids[key];
+        if (foundIds != undefined) {
+          break;
+        }
+      }
+
+      if (!foundIds) {
+        return null;
+      }
     }
   }
+
+  console.log(foundIds);
 
   if (foundIds.length === 1) {
     return foundIds[0];
   }
+
 
   // Region-free, don't care
   if (foundIds[0].slice(-1) === 'A') {
@@ -79,7 +111,7 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
         This should hopefully create a safety net where there's always some region avalible.
         If not just return "ids[gameName][0]" to use the first entry for the game.
     */
-  for (const gameID of ids[gameName]) {
+  for (const gameID of foundIds) {
     const gameRegion = gameID.slice(-1); // Last letter is the region
 
     // Europe
