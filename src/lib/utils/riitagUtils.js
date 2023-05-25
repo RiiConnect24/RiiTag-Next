@@ -50,7 +50,15 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
 
   const foundIds = ids[gameName];
   if (!foundIds) {
-    return null;
+    const ids = JSON.parse(
+      await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
+    );
+
+    const foundIds = ids[gameName];
+
+    if (!foundIds) {
+      return null;
+    }
   }
 
   if (foundIds.length === 1) {
