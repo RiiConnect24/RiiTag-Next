@@ -153,6 +153,7 @@ function IndexPage({ userCount, playCount, randomUsers }) {
           <Col>
             <h5 className="text-center">3DS</h5>
             <ul>
+              <li>3DS-RPC Discord RPC</li>
               <li>Citra Discord RPC</li>
             </ul>
           </Col>
