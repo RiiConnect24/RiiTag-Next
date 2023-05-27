@@ -76,7 +76,7 @@ export async function getAvatar(username, image) {
     );
   }
 
-    await saveFile(filepath, response.body);
+  await saveFile(filepath, response.body);
 
   return filepath;
 }
@@ -174,18 +174,18 @@ export async function makeBanner(user) {
 
       await (consoleType === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC
         ? // 3DS Cartridges need to be made smaller
-          context.drawImage(
-            await Canvas.loadImage(coverPath),
-            covCurrentX,
-            covCurrentY + inc,
-            160,
-            160
-          )
+        context.drawImage(
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc,
+          160,
+          160
+        )
         : context.drawImage(
-            await Canvas.loadImage(coverPath),
-            covCurrentX,
-            covCurrentY + inc
-          ));
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc
+        ));
 
       covCurrentX += covIncX;
       covCurrentY += covIncY;
