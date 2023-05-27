@@ -58,11 +58,11 @@ export async function getWiiUGameName(gameId) {
   return getGameNameFromTitlesTxt('wiiutdb.txt', gameId);
 }
 
-export async function getSimilarKeys(keys) {
-  const similarKeys = findSimilarKeys(gameName, keys);
+export function getSimilarKeys(ids, gameName, keys) {
+  let similarKeys = findSimilarKeys(gameName, keys);
 
   for (const key of similarKeys) {
-    foundIds = ids[key];
+    let foundIds = ids[key];
     if (foundIds) {
       return foundIds;
     }
@@ -77,7 +77,7 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
   let foundIds = ids[gameName];
 
   if (!foundIds) {
-    foundIds = getSimilarKeys(Object.keys(ids));
+    foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
 
     if (!foundIds) {
       return null;
@@ -170,14 +170,14 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
   let foundIds = ids[gameName];
 
   if (!foundIds) {
-    foundIds = getSimilarKeys(Object.keys(ids));
+    foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
 
     if (!foundIds) {
       const ids = JSON.parse(
         await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
       );
 
-      foundIds = getSimilarKeys(Object.keys(ids));
+      foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
 
       if (!foundIds) {
         return null;
