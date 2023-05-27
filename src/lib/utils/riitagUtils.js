@@ -53,6 +53,10 @@ export async function getWiiUGameName(gameId) {
   return getGameNameFromTitlesTxt('wiiutdb.txt', gameId);
 }
 
+export async function getSwitchGameName(gameId) {
+  return getGameNameFromTitlesTxt('switchtdb.txt', gameId);
+}
+
 export async function get3DSGameIdByNameAndRegion(gameName, region) {
   const ids = JSON.parse(
     await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
