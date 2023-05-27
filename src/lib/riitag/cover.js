@@ -90,7 +90,7 @@ export async function getSwitchGameRegion(gameId) {
 
     const games = result.datafile.game;
 
-    function findRegionByGameId(gameId) {
+    async function findRegionByGameId(gameId) {
       let regions = null;
       games.forEach(game => {
         if (game.id[0] === gameId) {
@@ -100,7 +100,7 @@ export async function getSwitchGameRegion(gameId) {
       return regions;
     }
 
-    const region = findRegionByGameId(gameId);
+    const region = await findRegionByGameId(gameId);
 
     for (const gameRegion of region) {
       // Europe
@@ -149,7 +149,7 @@ export async function getSwitchGameRegion(gameId) {
 }
 
 // Returns the game's region from the TID
-export function getGameRegion(gameConsole, gameId) {
+export async function getGameRegion(gameConsole, gameId) {
   switch (gameConsole) {
     case CONSOLE.THREEDS: {
       return get3DSGameRegion(gameId);
@@ -159,7 +159,6 @@ export function getGameRegion(gameConsole, gameId) {
       return getWiiGameRegion(gameId);
     }
     case CONSOLE.SWITCH: {
-      console.log(getSwitchGameRegion(gameId));
       return getSwitchGameRegion(gameId);
     }
     default: {
