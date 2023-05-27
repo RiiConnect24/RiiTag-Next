@@ -156,6 +156,11 @@ function IndexPage({ userCount, playCount, randomUsers }) {
               <li>3DS-RPC Discord RPC</li>
               <li>Citra Discord RPC</li>
             </ul>
+            <h5 className="text-center">Switch</h5>
+            <ul>
+              <li>NSO-RPC Discord RPC</li>
+              <li>SwitchPresence-Rewritten Discord RPC</li>
+            </ul>
           </Col>
           <Col>
             <h5 className="text-center">Wii</h5>

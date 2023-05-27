@@ -8,10 +8,10 @@ import { getCover, getGameRegion } from '@/lib/riitag/cover';
 import logger from '@/lib/logger';
 import { PUBLIC } from '@/lib/constants/filePaths';
 
-const validConsoles = new Set([CONSOLE.WII, CONSOLE.WII_U, CONSOLE.THREEDS]);
+const validConsoles = new Set([CONSOLE.WII, CONSOLE.WII_U, CONSOLE.THREEDS, CONSOLE.SWITCH]);
 
 function getCoverType(gameConsole) {
-  if (gameConsole === CONSOLE.THREEDS) {
+  if (gameConsole === CONSOLE.THREEDS || gameConsole === CONSOLE.SWITCH) {
     return COVER_TYPE.BOX;
   }
   return COVER_TYPE.COVER_3D;

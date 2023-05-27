@@ -1,9 +1,14 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import COVER_TYPE from '@/lib/constants/coverType';
 import CONSOLE from '@/lib/constants/console';
 import { CACHE } from '@/lib/constants/filePaths';
+import { DATA } from '@/lib/constants/filePaths';
 import { exists, saveFile } from '@/lib/utils/fileUtils';
+import { isBlank } from '@/lib/utils/utils';
 import logger from '@/lib/logger';
+import { getUserByRandKey } from '@/lib/utils/databaseUtils';
+const xml2js = require('xml2js');
 
 function getCoverUrl(gameConsole, coverType, region, gameId, extension) {
   return `https://art.gametdb.com/${gameConsole}/${coverType}/${region}/${gameId}.${extension}`;
@@ -62,6 +67,87 @@ function get3DSGameRegion(gameId) {
   }
 }
 
+export async function getSwitchGameRegion(gameId) {
+  const ids = JSON.parse(
+    await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
+  );
+
+  try {
+    const data = await fs.promises.readFile(
+      path.resolve(DATA.IDS, 'switchtdb.xml'),
+      'utf-8'
+    );
+
+    const result = await new Promise((resolve, reject) => {
+      xml2js.parseString(data, (parseErr, parseResult) => {
+        if (parseErr) {
+          reject(parseErr);
+        } else {
+          resolve(parseResult);
+        }
+      });
+    });
+
+    const games = result.datafile.game;
+
+    function findRegionByGameId(gameId) {
+      let regions = null;
+      games.forEach(game => {
+        if (game.id[0] === gameId) {
+          regions = game.region[0].split(',').map(region => region.trim());
+        }
+      });
+      return regions;
+    }
+
+    const region = findRegionByGameId(gameId);
+
+    for (const gameRegion of region) {
+      // Europe
+      if (gameRegion === "FRA") {
+        return "FR";
+      }
+      if (gameRegion === "DEU") {
+        return "DE";
+      }
+      if (gameRegion === "ESP") {
+        return "ES";
+      }
+      if (gameRegion === "AUS") {
+        return "AU";
+      }
+      if (gameRegion === "EUR") {
+        return "EN";
+      }
+      if (gameRegion === "KOR") {
+        return "KO";
+      }
+      if (gameRegion === "TWN") {
+        return "TW";
+      }
+
+      // Japan
+      if (gameRegion === "JPN") {
+        return "JP";
+      }
+
+      // USA
+      if (gameRegion === "USA") {
+        return "US";
+      }
+
+      if (gameRegion === "ALL") {
+        return "EN";
+      }
+    }
+
+    return null; // Game ID not found
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 // Returns the game's region from the TID
 export function getGameRegion(gameConsole, gameId) {
   switch (gameConsole) {
@@ -71,6 +157,10 @@ export function getGameRegion(gameConsole, gameId) {
     case CONSOLE.WII:
     case CONSOLE.WII_U: {
       return getWiiGameRegion(gameId);
+    }
+    case CONSOLE.SWITCH: {
+      console.log(getSwitchGameRegion(gameId));
+      return getSwitchGameRegion(gameId);
     }
     default: {
       throw new Error('Console must be one of wii, wiiu, 3ds');
@@ -114,12 +204,12 @@ async function downloadCover(gameConsole, coverType, region, gameId) {
 
 // Handles cover fallbacks
 export async function getCover(gameConsole, coverType, gameId, region) {
-  if (gameConsole === CONSOLE.THREEDS && coverType === COVER_TYPE.COVER_3D) {
+  if (gameConsole === CONSOLE.THREEDS && coverType === COVER_TYPE.COVER_3D || gameConsole === CONSOLE.SWITCH && coverType === COVER_TYPE.COVER_3D) {
     // 3DS has no 'cover3D'; it's named 'box' instead
     coverType = COVER_TYPE.BOX;
   }
 
-  if (gameConsole === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC) {
+  if (gameConsole === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC || gameConsole === CONSOLE.SWITCH && coverType === COVER_TYPE.DISC) {
     // 3DS has no discs obviously
     coverType = COVER_TYPE.CART;
   }

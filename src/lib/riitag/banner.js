@@ -172,8 +172,7 @@ export async function makeBanner(user) {
         }
       }
 
-      await (consoleType === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC
-        ? // 3DS Cartridges need to be made smaller
+      if (consoleType === CONSOLE.THREEDS && coverType === COVER_TYPE.DISC) {
         context.drawImage(
           await Canvas.loadImage(coverPath),
           covCurrentX,
@@ -181,11 +180,29 @@ export async function makeBanner(user) {
           160,
           160
         )
-        : context.drawImage(
+      } else if (consoleType === CONSOLE.SWITCH && coverType === COVER_TYPE.COVER_3D) {
+        context.drawImage(
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc,
+          107,
+          160
+        )
+      } else if (consoleType === CONSOLE.SWITCH && coverType === COVER_TYPE.DISC) {
+        context.drawImage(
+          await Canvas.loadImage(coverPath),
+          covCurrentX,
+          covCurrentY + inc,
+          142,
+          230
+        )
+      } else {
+        context.drawImage(
           await Canvas.loadImage(coverPath),
           covCurrentX,
           covCurrentY + inc
-        ));
+        )
+      }
 
       covCurrentX += covIncX;
       covCurrentY += covIncY;

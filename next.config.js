@@ -44,6 +44,10 @@ const nextConfig = {
         destination: '/api/update-tag/3ds',
       },
       {
+        source: '/switch',
+        destination: '/api/update-tag/switch',
+      },
+      {
         source: '/wii',
         destination: '/api/update-tag/wii',
       },

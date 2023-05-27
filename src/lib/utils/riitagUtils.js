@@ -4,6 +4,7 @@ import readline from 'node:readline';
 import prisma from '@/lib/db';
 import { DATA } from '@/lib/constants/filePaths';
 import { exists } from '@/lib/utils/fileUtils';
+const xml2js = require('xml2js');
 
 function findSimilarKeys(targetKey, keys) {
   const removePunctuation = key => key.replace(/[^\w\s]/g, '').replace(/™/g, ''); // Remove punctuation from key
@@ -45,6 +46,10 @@ export async function getWiiGameName(gameId) {
   return getGameNameFromTitlesTxt('wiitdb.txt', gameId);
 }
 
+export async function getSwitchGameName(gameId) {
+  return getGameNameFromTitlesTxt('switchtdb.txt', gameId);
+}
+
 export async function get3DSGameName(gameId) {
   return getGameNameFromTitlesTxt('3dstdb.txt', gameId);
 }
@@ -53,36 +58,126 @@ export async function getWiiUGameName(gameId) {
   return getGameNameFromTitlesTxt('wiiutdb.txt', gameId);
 }
 
+export async function getSimilarKeys(keys) {
+  const similarKeys = findSimilarKeys(gameName, keys);
+
+  for (const key of similarKeys) {
+    foundIds = ids[key];
+    if (foundIds) {
+      return foundIds;
+    }
+  }
+}
+
+export async function getSwitchGameIdByNameAndRegion(gameName, region) {
+  const ids = JSON.parse(
+    await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
+  );
+
+  let foundIds = ids[gameName];
+
+  if (!foundIds) {
+    foundIds = getSimilarKeys(Object.keys(ids));
+
+    if (!foundIds) {
+      return null;
+    }
+  }
+
+  try {
+    const data = await fs.promises.readFile(
+      path.resolve(DATA.IDS, 'switchtdb.xml'),
+      'utf-8'
+    );
+
+    const result = await new Promise((resolve, reject) => {
+      xml2js.parseString(data, (parseErr, parseResult) => {
+        if (parseErr) {
+          reject(parseErr);
+        } else {
+          resolve(parseResult);
+        }
+      });
+    });
+
+    const games = result.datafile.game;
+
+    function findRegionByGameId(gameId) {
+      let regions = null;
+      games.forEach(game => {
+        if (game.id[0] === gameId) {
+          regions = game.region[0].split(',').map(region => region.trim());
+        }
+      });
+      return regions;
+    }
+
+    for (const gameId of foundIds) {
+      const region = findRegionByGameId(gameId);
+
+      for (const gameRegion of region) {
+        // Europe
+        if (region === "FR" && gameRegion === "FRA") {
+          return gameId;
+        }
+        if (region === "DE" && gameRegion === "DEU") {
+          return gameId;
+        }
+        if (region === "ES" && gameRegion === "ESP") {
+          return gameId;
+        }
+        if (region === "AU" && gameRegion === "AUS") {
+          return gameId;
+        }
+        if (region === "EN" || region === "FR" || region === "DE" || region === "ES" || region === "IT" || region === "NL" || region === "PT" || region === "SE" || region === "DK" || region === "NO" || region === "FI" && gameRegion === "EUR") {
+          return gameId;
+        }
+        if (region === "KO" && gameRegion === "KOR") {
+          return gameId;
+        }
+        if (region === "TW" && gameRegion === "TWN") {
+          return gameId;
+        }
+
+        // Japan
+        if (region === "JP" && gameRegion === "JPN") {
+          return gameId;
+        }
+
+        // USA
+        if (region === "EN" && gameRegion === "USA") {
+          return gameId;
+        }
+
+        if (gameRegion === "ALL") {
+          return gameId;
+        }
+      }
+    }
+
+    return null; // Game ID not found
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 export async function get3DSGameIdByNameAndRegion(gameName, region) {
   const ids = JSON.parse(
     await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
   );
 
   let foundIds = ids[gameName];
-  if (!foundIds) {
-    const keys = Object.keys(ids);
-    const similarKeys = findSimilarKeys(gameName, keys);
 
-    for (const key of similarKeys) {
-      foundIds = ids[key];
-      if (foundIds) {
-        break;
-      }
-    }
+  if (!foundIds) {
+    foundIds = getSimilarKeys(Object.keys(ids));
 
     if (!foundIds) {
       const ids = JSON.parse(
         await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
       );
 
-      const similarKeys = findSimilarKeys(gameName, Object.keys(ids));
-
-      for (const key of similarKeys) {
-        foundIds = ids[key];
-        if (foundIds != undefined) {
-          break;
-        }
-      }
+      foundIds = getSimilarKeys(Object.keys(ids));
 
       if (!foundIds) {
         return null;
@@ -90,13 +185,9 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
     }
   }
 
-  console.log(foundIds);
-
   if (foundIds.length === 1) {
     return foundIds[0];
   }
-
-
   // Region-free, don't care
   if (foundIds[0].slice(-1) === 'A') {
     return foundIds[0];
