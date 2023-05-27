@@ -60,10 +60,10 @@ function App({ Component, pageProps }) {
             site_name: 'RiiTag',
             images: [
               {
-                url: `${ENV.BASE_URL}/logo.png`,
-                width: 630,
-                height: 275,
-                alt: 'RiiTag Logo',
+                url: `${ENV.BASE_URL}/img/riitag_back.png`,
+                width: 1920,
+                height: 1080,
+                alt: 'RiiTag',
                 type: 'image/png',
               },
             ],
