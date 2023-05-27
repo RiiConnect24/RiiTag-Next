@@ -1,0 +1,60 @@
+{
+  "name": "Wii Menu Dark",
+  "author": "Larsenv",
+  "id": 10,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay10.png",
+  "max_covers": 8,
+  "cover_start_x": 80,
+  "cover_start_y": 50,
+  "cover_increment_x": 120,
+  "cover_increment_y": 0,
+  "username": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "x": 0,
+    "y": -2
+  },
+  "flag": {
+    "x": 910,
+    "y": 355
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 895,
+    "y": -10
+  },
+  "coin_count": {
+    "font_family": "RodinNTLG",
+    "font_size": 48,
+    "font_style": "bold",
+    "font_color": "#ffffff",
+    "x": 920,
+    "y": -2,
+    "padded": true,
+    "max": 99999
+  },
+  "friend_code": {
+    "font_family": "digital7",
+    "font_size": 48,
+    "font_style": "normal",
+    "font_color": "#ffffff",
+    "force_font": "true",
+    "x": 355,
+    "y": 290
+  },
+  "avatar": {
+    "x": 722,
+    "y": 373,
+    "size": 64
+  },
+  "mii": {
+    "x": 396,
+    "y": 358,
+    "size": 80
+  },
+  "enabled": true
+}

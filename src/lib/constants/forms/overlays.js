@@ -35,6 +35,10 @@ export const OVERLAYS = Object.freeze([
     value: 'overlay9',
     label: 'Unlimited Light',
   },
+  {
+    value: 'overlay10',
+    label: 'Wii Menu Dark',
+  }
 ]);
 
 export const isValidOverlay = (value) =>
