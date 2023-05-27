@@ -185,16 +185,16 @@ export async function makeBanner(user) {
           await Canvas.loadImage(coverPath),
           covCurrentX,
           covCurrentY + inc,
-          107,
-          160
+          142,
+          230
         )
       } else if (consoleType === CONSOLE.SWITCH && coverType === COVER_TYPE.DISC) {
         context.drawImage(
           await Canvas.loadImage(coverPath),
           covCurrentX,
           covCurrentY + inc,
-          142,
-          230
+          107,
+          160
         )
       } else {
         context.drawImage(
