@@ -23,3 +23,33 @@ export async function getGameLeaderboard(page, limit) {
     }),
   ]);
 }
+
+export async function getGameLeaderboardSearch(page, limit, search) {
+  return prisma.$transaction([
+    prisma.game.count({
+      where: {
+        name: {
+          contains: search,
+        },
+        playcount: {
+          gt: 5,
+        },
+      },
+    }),
+    prisma.game.findMany({
+      where: {
+        name: {
+          contains: search,
+        },
+        playcount: {
+          gt: 5,
+        },
+      },
+      take: limit,
+      skip: limit * (page - 1),
+      orderBy: {
+        playcount: 'desc',
+      },
+    }),
+  ]);
+}
