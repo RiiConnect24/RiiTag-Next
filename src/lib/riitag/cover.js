@@ -213,7 +213,7 @@ export async function getCover(gameConsole, coverType, gameId, region) {
     coverType = COVER_TYPE.CART;
   }
 
-  const gameRegion = getGameRegion(gameConsole, gameId);
+  const gameRegion = await getGameRegion(gameConsole, gameId);
 
   if (region === gameRegion) {
     try {
