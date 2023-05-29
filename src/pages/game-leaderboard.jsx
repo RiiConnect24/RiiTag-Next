@@ -51,25 +51,7 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
     const searchParams = new URLSearchParams(window.location.search);
     const searchQuery = searchParams.get("search");
 
-    fetch(`/api/leaderboard/game-leaderboard?page=${newPage}&search=${searchQuery}`)
-      .then((result) => result.json())
-      .then((data) => {
-        window.history.pushState(
-          null,
-          null,
-          `/game-leaderboard?page=${newPage}&search=${searchQuery}`
-        );
-        window.scrollTo({
-          top: 0,
-          left: 0,
-        });
-        setGames(data.leaderboard);
-        setCurrentPage(newPage);
-        setTotal(data.totalPages);
-      })
-      .catch(() =>
-        toast.error('There was an error while getting the leaderboard.')
-      );
+    updateURLPageParameter(newPage, searchQuery);
   };
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,6 +59,15 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
   const updateURLParameter = (query) => {
     const params = new URLSearchParams(window.location.search);
     params.set('search', query);
+    const newURL = window.location.pathname + '?' + params.toString();
+    window.history.replaceState({}, '', newURL);
+    window.location.reload();
+  };
+
+  const updateURLPageParameter = (page, search) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', page);
+    params.set('search', search);
     const newURL = window.location.pathname + '?' + params.toString();
     window.history.replaceState({}, '', newURL);
     window.location.reload();
