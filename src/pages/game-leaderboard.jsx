@@ -22,7 +22,7 @@ export async function getServerSideProps({ query }) {
   // Add logic for the search handler
   let leaderboard;
   let totalGames;
-  if (search) {
+  if (search != "null") {
     // Call your search function here and pass the search parameter
     [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search);
   } else {
