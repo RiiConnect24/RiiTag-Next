@@ -53,7 +53,7 @@ export const COVER_REGIONS = Object.freeze([
   },
   {
     value: 'PT',
-    label: 'Poland',
+    label: 'Portugal',
   },
   {
     value: 'KO',
