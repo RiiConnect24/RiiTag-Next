@@ -75,7 +75,7 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    updateURLParameter(searchQuery);
+    updateURLPageParameter(1, searchQuery);
     // Perform search logic or other actions
   };
 
