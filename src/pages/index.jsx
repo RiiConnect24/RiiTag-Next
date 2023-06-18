@@ -159,7 +159,9 @@ function IndexPage({ userCount, playCount, randomUsers }) {
             <h5 className="text-center">Switch</h5>
             <ul>
               <li>NSO-RPC Discord RPC</li>
+              <li>Ryujinx Discord RPC</li>
               <li>SwitchPresence-Rewritten Discord RPC</li>
+              <li>Yuzu Discord RPC</li>
             </ul>
           </Col>
           <Col>
