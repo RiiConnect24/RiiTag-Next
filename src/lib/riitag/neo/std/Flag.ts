@@ -4,7 +4,6 @@ import Canvas from 'canvas'
 import path from 'node:path'
 import fs from 'node:fs'
 import { PUBLIC } from '@/lib/constants/filePaths'
-import { user } from '@prisma/client'
 
 export default class Flag extends ModuleBase {
   x: number
@@ -17,7 +16,7 @@ export default class Flag extends ModuleBase {
     this.y = overlay.flag.y
   }
 
-  async render (ctx: Canvas.CanvasRenderingContext2D, user: user): Promise<void> {
+  render (ctx: Canvas.CanvasRenderingContext2D, user) {
     const filepath = path.resolve(PUBLIC.FLAG, `${user.flag}.png`)
 
     if (!fs.existsSync(filepath)) {
@@ -25,7 +24,8 @@ export default class Flag extends ModuleBase {
       return
     }
 
-    const flag = await Canvas.loadImage(filepath)
-    ctx.drawImage(flag, this.x, this.y, 72, 72)
+    Canvas.loadImage(filepath).then((flag) => {
+      ctx.drawImage(flag, this.x, this.y, 72, 72)
+    })
   }
 }

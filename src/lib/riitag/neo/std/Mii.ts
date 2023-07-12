@@ -5,9 +5,9 @@ import Canvas from 'canvas'
 import { CACHE, PUBLIC } from '@/lib/constants/filePaths'
 import path from 'node:path'
 import fs from 'node:fs'
+import { isBlank } from '@/lib/utils/utils'
 import { getMiiFromHexData, getMiiHexDataFromCMOC } from '../../mii'
 import { saveFile } from '@/lib/utils/fileUtils'
-import { user } from '@prisma/client'
 
 export default class Mii extends ModuleBase {
   enabled: boolean
@@ -19,10 +19,7 @@ export default class Mii extends ModuleBase {
   constructor (overlay) {
     super()
 
-    if (!overlay.mii) {
-      this.enabled = false
-      return
-    }
+    if (!overlay.mii) { this.enabled = false; return }
 
     this.enabled = true
     this.x = overlay.mii.x
@@ -34,11 +31,7 @@ export default class Mii extends ModuleBase {
     }
   }
 
-  /**
-   * Get the mii associated with the userID.
-   * @argument user The user to get the mii for.
-   */
-  async getMii (user: user): Promise<Canvas.Image> {
+  async getMii (user) {
     let miiPath = PUBLIC.BLANK_MII
 
     switch (user.mii_type) {
@@ -46,49 +39,61 @@ export default class Mii extends ModuleBase {
         if (user.mii_data !== null) {
           miiPath = path.resolve(PUBLIC.GUEST_MIIS, `${user.mii_data}.png`)
         }
-
-        break
+        return await Canvas.loadImage(miiPath)
 
       case 'cmoc':
         miiPath = path.resolve(CACHE.CMOC_MIIS, `${user.cmoc_entry_no}.png`)
 
-        if (!fs.existsSync(miiPath)) {
-          await saveFile(miiPath, await getMiiFromHexData(await getMiiHexDataFromCMOC(user.cmoc_entry_no)))
+        if (fs.existsSync(miiPath)) {
+          return await Canvas.loadImage(miiPath)
         }
 
-        break
+        try {
+          let miiHexData = user.mii_data
+
+          if (isBlank(miiHexData)) {
+            miiHexData = await getMiiHexDataFromCMOC(user.cmoc_entry_no)
+          }
+
+          const mii = await getMiiFromHexData(miiHexData)
+          await saveFile(miiPath, mii)
+        } catch {
+          miiPath = PUBLIC.BLANK_MII
+        }
+
+        return await Canvas.loadImage(miiPath)
 
       case 'upload':
         miiPath = path.resolve(CACHE.MIIS, `${user.username}.png`)
 
         if (!fs.existsSync(miiPath)) {
-          const mii = await getMiiFromHexData(user.mii_data)
-          await saveFile(miiPath, mii)
-          miiPath = PUBLIC.BLANK_MII
+          try {
+            const mii = await getMiiFromHexData(user.mii_data)
+            await saveFile(miiPath, mii)
+          } catch {
+            miiPath = PUBLIC.BLANK_MII
+          }
         }
-
-        break
+        return await Canvas.loadImage(miiPath)
 
       default:
         logger.error(`Unknown mii type: ${user.mii_type}`)
-        break
+        return await Canvas.loadImage(miiPath)
     }
-
-    return await Canvas.loadImage(miiPath)
   }
 
-  async render (ctx: Canvas.CanvasRenderingContext2D, user: user): Promise<void> {
-    if (!user.show_mii) return
-    if (!this.enabled) return
+  async render (ctx: Canvas.CanvasRenderingContext2D, user) {
+    if (!user.show_mii) { return }
+    if (!this.enabled) { return }
 
     const mii = await this.getMii(user)
 
-    // Render the background if set, otherwise render only the mii
     if (this.background) {
       const background = await Canvas.loadImage(path.resolve(PUBLIC.OVERLAY_IMAGE, this.background.img))
       ctx.drawImage(background, this.background.x, this.background.y, this.background.width, this.background.height)
+      ctx.drawImage(mii, this.x, this.y, this.size, this.size)
+    } else {
+      ctx.drawImage(mii, this.x, this.y, this.size, this.size)
     }
-
-    ctx.drawImage(mii, this.x, this.y, this.size, this.size)
   }
 }

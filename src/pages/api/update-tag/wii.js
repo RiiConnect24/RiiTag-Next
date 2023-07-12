@@ -18,9 +18,8 @@ const limiter = rateLimit({
  * /wii?key=dev&game=RSBP01
  */
 async function addWiiGame (request, response) {
-  const { key, game, playtime } = request.query
-
-  const truePlaytime = playtime ? parseInt(playtime, 10) : 0
+  const { key } = request.query
+  const { game } = request.query
 
   if (isBlank(key) || isBlank(game) || game.length < 4 || game.length > 6) {
     return response
@@ -47,7 +46,7 @@ async function addWiiGame (request, response) {
   const gameName = await getWiiGameName(game)
 
   try {
-    const updatedUser = await updateRiiTag(user, game, gameName, CONSOLE.WII, truePlaytime)
+    const updatedUser = await updateRiiTag(user, game, gameName, CONSOLE.WII)
     renderTag(updatedUser)
   } catch (error) {
     logger.error(error)

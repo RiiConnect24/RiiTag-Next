@@ -6,7 +6,7 @@ import fs from 'node:fs'
 
 const overlay = JSON.parse(fs.readFileSync(path.resolve(DATA.OVERLAYS, 'neo', 'overlay7.json'), 'utf-8'))
 
-export default function runTests (): void {
+export default function runTests () {
   const region = new Covers(overlay).getBoxGameRegion('RMCE01')
 
   logger.info('Tests:')

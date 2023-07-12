@@ -2,7 +2,6 @@ import Font from './Font'
 import ModuleBase from '../ModuleBase'
 import Canvas, { CanvasTextAlign } from 'canvas'
 import { drawText } from '../Utils'
-import { user } from '@prisma/client'
 
 export default class CoinCount extends ModuleBase {
   font: Font
@@ -29,9 +28,9 @@ export default class CoinCount extends ModuleBase {
     this.max = overlay.coin_count.max
   }
 
-  render (ctx: Canvas.CanvasRenderingContext2D, user: user): void {
+  render (ctx: Canvas.CanvasRenderingContext2D, user) {
     if (user.font !== 'default' && this.font.force === false) { this.font.name = user.font }
 
-    drawText(ctx, this.font, user.coins > this.max ? String(this.max) : String(user.coins), this.x, this.y, this.align)
+    drawText(ctx, this.font, user.coins > this.max ? this.max : user.coins, this.x, this.y, this.align)
   }
 }

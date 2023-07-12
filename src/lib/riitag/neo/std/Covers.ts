@@ -32,13 +32,7 @@ export default class Covers extends ModuleBase {
     this.max = overlay.covers.max
   }
 
-  /**
-   * Trim a game ID to pull the region out of it.
-   * @param gameId
-   * @param games
-   * @returns
-   */
-  findRegionByGameId (gameId: string, games): string {
+  findRegionByGameId (gameId, games) {
     let regions = null
     games.forEach(game => {
       if (game.id[0] === gameId) {
@@ -48,34 +42,30 @@ export default class Covers extends ModuleBase {
     return regions // Ex. NA,EU,JA
   }
 
-  /**
-   * Get the region associated with a box.
-   * @param gameId
-   * @returns
-   */
-  getBoxGameRegion (gameId: string): string {
+  getBoxGameRegion (gameId) {
     switch (gameId.charAt(3)) {
-      case 'P':
+      case 'P': {
         return 'EN'
-      case 'E':
+      }
+      case 'E': {
         return 'US'
-      case 'J':
+      }
+      case 'J': {
         return 'JA'
-      case 'K':
+      }
+      case 'K': {
         return 'KO'
-      case 'W':
+      }
+      case 'W': {
         return 'ZH'
-      default:
+      }
+      default: {
         return 'EN'
+      }
     }
   }
 
-  /**
-   * Get a region for a switch game.
-   * @param gameId
-   * @returns
-   */
-  async getSwitchGameRegion (gameId: string): Promise<string> {
+  async getSwitchGameRegion (gameId) {
     try {
       const data = await fs.promises.readFile(
         path.resolve(DATA.IDS, 'switchtdb.xml'),
@@ -107,37 +97,34 @@ export default class Covers extends ModuleBase {
     }
   }
 
-  /**
-   * Get the region associated with a game.
-   * @param console
-   * @param gameId
-   * @returns
-   */
-  async getGameRegion (console: string, gameId: string): Promise<string> {
+  async getGameRegion (console, gameId) {
     switch (console) {
       case CONSOLE.WII:
       case CONSOLE.WII_U:
-      case CONSOLE.THREEDS:
+      case CONSOLE.THREEDS: {
         return this.getBoxGameRegion(gameId)
-      case CONSOLE.SWITCH:
+      }
+      case CONSOLE.SWITCH: {
         return await this.getSwitchGameRegion(gameId)
-      default:
+      }
+      default: {
         throw new Error(`Unknown console ${console}`)
+      }
     }
   }
 
-  getBaseURL (console, type, region, gameId, extention): string {
+  getCoverURL (console, type, region, gameId, extention) {
     return `https://art.gametdb.com/${console}/${type}/${region}/${gameId}.${extention}`
   }
 
-  async downloadCover (console: string, type: string, gameId: string, region: string): Promise<string> {
+  async downloadCover (console, type, gameId, region) {
     // Determine if a cache already exists, if so, return it.
     const filepath = path.resolve(CACHE.COVER, console, type, region, `${gameId}.${this.getExtension(type, console)}`)
     if (fs.existsSync(filepath)) return filepath
 
     // Fetch the the cover directly from the coverDB.
-    const response = await fetch(this.getBaseURL(console, type, region, gameId, this.getExtension(type, console)))
-    if (!response.ok) return null
+    const response = await fetch(this.getCoverURL(console, type, region, gameId, this.getExtension(type, console)))
+    if (!response.ok) throw new Error(`Failed to download cover for ${gameId}`)
 
     // Save to a cache and return it.
     await saveFile(filepath, await response.body)
@@ -145,52 +132,65 @@ export default class Covers extends ModuleBase {
   }
 
   // Wii uses the JPG format for covers so make sure to have an exception for that.
-  getExtension (coverType: string, gameConsole: string): string {
+  getExtension (coverType, gameConsole) {
     if (gameConsole !== CONSOLE.WII && coverType === COVER_TYPE.COVER) return 'jpg'
     return 'png'
   }
 
-  /**
-   * Get the cover associated with the game ID and console.
-   * @param gameConsole
-   * @param type
-   * @param gameId
-   * @param region
-   * @returns
-   */
-  async getCover (gameConsole: string, type: string, gameId: string, region: string): Promise<string> {
-    switch (gameConsole) {
+  async getCover (console, type, gameId, region) {
+    switch (console) {
       case CONSOLE.THREEDS:
       case CONSOLE.SWITCH:
         switch (type) {
-          case COVER_TYPE.COVER_3D:
+          case COVER_TYPE.COVER_3D: {
             type = COVER_TYPE.BOX
             break
-
-          case COVER_TYPE.DISC:
+          }
+          case COVER_TYPE.DISC: {
             type = COVER_TYPE.CART
             break
+          }
+          default: {
+            break
+          }
         }
         break
+      default: {
+        break
+      }
     }
 
-    // Attempt to get game cover from user region
-    let cover = await this.downloadCover(gameConsole, type, gameId, region)
+    const gameRegion = await this.getGameRegion(console, gameId)
 
-    // If unable, get the official region
-    if (!cover) {
-      cover = await this.downloadCover(gameConsole, type, gameId, await this.getGameRegion(gameConsole, gameId))
+    if (region === gameRegion) {
+      try {
+        return await this.downloadCover(console, type, gameId, region)
+      } catch {
+        try {
+          return await this.downloadCover(console, type, gameId, 'EN')
+        } catch {
+          return this.downloadCover(console, type, gameId, 'US')
+        }
+      }
     }
 
-    return cover
+    try {
+      return await this.downloadCover(console, type, gameId, gameRegion)
+    } catch {
+      try {
+        return await this.downloadCover(console, type, gameId, this.getGameRegion(console, gameId))
+      } catch {
+        try {
+          return await this.downloadCover(console, type, gameId, 'EN')
+        } catch {
+          return this.downloadCover(console, type, gameId, 'US')
+        }
+      }
+    }
   }
 
-  /**
-   * Get all of the covers for a user.
-   * @param user The user to get the covers for.
-   * @returns
-   */
   async getAllUserCovers (user: user): Promise<string[]> {
+    const coverType = user.cover_type
     const playlog = await prisma.playlog.findMany({
       where: {
         user: {
@@ -212,35 +212,46 @@ export default class Covers extends ModuleBase {
       take: this.max * 2
     })
 
-    // Return a default empty array if the user has no playlog.
-    if (playlog.length === 0) {
-      return []
+    if (playlog.length > 0) {
+      // const coverDownloads = playlog.map((logEntry) => {
+      //     this.getCover(
+      //         logEntry.game.console,
+      //         coverType,
+      //         logEntry.game.game_id,
+      //         user.cover_region
+      //     )
+      // })
+
+      // const coverPaths = await Promise.allSettled(coverDownloads).then((results) => {
+      //     results
+      //         .filter((result) => result.status === 'fulfilled')
+      //         .map((result: any) => result.value)
+      //         .reverse()
+      //         .slice(-this.max);
+      // });
+
+      const coverPaths = []
+
+      for (const logEntry of playlog) {
+        coverPaths.push(this.getCover(
+          logEntry.game.console,
+          coverType,
+          logEntry.game.game_id,
+          user.cover_region
+        ))
+      }
+
+      return await Promise.all(coverPaths)
     }
 
-    const coverPaths = []
-
-    for (const logEntry of playlog) {
-      coverPaths.push(this.getCover(
-        logEntry.game.console,
-        user.cover_type,
-        logEntry.game.game_id,
-        user.cover_region
-      ))
-    }
-
-    return await Promise.all(coverPaths)
+    return []
   }
 
-  async render (context: Canvas.CanvasRenderingContext2D, user): Promise<void> {
-    this.drawCovers(await this.getAllUserCovers(user), context)
+  async render (context: Canvas.CanvasRenderingContext2D, user) {
+    this.renderCovers(await this.getAllUserCovers(user), context)
   };
 
-  /**
-   * Draw the covers onto the supplied canvas.
-   * @param coverPaths The paths to the covers to draw.
-   * @param context The canvas context to draw the covers onto.
-   */
-  drawCovers (coverPaths: string[], context: Canvas.CanvasRenderingContext2D): void {
+  renderCovers (coverPaths: string[], context: Canvas.CanvasRenderingContext2D) {
     const object = this
 
     // Load the final cover with the y-offset applied
@@ -255,10 +266,7 @@ export default class Covers extends ModuleBase {
     let currentX: number = 0
     let yOffset: number = 0
 
-    coverPaths = coverPaths.reverse()
-
     coverPaths.forEach((coverPath) => {
-      if (!coverPath) return
       const coverPathSegments = coverPath.split(path.sep)
       const coverType = coverPathSegments[coverPathSegments.length - 4]
       console.log(coverPathSegments)

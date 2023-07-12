@@ -1,19 +1,18 @@
 import path from 'node:path'
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import fs from 'node:fs'
 import Canvas from 'canvas'
 import { CACHE, DATA } from '@/lib/constants/filePaths'
-import { saveFile } from '@/lib/utils/fileUtils'
+import { exists, saveFile } from '@/lib/utils/fileUtils'
 import ModuleBase from './ModuleBase'
 import logger from '@/lib/logger'
-import { user } from '@prisma/client'
 
 async function loadFonts () {
-  const fontJsons = readdirSync(DATA.FONTS)
+  const fontJsons = await fs.promises.readdir(DATA.FONTS)
 
   await Promise.all(
     fontJsons.map(async (fontJson) => {
       const font = JSON.parse(
-        readFileSync(path.resolve(DATA.FONTS, fontJson), 'utf8')
+        await fs.promises.readFile(path.resolve(DATA.FONTS, fontJson), 'utf8')
       )
 
       font.styles.map(async (fontStyle) => {
@@ -27,17 +26,18 @@ async function loadFonts () {
   )
 }
 
-export async function renderTag (user: user): Promise<void> {
+export async function renderTag (user) {
   await loadFonts()
   const overlayPath = path.resolve(DATA.OVERLAYS, `neo.${user.overlay}.json`)
 
-  if (!(existsSync(overlayPath))) throw new Error(`Overlay ${overlayPath} does not exist`)
-  const overlay = JSON.parse(readFileSync(overlayPath, 'utf-8'))
+  if (!(await exists(overlayPath))) throw new Error(`Overlay ${overlayPath} does not exist`)
+  const overlay = JSON.parse(fs.readFileSync(overlayPath, 'utf-8'))
 
   const canvas = new Canvas.Canvas(overlay.width, overlay.height)
   const context = canvas.getContext('2d')
 
-  // Load all renderable elements for the overlay
+  let finished = 0
+
   const elements: ModuleBase[] = await Promise.all(overlay.draw_order.map(async (element) => {
     const ModuleName = await import(`@/lib/riitag/neo/std/${element}`)
     // eslint-disable-next-line new-cap
@@ -47,15 +47,11 @@ export async function renderTag (user: user): Promise<void> {
     return module
   }))
 
-  let finished = 0
-
-  // Write the renderable elements to the canvas
   for (const element of elements) {
     await element.render(context, user)
     finished++
     logger.info(`Finished: ${finished}/${overlay.draw_order.length}`)
   }
 
-  await saveFile(path.resolve(CACHE.TAGS, `${user.username}.png`), canvas.createPNGStream())
   await saveFile(path.resolve(CACHE.TAGS, `${user.username}.max.png`), canvas.createPNGStream())
 }
