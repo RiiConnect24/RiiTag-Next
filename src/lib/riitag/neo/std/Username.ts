@@ -32,6 +32,7 @@ export default class Username extends ModuleBase {
 
     logger.info(`User Font: ${user.font}`)
     logger.info(`Font Info: ${this.font.name} ${this.font.size} ${this.font.style} ${this.font.color} ${this.font.force}`)
+
     drawText(ctx, this.font, user.name_on_riitag, this.x, this.y, this.align)
   }
 }

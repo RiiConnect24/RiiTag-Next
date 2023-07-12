@@ -15,7 +15,7 @@ export default class Overlay extends ModuleBase {
     this.img = overlay.overlay_img
   }
 
-  render (ctx: Canvas.CanvasRenderingContext2D, _: user): any {
+  async render (ctx: Canvas.CanvasRenderingContext2D, _: user): Promise<void> {
     const imgPath = path.resolve(PUBLIC.OVERLAY_IMAGE, this.img)
 
     if (!fs.existsSync(imgPath)) {
@@ -23,8 +23,7 @@ export default class Overlay extends ModuleBase {
       return
     }
 
-    Canvas.loadImage(imgPath).then((image) => {
-      ctx.drawImage(image, 0, 0)
-    })
+    const image = await Canvas.loadImage(imgPath)
+    ctx.drawImage(image, 0, 0)
   }
 }

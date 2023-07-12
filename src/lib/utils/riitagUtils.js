@@ -303,7 +303,7 @@ export async function getWiiUGameIdByNameAndRegion (gameName, region) {
   return gameRegions.USA ?? null
 }
 
-export async function updateRiiTag (user, gameId, gameName, gameConsole) {
+export async function updateRiiTag (user, gameId, gameName, gameConsole, playtime) {
   gameId = gameId.toUpperCase()
 
   const [value] = await prisma.events.findFirst({
@@ -339,6 +339,9 @@ export async function updateRiiTag (user, gameId, gameName, gameConsole) {
         name: gameName,
         playcount: {
           increment: 1
+        },
+        playtime: {
+          increment: playtime
         },
         playlog: {
           create: {
