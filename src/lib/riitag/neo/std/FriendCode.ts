@@ -2,6 +2,7 @@ import Font from './Font'
 import ModuleBase from '../ModuleBase'
 import Canvas, { CanvasTextAlign } from 'canvas'
 import { drawText } from '../Utils'
+import { user } from '@prisma/client'
 
 export default class FriendCode extends ModuleBase {
   font: Font
@@ -26,8 +27,9 @@ export default class FriendCode extends ModuleBase {
     this.y = overlay.friend_code.y
   }
 
-  render (ctx: Canvas.CanvasRenderingContext2D, user) {
+  render (ctx: Canvas.CanvasRenderingContext2D, user: user): void {
     if (user.font !== 'default' && this.font.force === false) this.font.name = user.font
+
     drawText(ctx, this.font, user.comment, this.x, this.y, this.align)
   }
 }
