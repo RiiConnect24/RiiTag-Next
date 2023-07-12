@@ -1,90 +1,90 @@
-import { ncWithSession } from '@/lib/routing';
-import HTTP_CODE from '@/lib/constants/httpStatusCodes';
-import { isBlank } from '@/lib/utils/utils';
-import prisma from '@/lib/db';
-import { makeBanner } from '@/lib/riitag/banner';
-import { isValidMiiType, MII_TYPE } from '@/lib/constants/miiType';
-import { isValidGuestMii } from '@/lib/constants/forms/guestMiis';
-import logger from '@/lib/logger';
-import { getMiiHexDataFromCMOC } from '@/lib/riitag/mii';
+import { ncWithSession } from '@/lib/routing'
+import HTTP_CODE from '@/lib/constants/httpStatusCodes'
+import { isBlank } from '@/lib/utils/utils'
+import prisma from '@/lib/db'
+import { renderTag } from '@/lib/riitag/neo/renderer'
+import { isValidMiiType, MII_TYPE } from '@/lib/constants/miiType'
+import { isValidGuestMii } from '@/lib/constants/forms/guestMiis'
+import logger from '@/lib/logger'
+import { getMiiHexDataFromCMOC } from '@/lib/riitag/mii'
 
-async function updateMii(request, response) {
-  const { miiType, guestMii, cmocEntryNo } = request.body;
-  const username = request.session?.username;
+async function updateMii (request, response) {
+  const { miiType, guestMii, cmocEntryNo } = request.body
+  const username = request.session?.username
 
   if (!username) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)
-      .json({ error: 'Unauthorized' });
+      .json({ error: 'Unauthorized' })
   }
 
   if (isBlank(miiType) || !isValidMiiType(miiType)) {
     return response
       .status(HTTP_CODE.BAD_REQUEST)
-      .send({ error: 'Invalid data' });
+      .send({ error: 'Invalid data' })
   }
 
-  let user;
+  let user
   switch (miiType) {
     case MII_TYPE.GUEST: {
       if (isBlank(guestMii) || !isValidGuestMii(guestMii)) {
         return response
           .status(HTTP_CODE.BAD_REQUEST)
-          .send({ error: 'Invalid data' });
+          .send({ error: 'Invalid data' })
       }
       try {
         user = await prisma.user.update({
           where: {
-            username,
+            username
           },
           data: {
             mii_type: MII_TYPE.GUEST,
-            mii_data: guestMii,
-          },
-        });
+            mii_data: guestMii
+          }
+        })
       } catch (error) {
-        logger.error(error);
+        logger.error(error)
         return response
           .status(HTTP_CODE.BAD_REQUEST)
-          .send({ error: 'Invalid data' });
+          .send({ error: 'Invalid data' })
       }
-      break;
+      break
     }
     case MII_TYPE.CMOC: {
       try {
-        const miiHexData = await getMiiHexDataFromCMOC(cmocEntryNo);
+        const miiHexData = await getMiiHexDataFromCMOC(cmocEntryNo)
         user = await prisma.user.update({
           where: {
-            username,
+            username
           },
           data: {
             mii_type: MII_TYPE.CMOC,
             cmoc_entry_no: cmocEntryNo.replaceAll('-', ''),
-            mii_data: miiHexData,
-          },
-        });
+            mii_data: miiHexData
+          }
+        })
       } catch (error) {
-        logger.error(error);
+        logger.error(error)
         return response
           .status(HTTP_CODE.BAD_REQUEST)
-          .send({ error: 'Invalid data' });
+          .send({ error: 'Invalid data' })
       }
-      break;
+      break
     }
     default: {
       return response
         .status(HTTP_CODE.BAD_REQUEST)
-        .send({ error: 'Invalid data' });
+        .send({ error: 'Invalid data' })
     }
   }
 
   if (user.show_mii === true) {
-    makeBanner(user);
+    renderTag(user)
   }
 
-  return response.status(HTTP_CODE.OK).send();
+  return response.status(HTTP_CODE.OK).send()
 }
 
-const handler = ncWithSession().post(updateMii);
+const handler = ncWithSession().post(updateMii)
 
-export default handler;
+export default handler

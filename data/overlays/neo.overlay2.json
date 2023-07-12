@@ -1,0 +1,83 @@
+{
+    "name": "Modern Light",
+    "author": "dhtdht020",
+    "id": 2,
+    "width": 1200,
+    "height": 450,
+    "overlay_img": "overlay2.png",
+    "covers": {
+      "x": 80,
+      "y": 110,
+      "increment_x": 120,
+      "increment_y": 0,
+      "max": 8
+    },
+    "username": {
+      "font": {
+        "name": "RodinNTLG",
+        "size": 48,
+        "style": "normal",
+        "color": "#000000",
+        "force": false
+      },
+      "x": 48,
+      "y": 17
+    },
+    "flag": {
+      "x": 15,
+      "y": 10
+    },
+    "coin_icon": {
+      "img": "mario",
+      "x": 864,
+      "y": 10
+    },
+    "coin_count": {
+      "font": {
+        "name": "RodinNTLG",
+        "size": 48,
+        "style": "bold",
+        "color": "#ffffff",
+        "force": false
+      },
+      "x": 902,
+      "y": 16,
+      "padded": true,
+      "max": 9999999
+    },
+    "friend_code": {
+      "font": {
+        "name": "RodinNTLG",
+        "size": 36,
+        "style": "normal",
+        "color": "#000000",
+        "force": false
+      },
+      "x": -13,
+      "y": 387
+    },
+    "avatar": {
+      "x": 1063,
+      "y": 250,
+      "size": 128
+    },
+    "mii": {
+      "x": -25,
+      "y": 208,
+      "size": 170
+    },
+    "draw_order": [
+      "Background",
+      "Covers",
+      "Overlay",
+      "Flag",
+      "CoinIcon",
+      "Username",
+      "FriendCode",
+      "CoinCount",
+      "Mii",
+      "Avatar"
+    ],
+    "enabled": true
+  }
+  

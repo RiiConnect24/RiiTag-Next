@@ -3,7 +3,7 @@ const COVER_TYPE = Object.freeze({
   CART: 'cart',
   COVER: 'cover',
   COVER_3D: 'cover3D',
-  DISC: 'disc',
-});
+  DISC: 'disc'
+})
 
-export default COVER_TYPE;
+export default COVER_TYPE

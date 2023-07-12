@@ -4,7 +4,7 @@ This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org
 
 ## Features
 
-- Cusotmizable Gamertag with a lot of options like backgrounds, fonts, etc.
+- Customizable Gamertag with a lot of options like backgrounds, fonts, etc.
 - Automatically updating the tag works for Wii, Wii U, Cemu and Citra
 - Game Leaderboards
 - Collect coins when you play a game and show everyone what you have been playing!

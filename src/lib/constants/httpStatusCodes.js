@@ -8,7 +8,7 @@ const HTTP_CODE = Object.freeze({
   NOT_FOUND: 404,
   REQUEST_ENTITY_TOO_LARGE: 413,
   TOO_MANY_REQUESTS: 429,
-  INTERNAL_SERVER_ERROR: 500,
-});
+  INTERNAL_SERVER_ERROR: 500
+})
 
-export default HTTP_CODE;
+export default HTTP_CODE

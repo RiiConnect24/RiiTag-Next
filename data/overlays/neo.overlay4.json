@@ -1,0 +1,82 @@
+{
+  "name": "Bottom Bar Dark",
+  "author": "dhtdht020",
+  "id": 4,
+  "width": 1200,
+  "height": 450,
+  "overlay_img": "overlay4.png",
+  "covers": {
+    "x": 80,
+    "y": 10,
+    "increment_x": 120,
+    "increment_y": 0,
+    "max": 8
+  },
+  "username": {
+    "font": {
+      "name": "RodinNTLG",
+      "size": 72,
+      "style": "normal",
+      "color": "#ffffff",
+      "force": false
+    },
+    "x": -36,
+    "y": 293
+  },
+  "flag": {
+    "x": 820,
+    "y": 280
+  },
+  "coin_icon": {
+    "img": "mario",
+    "x": 890,
+    "y": 280
+  },
+  "coin_count": {
+    "font": {
+      "name": "RodinNTLG",
+      "size": 48,
+      "style": "bold",
+      "color": "#FFFFFF",
+      "force": false
+    },
+    "x": 910,
+    "y": 287,
+    "padded": true,
+    "max": 99999
+  },
+  "friend_code": {
+    "font": {
+      "name": "RodinNTLG",
+      "size": 48,
+      "style": "normal",
+      "color": "#FFFFFF",
+      "force": false
+    },
+    "x": -13,
+    "y": 373
+  },
+  "avatar": {
+    "x": 1074,
+    "y": 146,
+    "size": 128
+  },
+  "mii": {
+    "x": -28,
+    "y": 103,
+    "size": 170
+  },
+  "draw_order": [
+    "Background",
+    "Covers",
+    "Overlay",
+    "Flag",
+    "CoinIcon",
+    "Username",
+    "FriendCode",
+    "CoinCount",
+    "Mii",
+    "Avatar"
+  ],
+  "enabled": true
+}

@@ -1,67 +1,68 @@
-import { Col, Container, Row } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { NextSeo } from 'next-seo';
-import { withSession } from '@/lib/iron-session';
-import prisma from '@/lib/db';
-import GeneralAdministrationCard from '@/components/admin/GeneralAdministrationCard';
-import PrivacyPolicyCard from '@/components/admin/PrivacyPolicyCard';
-import TermsOfServiceCard from '@/components/admin/TermsOfServiceCard';
-import ENV from '@/lib/constants/environmentVariables';
-import AboutCard from '@/components/admin/AboutCard';
+import React from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
+import PropTypes from 'prop-types'
+import { NextSeo } from 'next-seo'
+import { withSession } from '@/lib/iron-session'
+import prisma from '@/lib/db'
+import GeneralAdministrationCard from '@/components/admin/GeneralAdministrationCard'
+import PrivacyPolicyCard from '@/components/admin/PrivacyPolicyCard'
+import TermsOfServiceCard from '@/components/admin/TermsOfServiceCard'
+import ENV from '@/lib/constants/environmentVariables'
+import AboutCard from '@/components/admin/AboutCard'
 
 export const getServerSideProps = withSession(async ({ req }) => {
-  const username = req.session?.username;
+  const username = req.session?.username
 
   if (!username) {
     return {
       redirect: {
         destination: '/',
-        permanent: false,
-      },
-    };
+        permanent: false
+      }
+    }
   }
 
   const user = await prisma.user.findFirst({
     where: {
-      username,
+      username
     },
     select: {
-      role: true,
-    },
-  });
+      role: true
+    }
+  })
 
   if (user.role !== 'admin') {
     return {
       redirect: {
         destination: '/',
-        permanent: false,
-      },
-    };
+        permanent: false
+      }
+    }
   }
 
   const data = await prisma.sys.findMany({
     select: {
       key: true,
-      value: true,
-    },
-  });
+      value: true
+    }
+  })
 
   const systemInfo = {
     about: data.find((x) => x.key === 'about')?.value || '',
     privacyPolicy: data.find((x) => x.key === 'privacy-policy')?.value || '',
-    tos: data.find((x) => x.key === 'tos')?.value || '',
-  };
+    tos: data.find((x) => x.key === 'tos')?.value || ''
+  }
 
-  return { props: { systemInfo } };
-});
+  return { props: { systemInfo } }
+})
 
-function AdminPage({ systemInfo }) {
+function AdminPage ({ systemInfo }) {
   return (
     <Container>
       <NextSeo
-        title="Admin"
+        title='Admin'
         openGraph={{
-          url: `${ENV.BASE_URL}/admin`,
+          url: `${ENV.BASE_URL}/admin`
         }}
       />
       <Row>
@@ -83,11 +84,11 @@ function AdminPage({ systemInfo }) {
         </Col>
       </Row>
     </Container>
-  );
+  )
 }
 
 AdminPage.propTypes = {
-  systemInfo: PropTypes.object.isRequired,
-};
+  systemInfo: PropTypes.object.isRequired
+}
 
-export default AdminPage;
+export default AdminPage

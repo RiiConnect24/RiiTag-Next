@@ -1,0 +1,51 @@
+{
+    "name": "Small",
+    "author": "Larsenv",
+    "id": 3,
+    "width": 1050,
+    "height": 60,
+    "overlay_img": "overlay3.png",
+    "username": {
+      "font": {
+        "name": "RodinNTLG",
+        "size": 48,
+        "style": "normal",
+        "color": "#FFFFFF",
+        "force": false
+      },
+      "x": 50,
+      "y": 0
+    },
+    "flag": {
+      "x": 15,
+      "y": -6
+    },
+    "coin_icon": {
+      "img": "mario",
+      "x": 835,
+      "y": -5
+    },
+    "coin_count": {
+      "font": {
+        "name": "RodinNTLG",
+        "size": 45,
+        "style": "normal",
+        "color": "#000000",
+        "force": false
+      },
+      "x": 860,
+      "y": 2,
+      "padded": true,
+      "max": 999
+    },
+    "draw_order": [
+        "Background",
+        "Overlay",
+        "Flag",
+        "CoinIcon",
+        "Username",
+        "CoinCount"
+    ],
+    "enabled": true
+  }
+  

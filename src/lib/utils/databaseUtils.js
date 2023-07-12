@@ -1,41 +1,41 @@
-import prisma from '@/lib/db';
+import prisma from '@/lib/db'
 
-export async function getRandKeyByUsername(username) {
+export async function getRandKeyByUsername (username) {
   return prisma.user.findUnique({
     where: {
-      username,
+      username
     },
     select: {
-      randkey: true,
-    },
-  });
+      randkey: true
+    }
+  })
 }
 
-export async function getUserByUsername(username) {
+export async function getUserByUsername (username) {
   return prisma.user.findUnique({
     where: {
-      username,
-    },
-  });
+      username
+    }
+  })
 }
 
-export async function getUserByRandKey(randkey) {
+export async function getUserByRandKey (randkey) {
   return prisma.user.findUnique({
     where: {
-      randkey,
-    },
-  });
+      randkey
+    }
+  })
 }
 
-export async function userIsAdmin(username) {
+export async function userIsAdmin (username) {
   const user = await prisma.user.findFirst({
     where: {
-      username,
+      username
     },
     select: {
-      role: true,
-    },
-  });
+      role: true
+    }
+  })
 
-  return user.role === 'admin';
+  return user.role === 'admin'
 }

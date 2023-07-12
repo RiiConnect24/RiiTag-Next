@@ -1,20 +1,20 @@
-import pino from 'pino';
-import ENV from '@/lib/constants/environmentVariables';
+import pino from 'pino'
+import ENV from '@/lib/constants/environmentVariables'
 
 const options = {
-  level: process.env.NEXT_PUBLIC_LOGGING_LEVEL?.toLowerCase() || 'info',
-};
+  level: (process.env.NEXT_PUBLIC_LOGGING_LEVEL || 'info').toLowerCase()
+}
 
 if (ENV.IS_DEV) {
   options.transport = {
     target: 'pino-pretty',
     options: {
       ignore: 'pid,hostname',
-      translateTime: 'SYS:standard',
-    },
-  };
+      translateTime: 'SYS:standard'
+    }
+  }
 }
 
-const logger = pino(options);
+const logger = pino(options)
 
-export default logger;
+export default logger

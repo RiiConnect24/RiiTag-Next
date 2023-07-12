@@ -1,38 +1,38 @@
-import { Button } from 'react-bootstrap';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
-import useInfo from '@/lib/swr-hooks/useInfo';
-import ConfirmationModal from '@/components/shared/ConfirmationModal';
+import { React, useState } from 'react'
+import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
+import useInfo from '@/lib/swr-hooks/useInfo'
+import ConfirmationModal from '../shared/ConfirmationModal'
+import { Button } from 'react-bootstrap'
 
-export default function DeleteAccountButton() {
-  const router = useRouter();
-  const { mutate } = useInfo();
+export default function DeleteAccountButton () {
+  const router = useRouter()
+  const { mutate } = useInfo()
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
-  const toggleModal = () => setShow(!show);
+  const toggleModal = () => setShow(!show)
 
   const deleteAccount = async () => {
     const response = await fetch('/api/account/delete-account', {
-      method: 'POST',
-    });
+      method: 'POST'
+    })
     if (response.status === 200) {
-      toast.success('Your account has been deleted.');
-      mutate();
-      router.push('/');
+      toast.success('Your account has been deleted.')
+      mutate()
+      router.push('/')
     } else {
-      toast.error('An error occured, please try again later.');
+      toast.error('An error occured, please try again later.')
     }
-  };
+  }
 
   return (
     <>
       <ConfirmationModal
-        title="Delete Account"
-        cancelText="No, I want to stay!"
-        confirmText="Yes, delete my account"
-        confirmVariant="danger"
+        title='Delete Account'
+        cancelText='No, I want to stay!'
+        confirmText='Yes, delete my account'
+        confirmVariant='danger'
         show={show}
         toggleModal={toggleModal}
         onSubmit={deleteAccount}
@@ -43,7 +43,7 @@ export default function DeleteAccountButton() {
         </strong>
         ?
         <br />
-        <ul className="d-block mt-3">
+        <ul className='d-block mt-3'>
           <li>Your username won&apos;t be reserved</li>
           <li>Make sure to remove your RiiTag from forum signatures, etc.</li>
           <li>You can re-register at any time</li>
@@ -57,9 +57,9 @@ export default function DeleteAccountButton() {
         </ul>
         <strong>This cannot be undone!</strong>
       </ConfirmationModal>
-      <Button variant="danger" onClick={() => toggleModal()}>
+      <Button variant='danger' onClick={() => toggleModal()}>
         Delete your Account
       </Button>
     </>
-  );
+  )
 }

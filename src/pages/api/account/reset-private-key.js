@@ -1,36 +1,36 @@
-import HTTP_CODE from '@/lib/constants/httpStatusCodes';
-import { ncWithSession } from '@/lib/routing';
-import prisma from '@/lib/db';
-import { generateRandomKey } from '@/lib/utils/utils';
-import logger from '@/lib/logger';
+import HTTP_CODE from '@/lib/constants/httpStatusCodes'
+import { ncWithSession } from '@/lib/routing'
+import prisma from '@/lib/db'
+import { generateRandomKey } from '@/lib/utils/utils'
+import logger from '@/lib/logger'
 
-async function resetKey(request, response) {
-  const username = request.session?.username;
+async function resetKey (request, response) {
+  const username = request.session?.username
 
   if (!username) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)
-      .json({ error: 'Unauthorized' });
+      .json({ error: 'Unauthorized' })
   }
 
   try {
     const user = await prisma.user.update({
       where: {
-        username,
+        username
       },
       data: {
-        randkey: generateRandomKey(128),
-      },
-    });
+        randkey: generateRandomKey(128)
+      }
+    })
     return response.status(HTTP_CODE.OK).json({
-      randkey: user.randkey,
-    });
+      randkey: user.randkey
+    })
   } catch (error) {
-    logger.error(error);
-    return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send();
+    logger.error(error)
+    return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send()
   }
 }
 
-const handler = ncWithSession().post(resetKey);
+const handler = ncWithSession().post(resetKey)
 
-export default handler;
+export default handler

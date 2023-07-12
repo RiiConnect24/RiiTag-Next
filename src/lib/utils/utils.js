@@ -1,19 +1,21 @@
-export function isBlank(string_) {
+import React from 'react'
+
+export function isBlank (string_) {
   if (Array.isArray(string_)) {
     if (string_.length === 0) {
-      return true;
+      return true
     }
-    string_ = string_.join('');
+    string_ = string_.join('')
   }
-  return !string_ || string_.trim().length === 0;
+  return !string_ || string_.trim().length === 0
 }
 
-export function isBoolean(value) {
-  return typeof value === 'boolean';
+export function isBoolean (value) {
+  return typeof value === 'boolean'
 }
 
-export function setFileHeaders(response, filename) {
-  response.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+export function setFileHeaders (response, filename) {
+  response.setHeader('Content-Disposition', `inline; filename="${filename}"`)
 
   // This value is considered fresh for ten seconds (s-maxage=10).
   // If a request is repeated within the next 10 seconds, the previously
@@ -28,25 +30,25 @@ export function setFileHeaders(response, filename) {
   response.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
-  );
+  )
 }
 
-export function generateRandomKey(keyLength) {
+export function generateRandomKey (keyLength) {
   const chars =
-    'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890';
-  let key = '';
-  let lastChar = '';
+    'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890'
+  let key = ''
+  let lastChar = ''
 
   for (let index = 0; index < keyLength; index += 1) {
-    let char = chars.charAt(Math.floor(Math.random() * chars.length));
+    let char = chars.charAt(Math.floor(Math.random() * chars.length))
     while (char === lastChar) {
-      char = chars.charAt(Math.floor(Math.random() * chars.length));
+      char = chars.charAt(Math.floor(Math.random() * chars.length))
     }
-    key += char;
-    lastChar = char;
+    key += char
+    lastChar = char
   }
 
-  return key;
+  return key
 }
 
 export const createOptionNodes = (objectArray) =>
@@ -55,4 +57,4 @@ export const createOptionNodes = (objectArray) =>
     <option key={object.value} value={object.value}>
       {object.label}
     </option>
-  ));
+  ))

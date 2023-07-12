@@ -1,68 +1,68 @@
-import PropTypes from 'prop-types';
-import { Card, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import ENV from '@/lib/constants/environmentVariables';
+import PropTypes from 'prop-types'
+import { Card, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
+import { React, useState } from 'react'
+import { toast } from 'react-toastify'
+import ENV from '@/lib/constants/environmentVariables'
 
 const selectAndCopy = (event) => {
-  event.target.select();
+  event.target.select()
   navigator.clipboard
     .writeText(event.target.value)
     .then(() => toast.success('Copied!'))
-    .catch(() => toast.error('Failed to copy :('));
-};
+    .catch(() => toast.error('Failed to copy :('))
+}
 
 /*
  * NOTE: "##USERID##" in the text gets replaced with the userId
  * and ##TAG## will replace 'tag.png' with 'tag.max.png'
  */
-function EmbedText({ username, max, text }) {
-  let textareaValue = text.replaceAll('##USERID##', username);
+function EmbedText ({ username, max, text }) {
+  let textareaValue = text.replaceAll('##USERID##', username)
   textareaValue =
     max === true
       ? textareaValue.replaceAll('##TAG##', 'tag.max.png')
-      : textareaValue.replaceAll('##TAG##', 'tag.png');
+      : textareaValue.replaceAll('##TAG##', 'tag.png')
 
   return (
     <Form.Control
-      className="resizable-none"
+      className='resizable-none'
       readOnly
       rows={4}
-      as="textarea"
+      as='textarea'
       onClick={selectAndCopy}
       value={textareaValue}
     />
-  );
+  )
 }
 
 EmbedText.propTypes = {
   username: PropTypes.string.isRequired,
   max: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired,
-};
+  text: PropTypes.string.isRequired
+}
 
-function ShowYourTagCard({ username }) {
-  const [max, setMax] = useState(false);
+function ShowYourTagCard ({ username }) {
+  const [max, setMax] = useState(false)
 
   return (
-    <Card className="mb-3" bg="secondary" text="white">
-      <Card.Header as="h5">Show your RiiTag</Card.Header>
+    <Card className='mb-3' bg='secondary' text='white'>
+      <Card.Header as='h5'>Show your RiiTag</Card.Header>
       <Card.Body>
         <Tabs
-          id="embed-tabs"
-          className="mb-2"
-          variant="pills"
-          defaultActiveKey="html"
+          id='embed-tabs'
+          className='mb-2'
+          variant='pills'
+          defaultActiveKey='html'
           transition={false}
         >
-          <Tab title="HTML" eventKey="html">
+          <Tab title='HTML' eventKey='html'>
             <EmbedText
               max={max}
               username={username}
               text={`<a href="${ENV.BASE_URL}/user/##USERID##"><img src="${ENV.BASE_URL}/##USERID##/##TAG##" alt="RiiTag" /></a>`}
             />
           </Tab>
-          <Tab eventKey="bbcode" title="BBCode">
+          <Tab eventKey='bbcode' title='BBCode'>
             <EmbedText
               max={max}
               username={username}
@@ -72,13 +72,13 @@ function ShowYourTagCard({ username }) {
         </Tabs>
 
         <Form.Group
-          className="mt-2 align-items-baseline"
+          className='mt-2 align-items-baseline'
           as={Row}
-          controlId="bigImageSwitch"
+          controlId='bigImageSwitch'
         >
           <Col>
             <Form.Switch
-              label="Use large image instead"
+              label='Use large image instead'
               value={max}
               onChange={() => setMax(!max)}
             />
@@ -86,11 +86,11 @@ function ShowYourTagCard({ username }) {
         </Form.Group>
       </Card.Body>
     </Card>
-  );
+  )
 }
 
 ShowYourTagCard.propTypes = {
-  username: PropTypes.string.isRequired,
-};
+  username: PropTypes.string.isRequired
+}
 
-export default ShowYourTagCard;
+export default ShowYourTagCard

@@ -1,7 +1,8 @@
-import { Button, Modal } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Button, Modal } from 'react-bootstrap'
 
-function ConfirmationModal({
+function ConfirmationModal ({
   title,
   cancelText,
   confirmText,
@@ -9,21 +10,21 @@ function ConfirmationModal({
   show,
   toggleModal,
   onSubmit,
-  children,
+  children
 }) {
   const onConfirm = () => {
-    toggleModal();
-    onSubmit();
-  };
+    toggleModal()
+    onSubmit()
+  }
 
   return (
-    <Modal fullscreen="sm-down" show={show} onHide={toggleModal}>
-      <Modal.Header closeButton closeVariant="white">
+    <Modal fullscreen='sm-down' show={show} onHide={toggleModal}>
+      <Modal.Header closeButton closeVariant='white'>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="light" onClick={toggleModal}>
+        <Button variant='light' onClick={toggleModal}>
           {cancelText}
         </Button>
         <Button variant={confirmVariant} onClick={onConfirm}>
@@ -31,7 +32,7 @@ function ConfirmationModal({
         </Button>
       </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
 ConfirmationModal.propTypes = {
@@ -55,21 +56,21 @@ ConfirmationModal.propTypes = {
     'outline-warning',
     'outline-info',
     'outline-dark',
-    'outline-light',
+    'outline-light'
   ]),
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
+    PropTypes.node
+  ]).isRequired
+}
 
 ConfirmationModal.defaultProps = {
   cancelText: 'Cancel',
   confirmText: 'Submit',
-  confirmVariant: 'primary',
-};
+  confirmVariant: 'primary'
+}
 
-export default ConfirmationModal;
+export default ConfirmationModal

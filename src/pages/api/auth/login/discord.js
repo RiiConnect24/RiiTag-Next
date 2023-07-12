@@ -1,127 +1,127 @@
-import { ncWithSession } from '@/lib/routing';
-import { generateRandomKey, isBlank } from '@/lib/utils/utils';
-import { LOGIN_ERROR_URI } from '@/lib/utils/oAuthUtils';
-import logger from '@/lib/logger';
-import prisma from '@/lib/db';
-import ENV from '@/lib/constants/environmentVariables';
-import HTTP_CODE from '@/lib/constants/httpStatusCodes';
+import { ncWithSession } from '@/lib/routing'
+import { generateRandomKey, isBlank } from '@/lib/utils/utils'
+import { LOGIN_ERROR_URI } from '@/lib/utils/oAuthUtils'
+import logger from '@/lib/logger'
+import prisma from '@/lib/db'
+import ENV from '@/lib/constants/environmentVariables'
+import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 
-const PROVIDER_ID = 'discord';
-const BASE_URL = 'https://discord.com/api';
-const REDIRECT_URI = `${ENV.BASE_URL}/api/auth/login/discord`;
+const PROVIDER_ID = 'discord'
+const BASE_URL = 'https://discord.com/api'
+const REDIRECT_URI = `${ENV.BASE_URL}/api/auth/login/discord`
 
-async function generateAuthorizeUrl(request, response) {
-  const authUri = new URL(`${BASE_URL}/oauth2/authorize`);
-  authUri.searchParams.set('client_id', ENV.DISCORD_CLIENT_ID);
-  authUri.searchParams.set('redirect_uri', REDIRECT_URI);
-  authUri.searchParams.set('prompt', 'none');
-  authUri.searchParams.set('response_type', 'code');
-  authUri.searchParams.set('scope', 'identify');
+async function generateAuthorizeUrl (request, response) {
+  const authUri = new URL(`${BASE_URL}/oauth2/authorize`)
+  authUri.searchParams.set('client_id', ENV.DISCORD_CLIENT_ID)
+  authUri.searchParams.set('redirect_uri', REDIRECT_URI)
+  authUri.searchParams.set('prompt', 'none')
+  authUri.searchParams.set('response_type', 'code')
+  authUri.searchParams.set('scope', 'identify')
 
-  return response.redirect(HTTP_CODE.FOUND, authUri.toString());
+  return response.redirect(HTTP_CODE.FOUND, authUri.toString())
 }
 
-async function exchangeCode(code) {
-  const formData = new URLSearchParams();
-  formData.set('client_id', ENV.DISCORD_CLIENT_ID);
-  formData.set('client_secret', ENV.DISCORD_CLIENT_SECRET);
-  formData.set('grant_type', 'authorization_code');
-  formData.set('code', code);
-  formData.set('redirect_uri', REDIRECT_URI);
+async function exchangeCode (code) {
+  const formData = new URLSearchParams()
+  formData.set('client_id', ENV.DISCORD_CLIENT_ID)
+  formData.set('client_secret', ENV.DISCORD_CLIENT_SECRET)
+  formData.set('grant_type', 'authorization_code')
+  formData.set('code', code)
+  formData.set('redirect_uri', REDIRECT_URI)
 
   const response = await fetch(new URL(`${BASE_URL}/oauth2/token`).toString(), {
     method: 'POST',
     headers: new Headers({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/x-www-form-urlencoded'
     }),
-    body: formData,
-  }).then((data) => data.json());
+    body: formData
+  }).then((data) => data.json())
 
   if (!response || isBlank(response.access_token)) {
-    throw new Error('Getting Discord Access Token failed');
+    throw new Error('Getting Discord Access Token failed')
   }
-  return response;
+  return response
 }
 
-async function getAuthorizationInformation(accessToken) {
+async function getAuthorizationInformation (accessToken) {
   const response = await fetch(new URL(`${BASE_URL}/oauth2/@me`).toString(), {
     method: 'GET',
     headers: new Headers({
-      Authorization: `Bearer ${accessToken}`,
-    }),
-  }).then((data) => data.json());
+      Authorization: `Bearer ${accessToken}`
+    })
+  }).then((data) => data.json())
 
   if (!response.application || !response.user) {
-    throw new Error('Getting authorization information failed');
+    throw new Error('Getting authorization information failed')
   }
 
   if (response.application.id !== ENV.DISCORD_CLIENT_ID) {
-    throw new Error('Got information from another client id!?!?');
+    throw new Error('Got information from another client id!?!?')
   }
 
-  return response;
+  return response
 }
 
-function getAvatarUrl(authInfo) {
+function getAvatarUrl (authInfo) {
   if (authInfo.user.avatar === null) {
     const defaultAvatarNumber =
-      Number.parseInt(authInfo.user.discriminator, 10) % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png?size=512`;
+      Number.parseInt(authInfo.user.discriminator, 10) % 5
+    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png?size=512`
   }
-  const format = authInfo.user.avatar.startsWith('a_') ? 'gif' : 'png';
-  return `https://cdn.discordapp.com/avatars/${authInfo.user.id}/${authInfo.user.avatar}.${format}?size=512`;
+  const format = authInfo.user.avatar.startsWith('a_') ? 'gif' : 'png'
+  return `https://cdn.discordapp.com/avatars/${authInfo.user.id}/${authInfo.user.avatar}.${format}?size=512`
 }
 
-async function oAuthCallback(request, response) {
-  const { code } = request.query;
+async function oAuthCallback (request, response) {
+  const { code } = request.query
 
   if (isBlank(code)) {
-    return response.redirect(LOGIN_ERROR_URI);
+    return response.redirect(LOGIN_ERROR_URI)
   }
 
-  let accessTokenResponse;
+  let accessTokenResponse
   try {
-    accessTokenResponse = await exchangeCode(code.toString());
+    accessTokenResponse = await exchangeCode(code.toString())
   } catch (error) {
-    logger.error(error);
-    return response.redirect(LOGIN_ERROR_URI);
+    logger.error(error)
+    return response.redirect(LOGIN_ERROR_URI)
   }
 
-  let authInfo;
+  let authInfo
   try {
     authInfo = await getAuthorizationInformation(
       accessTokenResponse.access_token
-    );
+    )
   } catch (error) {
-    logger.error(error);
-    return response.redirect(LOGIN_ERROR_URI);
+    logger.error(error)
+    return response.redirect(LOGIN_ERROR_URI)
   }
 
-  const imageUrl = getAvatarUrl(authInfo);
+  const imageUrl = getAvatarUrl(authInfo)
 
   let user = await prisma.user.findFirst({
     where: {
       accounts: {
         some: {
           provider_id: PROVIDER_ID,
-          provider_account_id: authInfo.user.id,
-        },
-      },
+          provider_account_id: authInfo.user.id
+        }
+      }
     },
     select: {
-      username: true,
-    },
-  });
+      username: true
+    }
+  })
 
   if (user) {
     await prisma.user.update({
       where: {
-        username: user.username,
+        username: user.username
       },
       data: {
-        image: imageUrl,
-      },
-    });
+        image: imageUrl
+      }
+    })
   } else {
     user = await prisma.user.create({
       data: {
@@ -132,19 +132,19 @@ async function oAuthCallback(request, response) {
         accounts: {
           create: {
             provider_id: PROVIDER_ID,
-            provider_account_id: authInfo.user.id,
-          },
-        },
-      },
-    });
+            provider_account_id: authInfo.user.id
+          }
+        }
+      }
+    })
   }
 
-  request.session.username = user.username;
-  await request.session.save();
+  request.session.username = user.username
+  await request.session.save()
 
-  return response.redirect(ENV.BASE_URL);
+  return response.redirect(ENV.BASE_URL)
 }
 
-const handler = ncWithSession().get(oAuthCallback).post(generateAuthorizeUrl);
+const handler = ncWithSession().get(oAuthCallback).post(generateAuthorizeUrl)
 
-export default handler;
+export default handler

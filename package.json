@@ -21,15 +21,22 @@
     "global:check-dependencies": "npm-check --skip-unused"
   },
   "devDependencies": {
-    "eslint": "8.30.0",
+    "eslint": "^8.44.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-next": "13.1.1",
     "eslint-config-prettier": "8.5.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-jsx": "^11.0.0",
     "eslint-import-resolver-alias": "1.1.2",
-    "eslint-plugin-unicorn": "45.0.2",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
     "prettier": "2.8.1",
     "prisma": "4.8.0",
-    "sass": "1.57.1"
+    "sass": "1.57.1",
+    "typescript-eslint": "^0.0.1-alpha.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.2.1",
@@ -45,6 +52,7 @@
     "bootstrap": "5.2.3",
     "canvas": "2.11.0",
     "dayjs": "1.11.7",
+    "decimal.js": "^10.4.3",
     "dotenv-cli": "6.0.0",
     "form-data": "4.0.0",
     "formidable": "2.1.1",
@@ -65,7 +73,8 @@
     "react-toastify": "9.1.1",
     "safe-json-stringify": "1.2.0",
     "swr": "2.0.0",
-    "twitter-lite": "1.1.0"
+    "twitter-lite": "1.1.0",
+    "xml2js": "^0.6.0"
   },
   "browserslist": [
     "defaults",

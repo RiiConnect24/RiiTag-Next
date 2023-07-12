@@ -6,7 +6,7 @@ const ENV = Object.freeze({
   IS_DEV: process.env.NODE_ENV === 'development',
   STAGING: process.env.NEXT_PUBLIC_STAGING,
   TWITTER_API_KEY: process.env.TWITTER_API_KEY,
-  TWITTER_API_SECRET: process.env.TWITTER_API_SECRET_KEY,
-});
+  TWITTER_API_SECRET: process.env.TWITTER_API_SECRET_KEY
+})
 
-export default ENV;
+export default ENV

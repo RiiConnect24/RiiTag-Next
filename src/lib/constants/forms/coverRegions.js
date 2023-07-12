@@ -1,69 +1,69 @@
 export const COVER_REGIONS = Object.freeze([
   {
     value: 'EN',
-    label: 'English (General)',
+    label: 'English (General)'
   },
   {
     value: 'AU',
-    label: 'Australia',
+    label: 'Australia'
   },
   {
     value: 'DK',
-    label: 'Denmark',
+    label: 'Denmark'
   },
   {
     value: 'FR',
-    label: 'France',
+    label: 'France'
   },
   {
     value: 'DE',
-    label: 'Germany',
+    label: 'Germany'
   },
   {
     value: 'FI',
-    label: 'Finland',
+    label: 'Finland'
   },
   {
     value: 'IT',
-    label: 'Italy',
+    label: 'Italy'
   },
   {
     value: 'JP',
-    label: 'Japan',
+    label: 'Japan'
   },
   {
     value: 'NL',
-    label: 'Netherlands',
+    label: 'Netherlands'
   },
   {
     value: 'NO',
-    label: 'Norway',
+    label: 'Norway'
   },
   {
     value: 'PT',
-    label: 'Poland',
+    label: 'Poland'
   },
   {
     value: 'KO',
-    label: 'South Korea',
+    label: 'South Korea'
   },
   {
     value: 'ES',
-    label: 'Spain',
+    label: 'Spain'
   },
   {
     value: 'SE',
-    label: 'Sweden',
+    label: 'Sweden'
   },
   {
     value: 'TW',
-    label: 'Taiwan',
+    label: 'Taiwan'
   },
   {
     value: 'TR',
-    label: 'Turkey',
-  },
-]);
+    label: 'Turkey'
+  }
+])
 
 export const isValidCoverRegion = (value) =>
-  COVER_REGIONS.some((coverRegion) => coverRegion.value === value);
+  COVER_REGIONS.some((coverRegion) => coverRegion.value === value)

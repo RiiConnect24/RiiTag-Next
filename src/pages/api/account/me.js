@@ -1,19 +1,19 @@
-import HTTP_CODE from '@/lib/constants/httpStatusCodes';
-import { ncWithSession } from '@/lib/routing';
-import prisma from '@/lib/db';
+import HTTP_CODE from '@/lib/constants/httpStatusCodes'
+import { ncWithSession } from '@/lib/routing'
+import prisma from '@/lib/db'
 
-async function getInfo(request, response) {
-  const username = request.session?.username;
+async function getInfo (request, response) {
+  const username = request.session?.username
 
   if (!username) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)
-      .json({ error: 'Unauthorized' });
+      .json({ error: 'Unauthorized' })
   }
 
   const user = await prisma.user.findFirst({
     where: {
-      username,
+      username
     },
     select: {
       username: true,
@@ -25,15 +25,15 @@ async function getInfo(request, response) {
         select: {
           provider_id: true,
           provider_account_id: true,
-          created_at: true,
-        },
-      },
-    },
-  });
+          created_at: true
+        }
+      }
+    }
+  })
 
-  return response.status(HTTP_CODE.OK).json(user);
+  return response.status(HTTP_CODE.OK).json(user)
 }
 
-const handler = ncWithSession().get(getInfo);
+const handler = ncWithSession().get(getInfo)
 
-export default handler;
+export default handler

@@ -558,5 +558,5 @@ export const BACKGROUNDS = Object.freeze([
   'zelda7.png',
   'zelda8.png',
   'zelda9.png',
-  'zelda10.png',
-]);
+  'zelda10.png'
+])

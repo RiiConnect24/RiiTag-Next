@@ -1,33 +1,33 @@
 export const GUEST_MIIS = Object.freeze([
   {
     value: 'unknown',
-    label: 'Unknown',
+    label: 'Unknown'
   },
   {
     value: 'guestA',
-    label: 'Guest A',
+    label: 'Guest A'
   },
   {
     value: 'guestB',
-    label: 'Guest B',
+    label: 'Guest B'
   },
   {
     value: 'guestC',
-    label: 'Guest C',
+    label: 'Guest C'
   },
   {
     value: 'guestD',
-    label: 'Guest D',
+    label: 'Guest D'
   },
   {
     value: 'guestE',
-    label: 'Guest E',
+    label: 'Guest E'
   },
   {
     value: 'guestF',
-    label: 'Guest F',
-  },
-]);
+    label: 'Guest F'
+  }
+])
 
 export const isValidGuestMii = (value) =>
-  GUEST_MIIS.some((mii) => mii.value === value);
+  GUEST_MIIS.some((mii) => mii.value === value)

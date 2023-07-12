@@ -28,11 +28,11 @@
     "y": 2
   },
   "coin_count": {
-    "font_family": "NintendoU",
+    "font_family": "RodinNTLG",
     "font_size": 44,
     "font_style": "normal",
     "font_color": "#323232",
-    "force_font": "true",
+    "force_font": "false",
     "x": 644,
     "y": 10,
     "max": 999999
@@ -42,7 +42,7 @@
     "font_size": 40,
     "font_style": "normal",
     "font_color": "#ffffff",
-    "force_font": "true",
+    "force_font": "false",
     "align": "end",
     "x": 1077,
     "y": 388

@@ -1,79 +1,24 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:unicorn/recommended",
-    "prettier"
-  ],
-  "plugins": ["unicorn"],
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "settings": {
-    "import/resolver": {
-      "alias": {
-        "extensions": [".ts", ".js", ".jsx", ".json"],
-        "map": [
-          ["@", "./src"],
-          ["components", "./components"],
-          ["lib", "./lib"],
-          ["styles", "./styles"]
-        ]
-      }
-    }
-  },
-  "parserOptions": {
-    "ecmaVersion": 2016,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "modules": true
-    }
-  },
-  "reportUnusedDisableDirectives": true,
-  "rules": {
-    "@next/next/no-img-element": "off",
-    "camelcase": "off",
-    "no-restricted-syntax": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "import/prefer-default-export": "off",
-    "react/react-in-jsx-scope": "off",
-    "no-nested-ternary": "off",
-    "no-param-reassign": "off",
-    "no-underscore-dangle": "off",
-    "no-unused-expressions": [
-      "error",
-      {
-        "allowTernary": true
-      }
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "standard"
     ],
-    "react/no-array-index-key": "off",
-    "react/jsx-props-no-spreading": [
-      "error",
-      {
-        "html": "ignore",
-        "exceptions": ["Component"]
-      }
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
     ],
-    "react/prop-types": "error",
-    "react/forbid-prop-types": "off",
-    "unicorn/filename-case": "off",
-    "unicorn/no-array-for-each": "off",
-    "unicorn/no-array-reduce": "off",
-    "unicorn/no-null": "off",
-    "unicorn/no-useless-promise-resolve-reject": "off",
-    "unicorn/prefer-json-parse-buffer": "off",
-    "unicorn/prevent-abbreviations": [
-      "error",
-      {
-        "allowList": {
-          "getServerSideProps": true,
-          "getStaticProps": true,
-          "getStaticPaths": true
-        }
-      }
-    ]
-  }
+    "rules": {
+    }
 }
