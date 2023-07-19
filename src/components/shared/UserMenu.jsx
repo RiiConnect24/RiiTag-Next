@@ -8,7 +8,6 @@ import {
   faUser
 } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { toast } from 'react-toastify'
 import useInfo from '@/lib/swr-hooks/useInfo'
 import { isBlank } from '@/lib/utils/utils'
 import useRouterRefresh from '../../hooks/useRefreshRoute'
@@ -24,7 +23,6 @@ function UserMenu () {
     fetch('/api/auth/logout', { method: 'POST' }).then(() => {
       mutate()
       refresh()
-      toast.success('Logout successful! Bye!')
     })
   }
 
@@ -48,12 +46,15 @@ function UserMenu () {
       <NavDropdown
         align='end'
         title={
-          <img
-            className='me-1 ms-auto'
-            style={{ width: 25, height: 25 }}
-            src={user.image}
-            alt='User Avatar'
-          />
+          <span className='d-inline-flex align-items-center'>
+            <span className='me-1'>{user.name_on_riitag}</span>&nbsp;
+            <img
+              className='me-1 ms-auto'
+              style={{ width: 25, height: 25, borderRadius: '50%' }}
+              src={user.image}
+              alt='User Avatar'
+            />
+          </span>
         }
       >
         <Link href={`/user/${user.username}`} passHref legacyBehavior>
@@ -62,12 +63,6 @@ function UserMenu () {
             <span>Profile</span>
           </NavDropdown.Item>
         </Link>
-        {/* <Link href={`/user/${user.username}/playlog`} passHref> */}
-        {/*  <NavDropdown.Item> */}
-        {/*    <FontAwesomeIcon className="me-1" icon={faGamepad} /> */}
-        {/*    <span>Playlog</span> */}
-        {/*  </NavDropdown.Item> */}
-        {/* </Link> */}
         <Link href='/account' passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className='me-2' icon={faKey} />

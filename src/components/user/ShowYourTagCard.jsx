@@ -46,7 +46,7 @@ function ShowYourTagCard ({ username }) {
 
   return (
     <Card className='mb-3' bg='secondary' text='white'>
-      <Card.Header as='h5'>Show your RiiTag</Card.Header>
+      <Card.Header as='h5'>Show your LinkTag</Card.Header>
       <Card.Body>
         <Tabs
           id='embed-tabs'
@@ -59,7 +59,7 @@ function ShowYourTagCard ({ username }) {
             <EmbedText
               max={max}
               username={username}
-              text={`<a href="${ENV.BASE_URL}/user/##USERID##"><img src="${ENV.BASE_URL}/##USERID##/##TAG##" alt="RiiTag" /></a>`}
+              text={`<a href="${ENV.BASE_URL}/user/##USERID##"><img src="${ENV.BASE_URL}/##USERID##/##TAG##" alt="LinkTag" /></a>`}
             />
           </Tab>
           <Tab eventKey='bbcode' title='BBCode'>

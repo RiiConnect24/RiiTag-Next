@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { NextSeo } from 'next-seo'
 import { withSession } from '@/lib/iron-session'
 import prisma from '@/lib/db'
-import RiiTag from '@/components/user/RiiTag'
+import LinkTag from '@/components/user/LinkTag'
 import UserInformationCard from '@/components/user/UserInformationCard'
 import ShowYourTagCard from '@/components/user/ShowYourTagCard'
 import ENV from '@/lib/constants/environmentVariables'
@@ -141,7 +141,7 @@ function ProfilePage ({ user, isLoggedIn, loggedInUser, event, playlog, session,
       <Row>
         <Col lg={7}>
           <div className='mb-3'>
-            <RiiTag
+            <LinkTag
               username={user.username}
               name={user.name_on_riitag}
               updated_at={user.updated_at}

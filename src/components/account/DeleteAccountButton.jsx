@@ -45,13 +45,13 @@ export default function DeleteAccountButton () {
         <br />
         <ul className='d-block mt-3'>
           <li>Your username won&apos;t be reserved</li>
-          <li>Make sure to remove your RiiTag from forum signatures, etc.</li>
+          <li>Make sure to remove your LinkTag from forum signatures, etc.</li>
           <li>You can re-register at any time</li>
           <li>
             You can export your data on the account page beforehand if you like
           </li>
           <li>
-            You should remove RiiTag in the settings of the social media
+            You should remove LinkTag in the settings of the social media
             provider (e.g. Discord)
           </li>
         </ul>

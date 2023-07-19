@@ -5,7 +5,6 @@ import { React, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import useInfo from '@/lib/swr-hooks/useInfo'
@@ -57,22 +56,7 @@ function IndexPage ({ userCount, playCount, randomUsers }) {
       <NextSeo />
       <Row>
         <Col className='text-center'>
-          <h1>Welcome to RiiTag!</h1>
-          <p className='mt-4'>
-            RiiTag is a customizable gamertag. By sharing your
-            gamertag, you can show what you&apos;ve been
-            playing to your friends! The tag
-            updates on-the-fly. You need a Discord account in order to start
-            using RiiTag. Covers are provided by{' '}
-            <a href='https://gametdb.com/' target='_blank' rel='noreferrer'>
-              GameTDB
-            </a>{' '}
-            and this service is developed by{' '}
-            <a href='https://rc24.xyz/' target='_blank' rel='noreferrer'>
-              RiiConnect24
-            </a>
-            .
-          </p>
+          <h1>Welcome to LinkTag!</h1>
         </Col>
       </Row>
 
@@ -96,10 +80,6 @@ function IndexPage ({ userCount, playCount, randomUsers }) {
                   target='_blank'
                   rel='noreferrer noopener'
                 >
-                  <Button size='lg'>
-                    <FontAwesomeIcon className='me-2' icon={faQuestionCircle} />
-                    Instructions
-                  </Button>
                 </a>
               </Col>
             </Row>
@@ -150,18 +130,6 @@ function IndexPage ({ userCount, playCount, randomUsers }) {
           Platforms Supported
         </h3>
         <Row className='mt-4'>
-          <Col>
-            <h5 className='text-center'>3DS</h5>
-            <ul>
-              <li>3DS-RPC Discord RPC</li>
-              <li>Citra Discord RPC</li>
-            </ul>
-            <h5 className='text-center'>Switch</h5>
-            <ul>
-              <li>NSO-RPC Discord RPC</li>
-              <li>SwitchPresence-Rewritten Discord RPC</li>
-            </ul>
-          </Col>
           <Col>
             <h5 className='text-center'>Wii</h5>
             <ul>

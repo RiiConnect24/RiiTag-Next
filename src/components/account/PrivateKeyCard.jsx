@@ -37,7 +37,7 @@ function PrivateKeyCard ({ randkey }) {
         show={show}
         onSubmit={resetKey}
       >
-        Do you really want to <strong>reset your RiiTag Private Key</strong>?
+        Do you really want to <strong>reset your LinkTag Private Key</strong>?
         You will need to reconfigure your USB loaders, etc!
       </ConfirmationModal>
       <Card.Header className='h5'>RiiTag Private Key</Card.Header>

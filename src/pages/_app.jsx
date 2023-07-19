@@ -23,9 +23,9 @@ function App ({ Component, pageProps }) {
         <AppNavbar />
         <DefaultSeo
           title={undefined}
-          titleTemplate='RiiTag | %s'
-          defaultTitle='RiiTag'
-          description='RiiTag is a customizable gamertag for the Wii.'
+          titleTemplate='Linktag | %s'
+          defaultTitle='LinkTag'
+          description='LinkTag is the new generation of gamer tags for Wii.'
           additionalLinkTags={[
             {
               rel: 'apple-touch-icon',
@@ -58,7 +58,7 @@ function App ({ Component, pageProps }) {
             type: 'website',
             locale: 'en',
             url: ENV.BASE_URL,
-            site_name: 'RiiTag',
+            site_name: 'LinkTag',
             images: [
               {
                 url: `${ENV.BASE_URL}/img/riitag_back.png`,
@@ -68,11 +68,6 @@ function App ({ Component, pageProps }) {
                 type: 'image/png'
               }
             ]
-          }}
-          twitter={{
-            handle: '@RiiConnect24',
-            site: '@RiiConnect24',
-            cardType: 'summary_large_image'
           }}
         />
         <Component {...pageProps} />

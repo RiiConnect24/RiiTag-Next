@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   faGear,
-  faPen,
-  faQuestionCircle,
-  faWifi
+  faPen
 } from '@fortawesome/free-solid-svg-icons'
 import dayjs from '@/lib/dayjs'
 import { DATE_FORMAT } from '@/lib/constants/miscConstants'
@@ -64,28 +62,10 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin }) {
             }
           </li>
         </ul>
-        {isLoggedIn && (
+        {(isLoggedIn || isAdmin) && (
           <div>
             <hr />
             <div className='d-flex justify-content-between'>
-              <a
-                href='https://wii.guide/riitag'
-                target='_blank'
-                rel='noreferrer noopener'
-              >
-                <Button variant='outline-light'>
-                  <FontAwesomeIcon className='me-1' icon={faQuestionCircle} />{' '}
-                  How to Use
-                </Button>
-              </a>
-
-              <a href={`/api/user/${user.username}/riitag.wad`}>
-                <Button variant='success'>
-                  <FontAwesomeIcon className='me-1' icon={faWifi} /> RiiTag
-                  Channel
-                </Button>
-              </a>
-
               <Link href='/edit' passHref>
                 <Button variant='primary'>
                   <FontAwesomeIcon className='me-1' icon={faPen} /> Edit Tag
