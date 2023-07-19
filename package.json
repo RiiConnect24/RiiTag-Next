@@ -59,6 +59,7 @@
     "formik": "2.2.9",
     "iron-session": "6.3.1",
     "lru-cache": "7.14.1",
+    "moment": "^2.29.4",
     "next": "13.1.1",
     "next-connect": "0.13.0",
     "next-seo": "5.15.0",

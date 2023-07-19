@@ -44,6 +44,7 @@ model playlog {
   game_pk    Int      @db.UnsignedInt
   play_time  Int?
   played_on  DateTime @default(now())
+  play_count Int      @default(0)
   game       game     @relation(fields: [game_pk], references: [game_pk], onUpdate: NoAction, map: "FK_playlog_game")
   user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_playlog_user")
 
@@ -100,4 +101,11 @@ model events {
   start_time  DateTime @db.Date
   end_time    DateTime @db.Date
   bonus_coins Int      @default(0)
+}
+
+model game_sessions {
+  id         Int      @id @unique(map: "game_sessions_id_uindex") @default(autoincrement())
+  user_id    String   @db.VarChar(64)
+  game_id    String   @db.VarChar(12)
+  start_time DateTime @default(now()) @db.DateTime(0)
 }

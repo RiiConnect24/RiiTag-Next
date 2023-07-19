@@ -20,7 +20,7 @@ const limiter = rateLimit({
 async function addWiiGame (request, response) {
   const { key, game, playtime } = request.query
 
-  const truePlaytime = playtime ? parseInt(playtime, 10) : 0
+  const truePlaytime = playtime ? parseInt(playtime) : 0
 
   if (isBlank(key) || isBlank(game) || game.length < 4 || game.length > 6) {
     return response

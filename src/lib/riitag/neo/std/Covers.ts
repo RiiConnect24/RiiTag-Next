@@ -209,7 +209,7 @@ export default class Covers extends ModuleBase {
         played_on: 'desc'
       },
       distinct: ['game_pk'],
-      take: this.max * 2
+      take: this.max
     })
 
     // Return a default empty array if the user has no playlog.
@@ -254,8 +254,6 @@ export default class Covers extends ModuleBase {
     let currentY: number = 0
     let currentX: number = 0
     let yOffset: number = 0
-
-    coverPaths = coverPaths.reverse()
 
     coverPaths.forEach((coverPath) => {
       if (!coverPath) return

@@ -1,0 +1,356 @@
+[33mcommit c9e87435595a89322e2ac2a70f09a845dd003d7c[m[33m ([m[1;36mHEAD -> [m[1;32mplaytime-logging[m[33m)[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Tue Jul 18 21:22:33 2023 -0400
+
+    fix: .env
+
+[33mcommit a392ddabdbeb9e9e333049da719f9dd18a25cb69[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Tue Jul 18 21:19:52 2023 -0400
+
+    fix: .env
+
+[33mcommit 04fd5e93b031f51227b00ea67266754795860b20[m[33m ([m[1;31morigin/playtime-logging[m[33m)[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Fri Jul 14 00:09:44 2023 -0400
+
+    fix: Fix crashes occuring when no game is currently played
+
+[33mcommit 0a782e62e8b53438acdb5a63a0584ce47bfba9af[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Fri Jul 14 00:08:05 2023 -0400
+
+    ui: Only show playing status when playing something
+
+[33mcommit 95f076f80022d63d4690b5c434528cf2bb70c3cb[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Fri Jul 14 00:05:06 2023 -0400
+
+    ui: Play log now displays from most recent and only the first 10
+
+[33mcommit af52b6050acaa21fd16ea1f5d4dd06869eec7d1e[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Thu Jul 13 23:49:20 2023 -0400
+
+    feature: Play log lists and play statuses all day
+
+[33mcommit 91344acb8c1b4e0ffa162349bf13a8e443b42829[m
+Author: Matthe815 <matthew.elswick@matthe815.dev>
+Date:   Thu Jul 13 20:22:54 2023 -0400
+
+    fix: Fix issues with play log
+
+[33mcommit f5c82ed35d5dcdf67c2e7a085a400b313b0619ab[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Matthew <matthew.elswick@matthe815.dev>
+Date:   Wed Jul 12 16:04:20 2023 -0400
+
+    Refactor: Code Optimization (#4)
+    
+    * Fix data export (#33) (#35)
+    
+    This just defers the download to the next event cycle, allowing React
+    enough time to properly update the href.
+    
+    * Fix typo in readme
+    
+    * Only print registered date if user registered after RiiTag 2.0 came out
+    
+    * Add correct favicons
+    
+    * Fix path to apple touch icon png
+    
+    * Add theme color
+    
+    * Expand on homepage
+    
+    * Replace tag error with image
+    
+    * Add game counter to homepage
+    
+    * Add GameTDB titles to parse
+    
+    * Add 3DS-RPC to supported platforms list
+    
+    * Find similar games
+    
+    * Add custom background for embed
+    
+    * Remove unknown Mii showing up on tag
+    
+    * Add Wii Menu Dark theme
+    
+    * Add Switch support
+    
+    * Add switchtdb.json
+    
+    * Add switchtdb.xml
+    
+    * Fix cover reducing size
+    
+    * Fix ids issue
+    
+    * Reduce xml filesize
+    
+    * Make grabbing cover be async
+    
+    * Add search bar to leaderboard
+    
+    * Fix cover grabbing
+    
+    * Fix Flat Dark font setting
+    
+    * Fix pagination when searching games
+    
+    * Engine rewrite
+    
+    * Neo Renderer Update
+    
+    Co-authored-by: Matthew <matthew.elswick@matthe815.dev>
+    
+    * Replace makeBanner with renderTag (Neo renderer)
+    
+    * feature: Events
+    
+    * fix: env
+    
+    * refactor: Rewrites
+    
+    * package: Fixes
+    
+    * package: Fixes
+    
+    * refactor: Eslint fixes
+    
+    * refactor: Linting issue fixes
+    
+    * refactor: Lint fixes
+    
+    * refactor: Began rewritting entire to fit JS standard
+    
+    * refactor: More code to JS Standard
+    
+    * refactor: Final JS standard rewrites
+    
+    * fix: Fixed module constructors
+    
+    * renderer: Code optimization and documentation
+    
+    * fix: Fixed renderer crashes and cover order
+    
+    * .env emptying
+    
+    * feature: Starting point for playtime tracking
+    
+    * .env fix
+    
+    ---------
+
+[33mcommit ef864877c39676ab7d646dbbf6680a12020303fa[m
+Author: Matthew <matthew.elswick@matthe815.dev>
+Date:   Wed Jul 12 16:03:41 2023 -0400
+
+    Revert "Refactor: Code optimization Optimization (#2)" (#3)
+    
+    This reverts commit c791a558ac17cf3430c345cfbe23d04f122dff2f.
+
+[33mcommit c791a558ac17cf3430c345cfbe23d04f122dff2f[m
+Author: Matthew <matthew.elswick@matthe815.dev>
+Date:   Wed Jul 12 16:02:20 2023 -0400
+
+    Refactor: Code optimization Optimization (#2)
+    
+    * Fix data export (#33) (#35)
+    
+    This just defers the download to the next event cycle, allowing React
+    enough time to properly update the href.
+    
+    * Fix typo in readme
+    
+    * Only print registered date if user registered after RiiTag 2.0 came out
+    
+    * Add correct favicons
+    
+    * Fix path to apple touch icon png
+    
+    * Add theme color
+    
+    * Expand on homepage
+    
+    * Replace tag error with image
+    
+    * Add game counter to homepage
+    
+    * Add GameTDB titles to parse
+    
+    * Add 3DS-RPC to supported platforms list
+    
+    * Find similar games
+    
+    * Add custom background for embed
+    
+    * Remove unknown Mii showing up on tag
+    
+    * Add Wii Menu Dark theme
+    
+    * Add Switch support
+    
+    * Add switchtdb.json
+    
+    * Add switchtdb.xml
+    
+    * Fix cover reducing size
+    
+    * Fix ids issue
+    
+    * Reduce xml filesize
+    
+    * Make grabbing cover be async
+    
+    * Add search bar to leaderboard
+    
+    * Fix cover grabbing
+    
+    * Fix Flat Dark font setting
+    
+    * Fix pagination when searching games
+    
+    * Engine rewrite
+    
+    * Neo Renderer Update
+    
+    Co-authored-by: Matthew <matthew.elswick@matthe815.dev>
+    
+    * Replace makeBanner with renderTag (Neo renderer)
+    
+    * feature: Events
+    
+    * fix: env
+    
+    * refactor: Rewrites
+    
+    * package: Fixes
+    
+    * package: Fixes
+    
+    * refactor: Eslint fixes
+    
+    * refactor: Linting issue fixes
+    
+    * refactor: Lint fixes
+    
+    * refactor: Began rewritting entire to fit JS standard
+    
+    * refactor: More code to JS Standard
+    
+    * refactor: Final JS standard rewrites
+    
+    * fix: Fixed module constructors
+    
+    * renderer: Code optimization and documentation
+    
+    * fix: Fixed renderer crashes and cover order
+    
+    * .env emptying
+    
+    * feature: Starting point for playtime tracking
+    
+    * .env fix
+    
+    ---------
+    
+    Co-authored-by: RuiNtD <RuiNtD@outlook.com>
+    Co-authored-by: Larsenv <larsen@weborican.com>
+    Co-authored-by: bendevnull <bennyman123abc@hotmail.com>
+
+[33mcommit 83431c9b7a0c2339586e2cb5ff223290d077f480[m
+Author: Matthew <matthew.elswick@matthe815.dev>
+Date:   Wed Jul 12 10:21:49 2023 -0400
+
+    Refactor: Code rewrites (#1)
+    
+    * Fix data export (#33) (#35)
+    
+    This just defers the download to the next event cycle, allowing React
+    enough time to properly update the href.
+    
+    * Fix typo in readme
+    
+    * Only print registered date if user registered after RiiTag 2.0 came out
+    
+    * Add correct favicons
+    
+    * Fix path to apple touch icon png
+    
+    * Add theme color
+    
+    * Expand on homepage
+    
+    * Replace tag error with image
+    
+    * Add game counter to homepage
+    
+    * Add GameTDB titles to parse
+    
+    * Add 3DS-RPC to supported platforms list
+    
+    * Find similar games
+    
+    * Add custom background for embed
+    
+    * Remove unknown Mii showing up on tag
+    
+    * Add Wii Menu Dark theme
+    
+    * Add Switch support
+    
+    * Add switchtdb.json
+    
+    * Add switchtdb.xml
+    
+    * Fix cover reducing size
+    
+    * Fix ids issue
+    
+    * Reduce xml filesize
+    
+    * Make grabbing cover be async
+    
+    * Add search bar to leaderboard
+    
+    * Fix cover grabbing
+    
+    * Fix Flat Dark font setting
+    
+    * Fix pagination when searching games
+    
+    * Engine rewrite
+    
+    * Neo Renderer Update
+    
+    Co-authored-by: Matthew <matthew.elswick@matthe815.dev>
+    
+    * Replace makeBanner with renderTag (Neo renderer)
+    
+    * feature: Events
+    
+    * fix: env
+    
+    * refactor: Rewrites
+    
+    * package: Fixes
+    
+    * package: Fixes
+    
+    * refactor: Eslint fixes
+    
+    * refactor: Linting issue fixes
+    
+    * refactor: Lint fixes
+    
+    * refactor: Began rewritting entire to fit JS standard
+    
+    * refactor: More code to JS Standard
+    
+    * refactor: Final JS standard rewrites
+    
+    * fix: Fixed module constru

@@ -9,6 +9,8 @@ import RiiTag from '@/components/user/RiiTag'
 import UserInformationCard from '@/components/user/UserInformationCard'
 import ShowYourTagCard from '@/components/user/ShowYourTagCard'
 import ENV from '@/lib/constants/environmentVariables'
+import PlayLog from '@/components/user/PlayLog'
+import PlayingStatus from '@/components/user/PlayingStatus'
 
 export const getServerSideProps = withSession(async ({ req, query }) => {
   const { username } = query
@@ -19,6 +21,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       username: username.toString()
     },
     select: {
+      id: true,
       username: true,
       image: true,
       name_on_riitag: true,
@@ -46,6 +49,41 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     }
   })
 
+  const playlog = await prisma.playlog.findMany({
+    where: {
+      user: {
+        username: username.toString()
+      }
+    },
+    select: {
+      play_time: true,
+      play_count: true,
+      played_on: true,
+      game: {
+        select: {
+          game_id: true,
+          name: true
+        }
+      }
+    },
+    orderBy: {
+      played_on: 'desc'
+    },
+    take: 10
+  })
+
+  const session = await prisma.game_sessions.findFirst({
+    where: {
+      user_id: user.username
+    }
+  })
+
+  const sessionGame = await prisma.game.findFirst({
+    where: {
+      game_id: session?.game_id || '0'
+    }
+  })
+
   const loggedInUser = await prisma.user.findUnique({
     where: {
       username: loggedInUsername
@@ -68,12 +106,15 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
         name: event.name,
         date: `${event.end_time.getMonth() + 1}/${event.end_time.getDate()}/${event.end_time.getFullYear()}`,
         bonus: event.bonus_coins
-      }
+      },
+      playlog: JSON.parse(safeJsonStringify(playlog)),
+      session: JSON.parse(safeJsonStringify(session)),
+      game: JSON.parse(safeJsonStringify(sessionGame))
     }
   }
 })
 
-function ProfilePage ({ user, isLoggedIn, loggedInUser, event }) {
+function ProfilePage ({ user, isLoggedIn, loggedInUser, event, playlog, session, game }) {
   return (
     <Container>
       <NextSeo
@@ -107,12 +148,15 @@ function ProfilePage ({ user, isLoggedIn, loggedInUser, event }) {
             />
           </div>
 
-          {isLoggedIn && <ShowYourTagCard username={user.username} />}
+          <PlayLog playlog={playlog} current={game} />
         </Col>
 
         <Col lg={5}>
-          <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert>
+          { event && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert> }
+          { session && <PlayingStatus session={session} game={game} /> }
+
           <UserInformationCard user={user} isLoggedIn={isLoggedIn} isAdmin={loggedInUser.role === 'admin'} />
+          {isLoggedIn && <ShowYourTagCard username={user.username} />}
         </Col>
       </Row>
     </Container>
@@ -123,7 +167,10 @@ ProfilePage.propTypes = {
   user: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   loggedInUser: PropTypes.object.isRequired,
-  event: PropTypes.object.isRequired
+  event: PropTypes.object.isRequired,
+  playlog: PropTypes.array.isRequired,
+  session: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired
 }
 
 export default ProfilePage
