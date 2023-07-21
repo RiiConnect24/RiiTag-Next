@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<datafile xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="switchtdb.xsd">
+<datafile xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="switchtdb.xsd">
 	<SwitchTDB version="20230721014026" filter="EN" games="12092"/>
 	<!--
  GameTDB: Switch, Database started in 2017 (https://www.gametdb.com)
  Never modify this file manually, it will get overwritten when you update. You can add games and fixes on the website.
+	-->
 	<game name="Quest Contents Install Tool (EN)">
 		<id>1CGNA</id>
 		<region>USA</region>
