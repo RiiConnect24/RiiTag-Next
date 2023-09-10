@@ -28,6 +28,29 @@ async function updateTagSettings (request, response) {
   } = request.body
   const username = request.session?.username
 
+  function validateFriendCode () {
+    if (!request.body.comment) {
+      return true
+    }
+
+    const friendCode = request.body.comment.replace(/-/g, '')
+    if (friendCode.length !== 16) {
+      return false
+    }
+
+    if (!/^\d+$/.test(friendCode)) {
+      return false
+    }
+
+    return true
+  }
+
+  if (!validateFriendCode()) {
+    return response
+      .status(HTTP_CODE.BAD_REQUEST)
+      .send({ error: 'Invalid data' })
+  }
+
   if (!username) {
     return response
       .status(HTTP_CODE.UNAUTHORIZED)

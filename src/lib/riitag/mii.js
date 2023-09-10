@@ -1,5 +1,4 @@
 import FormData from 'form-data'
-import logger from '@/lib/logger'
 
 export async function getMiiHexDataFromCMOC (entryNo) {
   entryNo = entryNo.replaceAll('-', '')
@@ -15,7 +14,6 @@ export async function getMiiHexDataFromCMOC (entryNo) {
   formData.append('id', entryNo)
 
   let response
-  logger.info(`Getting CMOC entry no. ${entryNo}`)
   try {
     response = await fetch(cmocUrl, { method: 'POST', body: formData })
   } catch (error) {
@@ -44,7 +42,6 @@ export async function getMiiFromQR (data) {
   formData.append('data', data)
 
   let response
-  logger.info('Sending QR-Code Mii')
   try {
     response = await fetch(cmocUrl, {
       method: 'POST',
@@ -74,7 +71,6 @@ export async function getMiiFromHexData (hexData) {
     // QR code
     url = `https://studio.mii.nintendo.com/miis/image.png?data=${hexData}&type=face&width=512&instanceCount=1`
   }
-  logger.info(`Downloading Mii from ${url}`)
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(

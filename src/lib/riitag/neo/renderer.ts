@@ -6,6 +6,7 @@ import { saveFile } from '@/lib/utils/fileUtils'
 import ModuleBase from './ModuleBase'
 import logger from '@/lib/logger'
 import { user } from '@prisma/client'
+import { setupWorkers, startWorkerRender } from '@/lib/utils/riitagUtils'
 
 async function loadFonts () {
   const fontJsons = readdirSync(DATA.FONTS)
@@ -28,6 +29,11 @@ async function loadFonts () {
 }
 
 export async function renderTag (user: user): Promise<void> {
+  await setupWorkers()
+  startWorkerRender(user)
+}
+
+export async function doRender (user: user): Promise<void> {
   await loadFonts()
   const overlayPath = path.resolve(DATA.OVERLAYS, `neo.${user.overlay}.json`)
 

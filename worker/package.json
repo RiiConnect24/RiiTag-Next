@@ -1,0 +1,16 @@
+{
+  "name": "linktagworker",
+  "version": "2.0.0",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+    "canvas": "2.11.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ]
+}

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import ENV from '@/lib/constants/environmentVariables'
+import ENV from '../lib/constants/environmentVariables'
 
 const prisma = global.prisma || new PrismaClient()
 

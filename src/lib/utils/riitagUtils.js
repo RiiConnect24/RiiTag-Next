@@ -2,9 +2,72 @@ import fs from 'node:fs'
 import path from 'node:path'
 import readline from 'node:readline'
 import prisma from '@/lib/db'
-import { DATA } from '@/lib/constants/filePaths'
+import { CACHE, DATA } from '@/lib/constants/filePaths'
 import { exists } from '@/lib/utils/fileUtils'
+import { Socket } from 'node:net'
+import { doRender } from '../riitag/neo/renderer'
 const xml2js = require('xml2js')
+
+const workers = [{
+  address: 'localhost',
+  port: 9200,
+  socket: null,
+  activeJobs: 0
+},
+{
+  address: 'localhost',
+  port: 9201,
+  socket: null,
+  activeJobs: 0
+}]
+
+export function setupWorkers () {
+  workers.forEach((worker) => {
+    worker.socket = new Socket()
+    worker.socket.connect(worker.port, worker.address)
+
+    // Buffer to store the packet message
+    let buffer = ''
+
+    worker.socket.on('data', (data) => {
+      console.log(String(data))
+      buffer += String(data)
+
+      // If the end-packet character is not found, return
+      if (!buffer.endsWith('\n')) {
+        return
+      }
+
+      const json = JSON.parse(String(buffer))
+
+      switch (json.o) {
+        case 1:
+          console.log('Worker started.')
+          worker.activeJobs = json.c
+          break
+        case 2:
+          console.log('Worker finished.')
+          worker.activeJobs = json.c
+
+          // Store the image locally
+          fs.writeFileSync(path.resolve(CACHE.TAGS, `${json.u}.max.png`), Buffer.from(json.d))
+      }
+
+      // Clear the buffer
+      buffer = ''
+    })
+  })
+}
+
+export function startWorkerRender (user) {
+  // if there are no renders avaliable, render it on the main thread
+  if (workers.length === 0) {
+    doRender(user)
+  } else {
+    // pick the worker with the least number of active jobs
+    workers.sort((a, b) => a.activeJobs - b.activeJobs)[0].socket.write(JSON.stringify(user))
+  }
+}
 
 function findSimilarKeys (targetKey, keys) {
   const removePunctuation = key => key.replace(/[^\w\s]/g, '').replace(/™/g, '') // Remove punctuation from key
@@ -317,31 +380,74 @@ export async function updateRiiTag (user, gameId, gameName, gameConsole, playtim
     }
   })
 
-  const [, updatedUser] = await prisma.$transaction([
-    prisma.game.upsert({
+  const game = await prisma.game.findFirst({
+    where: {
+      game_id_console: {
+        game_id: gameId,
+        console: gameConsole
+      }
+    }
+  })
+
+  if (game) {
+    await prisma.game.update({
       where: {
         game_id_console: {
           game_id: gameId,
           console: gameConsole
         }
       },
-      create: {
-        game_id: gameId,
-        console: gameConsole,
-        name: gameName,
-        playlog: {
-          create: {
-            user_id: user.id
-          }
-        }
-      },
-      update: {
-        name: gameName,
+      data: {
         playcount: {
           increment: 1
         }
       }
-    }),
+    })
+  } else {
+    await prisma.game.create({
+      data: {
+        game_id_console: {
+          game_id: gameId,
+          console: gameConsole
+        },
+        name: gameName,
+        playcount: 1
+      }
+    })
+  }
+
+  const playlog = await prisma.playlog.findFirst({
+    where: {
+      game_pk: game.game_pk
+    }
+  })
+
+  if (playlog) {
+    await prisma.playlog.update({
+      where: {
+        playlog_pk: playlog.playlog_pk
+      },
+      data: {
+        playtime: {
+          increment: playtime
+        },
+        play_count: {
+          increment: 1
+        }
+      }
+    })
+  } else {
+    await prisma.playlog.create({
+      data: {
+        game_pk: game.game_pk,
+        user_id: user.id,
+        play_time: playtime,
+        play_count: 1
+      }
+    })
+  }
+
+  const [, updatedUser] = await prisma.$transaction([
     prisma.user.update({
       where: {
         id: user.id

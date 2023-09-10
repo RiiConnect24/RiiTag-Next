@@ -84,14 +84,16 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     }
   })
 
-  const loggedInUser = await prisma.user.findUnique({
-    where: {
-      username: loggedInUsername
-    },
-    select: {
-      role: true
-    }
-  })
+  const loggedInUser = loggedInUsername != null
+    ? await prisma.user.findUnique({
+      where: {
+        username: loggedInUsername
+      },
+      select: {
+        role: true
+      }
+    })
+    : { role: 'guest' }
 
   if (!user) {
     return { notFound: true }
