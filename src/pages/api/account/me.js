@@ -18,7 +18,7 @@ async function getInfo (request, response) {
     select: {
       username: true,
       role: true,
-      name_on_riitag: true,
+      display_name: true,
       image: true,
       randkey: true,
       accounts: {

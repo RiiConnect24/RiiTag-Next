@@ -28,7 +28,7 @@ function AboutPage ({ about }) {
   return (
     <Container>
       <NextSeo
-        title='About RiiTag'
+        title='About linktag'
         openGraph={{
           url: `${ENV.BASE_URL}/about`
         }}
@@ -36,7 +36,7 @@ function AboutPage ({ about }) {
 
       <Row>
         <Col>
-          <h1>About RiiTag</h1>
+          <h1>About linktag</h1>
         </Col>
       </Row>
       <Row className='mt-3'>

@@ -15,7 +15,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
   if (!username) {
     return {
       props: {
-        name_on_riitag: 'You'
+        display_name: 'You'
       }
     }
   }
@@ -25,14 +25,14 @@ export const getServerSideProps = withSession(async ({ req }) => {
       username
     },
     select: {
-      name_on_riitag: true
+      display_name: true
     }
   })
 
-  return { props: { name_on_riitag: accountInfo.name_on_riitag } }
+  return { props: { display_name: accountInfo.display_name } }
 })
 
-function CreditsPage ({ name_on_riitag: wiitagName }) {
+function CreditsPage ({ display_name: wiitagName }) {
   return (
     <Container>
       <NextSeo
@@ -43,29 +43,29 @@ function CreditsPage ({ name_on_riitag: wiitagName }) {
       />
       <Row className='mb-3'>
         <Col xs={9}>
-          <p className='h2'>Without these people, RiiTag would not exist:</p>
+          <p className='h2'>Without these people, linktag would not exist:</p>
           <ul>
             <Contributor name='Artuto'>
-              Added RiiTag support to the RiiConnect24 Bot
+              Added linktag support to the RiiConnect24 Bot
             </Contributor>
             <Contributor name='bendevnull'>
-              One of the main developers and designers of RiiTag
+              One of the main developers and designers of linktag
             </Contributor>
             <Contributor name='blackb0x'>
-              Added official RiiTag support to his modification of USB Loader GX
+              Added official linktag support to his modification of USB Loader GX
             </Contributor>
             <Contributor name='Brawl345' link='https://wiidatabase.de'>
-              Completely rewrote RiiTag into version 2.0 (RiiTag-Next)
+              Completely rewrote linktag into version 2.0 (linktag-Next)
             </Contributor>
             <Contributor name='daileon'>
               Created Wiinnertag (no longer available), which heavily inspired
-              RiiTag
+              linktag
             </Contributor>
             <Contributor name='dhtdht020'>
-              Created some of the RiiTag overlays
+              Created some of the linktag overlays
             </Contributor>
             <Contributor name='DismissedGuy'>
-              Created RiiTag-RPC for Discord
+              Created linktag-RPC for Discord
             </Contributor>
             <Contributor name='DLEDeviant'>
               Created the font&nbsp;
@@ -79,7 +79,7 @@ function CreditsPage ({ name_on_riitag: wiitagName }) {
               , one of the selectable fonts.
             </Contributor>
             <Contributor name='fledge68'>
-              Added RiiTag support to WiiFlow Lite
+              Added linktag support to WiiFlow Lite
             </Contributor>
             <Contributor name='Genwald'>Mii support</Contributor>
             <Contributor name='HEYimHeroic'>Mii support</Contributor>
@@ -90,8 +90,8 @@ function CreditsPage ({ name_on_riitag: wiitagName }) {
               One of the main developers of the project and brought it to life
             </Contributor>
             <Contributor name='Lustar'>
-              Creator and owner of GameTDB; the database of games that RiiTag
-              uses, also came up with the name RiiTag
+              Creator and owner of GameTDB; the database of games that linktag
+              uses, also came up with the name linktag
             </Contributor>
             <Contributor name='Matthe815'>
               Additional for the project
@@ -101,21 +101,21 @@ function CreditsPage ({ name_on_riitag: wiitagName }) {
             </Contributor>
             <Contributor name='PF2M'>Mii support</Contributor>
             <Contributor name='ShadowPuppet'>
-              Created DUTag (no longer available), which heavily inspired RiiTag
+              Created DUTag (no longer available), which heavily inspired linktag
             </Contributor>
             <Contributor name='TheShadowEevee'>
               Additional developer of the project, and helped add Cemu and Citra
               support
             </Contributor>
             <Contributor name='twosecslater'>
-              Created U-Tag, the RiiTag plugin for Wii U
+              Created U-Tag, the linktag plugin for Wii U
             </Contributor>
             <Contributor
               name={
                 wiitagName === 'You' ? 'You' : `${wiitagName} (You)`
               }
             >
-              For using RiiTag!
+              For using linktag!
             </Contributor>
           </ul>
         </Col>
@@ -140,11 +140,11 @@ function CreditsPage ({ name_on_riitag: wiitagName }) {
 }
 
 CreditsPage.propTypes = {
-  name_on_riitag: PropTypes.string
+  display_name: PropTypes.string
 }
 
 CreditsPage.defaultProps = {
-  name_on_riitag: 'You'
+  display_name: 'You'
 }
 
 export default CreditsPage

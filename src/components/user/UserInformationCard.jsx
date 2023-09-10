@@ -23,7 +23,7 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin }) {
       <Card.Body>
         <ul className='list-unstyled m-0'>
           <li>
-            <strong>Name:</strong> {user.name_on_riitag}
+            <strong>Name:</strong> {user.display_name}
           </li>
           {dayjs(user.created_at).format(DATE_FORMAT) !== '4th August 2022' ? (<li><strong>Registered:</strong>{' '} {dayjs(user.created_at).format(DATE_FORMAT)}</li>) : ('')}
           <li>

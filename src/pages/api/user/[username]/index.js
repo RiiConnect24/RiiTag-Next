@@ -2,7 +2,7 @@ import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import { nc } from '@/lib/routing'
 import prisma from '@/lib/db'
 import ENV from '@/lib/constants/environmentVariables'
-import { getGameRegion } from '@/lib/riitag/cover'
+import { getGameRegion } from '@/lib/linktag/cover'
 
 async function getUserByUsername (request, response) {
   const { username } = request.query
@@ -54,7 +54,7 @@ async function getUserByUsername (request, response) {
 
   const json = {
     user: {
-      name: user.name_on_riitag,
+      name: user.display_name,
       id: user.username
     },
     tag_url: {

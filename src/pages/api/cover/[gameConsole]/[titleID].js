@@ -4,7 +4,7 @@ import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import { setFileHeaders } from '@/lib/utils/utils'
 import CONSOLE from '@/lib/constants/console'
 import COVER_TYPE from '@/lib/constants/coverType'
-import { getCover, getGameRegion } from '@/lib/riitag/cover'
+import { getCover, getGameRegion } from '@/lib/linktag/cover'
 import logger from '@/lib/logger'
 import { PUBLIC } from '@/lib/constants/filePaths'
 

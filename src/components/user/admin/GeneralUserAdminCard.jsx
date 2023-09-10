@@ -13,7 +13,7 @@ export default function GeneralAdministrationCard ({ user }) {
 
   return (
     <Card className='mb-3' bg='secondary' text='light'>
-      <Card.Header className='h5'>Update Badge for {user.name_on_riitag}</Card.Header>
+      <Card.Header className='h5'>Update Badge for {user.display_name}</Card.Header>
       <Card.Body>
         <Row>
           <Col className='mb-3' md={6}>

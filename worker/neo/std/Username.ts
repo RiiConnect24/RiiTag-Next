@@ -29,6 +29,6 @@ export default class Username extends ModuleBase {
   render (ctx: Canvas.CanvasRenderingContext2D, user) {
     if (user.font !== 'default' && this.font.force === false) this.font.name = user.font
 
-    drawText(ctx, this.font, user.name_on_riitag, this.x, this.y, this.align)
+    drawText(ctx, this.font, user.display_name, this.x, this.y, this.align)
   }
 }

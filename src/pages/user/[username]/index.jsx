@@ -24,7 +24,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       id: true,
       username: true,
       image: true,
-      name_on_riitag: true,
+      display_name: true,
       created_at: true,
       updated_at: true,
       overlay: true,
@@ -104,11 +104,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       user: JSON.parse(safeJsonStringify(user)),
       isLoggedIn: user.username === loggedInUsername,
       loggedInUser,
-      event: {
-        name: event.name,
-        date: `${event.end_time.getMonth() + 1}/${event.end_time.getDate()}/${event.end_time.getFullYear()}`,
-        bonus: event.bonus_coins
-      },
+      event: JSON.parse(safeJsonStringify(event)),
       playlog: JSON.parse(safeJsonStringify(playlog)),
       session: JSON.parse(safeJsonStringify(session)),
       game: JSON.parse(safeJsonStringify(sessionGame))
@@ -120,8 +116,8 @@ function ProfilePage ({ user, isLoggedIn, loggedInUser, event, playlog, session,
   return (
     <Container>
       <NextSeo
-        title={user.name_on_riitag}
-        description={`See what ${user.name_on_riitag} has played`}
+        title={user.display_name}
+        description={`See what ${user.display_name} has played`}
         openGraph={{
           url: `${ENV.BASE_URL}/user/${user.username}`,
           images: [
@@ -131,12 +127,12 @@ function ProfilePage ({ user, isLoggedIn, loggedInUser, event, playlog, session,
               ).getTime()}`,
               width: 1200,
               height: 450,
-              alt: `RiiTag of ${user.name_on_riitag}`,
+              alt: `linktag of ${user.display_name}`,
               type: 'image/png'
             }
           ],
           profile: {
-            username: user.name_on_riitag
+            username: user.display_name
           }
         }}
       />
@@ -145,7 +141,7 @@ function ProfilePage ({ user, isLoggedIn, loggedInUser, event, playlog, session,
           <div className='mb-3'>
             <LinkTag
               username={user.username}
-              name={user.name_on_riitag}
+              name={user.display_name}
               updated_at={user.updated_at}
             />
           </div>

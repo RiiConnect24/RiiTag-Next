@@ -16,18 +16,18 @@ function GeneralCard ({ values, errors, handleChange }) {
         <Row>
           <Col>
             <Form.Group className='mb-3' controlId='name'>
-              <Form.Label>Name on RiiTag</Form.Label>
+              <Form.Label>Name on linktag</Form.Label>
               <Form.Control
                 required
                 type='text'
                 placeholder='Nickname'
-                name='nameOnRiiTag'
+                name='nameOnlinktag'
                 onChange={handleChange}
-                value={values.nameOnRiiTag}
-                isInvalid={!!errors.nameOnRiiTag}
+                value={values.nameOnlinktag}
+                isInvalid={!!errors.nameOnlinktag}
               />
               <Form.Control.Feedback type='invalid'>
-                {errors.nameOnRiiTag}
+                {errors.nameOnlinktag}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -88,7 +88,7 @@ function GeneralCard ({ values, errors, handleChange }) {
                 {errors.coverRegion}
               </Form.Control.Feedback>
               <Form.Text className='text-muted'>
-                RiiTag will try the game&apos;s region and fallback to English
+                linktag will try the game&apos;s region and fallback to English
                 if it can&apos;t find a cover.
               </Form.Text>
             </Form.Group>

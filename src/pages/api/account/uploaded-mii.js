@@ -7,7 +7,7 @@ import { MII_TYPE } from '@/lib/constants/miiType'
 import { setFileHeaders } from '@/lib/utils/utils'
 import { CACHE, PUBLIC } from '@/lib/constants/filePaths'
 import { exists, saveFile } from '@/lib/utils/fileUtils'
-import { getMiiFromHexData } from '@/lib/riitag/mii'
+import { getMiiFromHexData } from '@/lib/linktag/mii'
 import logger from '@/lib/logger'
 
 async function getMyUploadedMii (request, response) {

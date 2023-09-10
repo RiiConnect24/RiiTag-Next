@@ -67,32 +67,32 @@ model following {
 }
 
 model user {
-  id             Int         @id @default(autoincrement())
-  username       String      @unique @db.VarChar(50)
-  role           String      @default("user") @db.VarChar(25)
-  name_on_riitag String?     @db.VarChar(255)
-  image          String?     @db.VarChar(255)
-  randkey        String?     @unique @db.VarChar(200)
-  coins          Int         @default(0) @db.UnsignedInt
-  cover_region   String      @default("EN") @db.VarChar(6)
-  cover_type     String      @default("cover3D") @db.VarChar(10)
-  comment        String?     @db.VarChar(50)
-  overlay        String      @default("overlay1") @db.VarChar(20)
-  background     String      @default("riiconnect241.png") @db.VarChar(120)
-  flag           String      @default("rc24") @db.VarChar(20)
-  coin           String      @default("mario") @db.VarChar(20)
-  font           String      @default("default") @db.VarChar(50)
-  show_avatar    Boolean     @default(false)
-  show_mii       Boolean     @default(false)
-  mii_type       String      @default("guest") @db.VarChar(10)
-  mii_data       String?     @db.VarChar(8192)
-  cmoc_entry_no  String?     @db.VarChar(12)
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @default(now()) @updatedAt
-  badge          String?     @db.VarChar(50)
-  accounts       account[]
-  following      following[]
-  playlog        playlog[]
+  id            Int         @id @default(autoincrement())
+  username      String      @unique @db.VarChar(50)
+  role          String      @default("user") @db.VarChar(25)
+  display_name  String?     @db.VarChar(255)
+  image         String?     @db.VarChar(255)
+  randkey       String?     @unique @db.VarChar(200)
+  coins         Int         @default(0) @db.UnsignedInt
+  cover_region  String      @default("EN") @db.VarChar(6)
+  cover_type    String      @default("cover3D") @db.VarChar(10)
+  comment       String?     @db.VarChar(50)
+  overlay       String      @default("overlay1") @db.VarChar(20)
+  background    String      @default("riiconnect241.png") @db.VarChar(120)
+  flag          String      @default("rc24") @db.VarChar(20)
+  coin          String      @default("mario") @db.VarChar(20)
+  font          String      @default("default") @db.VarChar(50)
+  show_avatar   Boolean     @default(false)
+  show_mii      Boolean     @default(false)
+  mii_type      String      @default("guest") @db.VarChar(10)
+  mii_data      String?     @db.VarChar(8192)
+  cmoc_entry_no String?     @db.VarChar(12)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @default(now()) @updatedAt
+  badge         String?     @db.VarChar(50)
+  accounts      account[]
+  following     following[]
+  playlog       playlog[]
 }
 
 model events {
@@ -106,6 +106,6 @@ model events {
 model game_sessions {
   id         Int      @id @unique(map: "game_sessions_id_uindex") @default(autoincrement())
   user_id    String   @db.VarChar(64)
-  game_id    String   @db.VarChar(12)
+  game_id    String   @db.VarChar(50)
   start_time DateTime @default(now()) @db.DateTime(0)
 }

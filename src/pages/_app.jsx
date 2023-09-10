@@ -61,10 +61,10 @@ function App ({ Component, pageProps }) {
             site_name: 'LinkTag',
             images: [
               {
-                url: `${ENV.BASE_URL}/img/riitag_back.png`,
+                url: `${ENV.BASE_URL}/img/linktag_back.png`,
                 width: 1920,
                 height: 1080,
-                alt: 'RiiTag',
+                alt: 'linktag',
                 type: 'image/png'
               }
             ]

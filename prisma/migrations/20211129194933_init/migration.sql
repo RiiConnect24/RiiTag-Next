@@ -57,7 +57,7 @@ CREATE TABLE `user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(50) NOT NULL,
     `role` VARCHAR(25) NOT NULL DEFAULT 'user',
-    `name_on_riitag` VARCHAR(255) NULL,
+    `display_name` VARCHAR(255) NULL,
     `image` VARCHAR(255) NULL,
     `randkey` VARCHAR(200) NULL,
     `coins` INTEGER UNSIGNED NOT NULL DEFAULT 0,

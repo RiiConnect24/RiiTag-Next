@@ -25,7 +25,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     select: {
       username: true,
       badge: true,
-      name_on_riitag: true
+      display_name: true
     }
   })
 

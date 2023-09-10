@@ -37,7 +37,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
       username
     },
     select: {
-      name_on_riitag: true,
+      display_name: true,
       cover_region: true,
       cover_type: true,
       comment: true,
@@ -58,7 +58,7 @@ function EditPage ({ tagInfo }) {
   return (
     <Formik
       initialValues={{
-        nameOnRiiTag: tagInfo.name_on_riitag,
+        nameOnlinktag: tagInfo.display_name,
         comment: tagInfo.comment === null ? '' : tagInfo.comment,
         coverRegion: tagInfo.cover_region,
         coverType: tagInfo.cover_type,
@@ -73,10 +73,10 @@ function EditPage ({ tagInfo }) {
       validate={(values) => {
         const errors = {}
 
-        if (!values.nameOnRiiTag) {
-          errors.nameOnRiiTag = 'Required'
-        } else if (values.nameOnRiiTag.length > 20) {
-          errors.nameOnRiiTag = 'Name must be < 20 characters.'
+        if (!values.nameOnlinktag) {
+          errors.nameOnlinktag = 'Required'
+        } else if (values.nameOnlinktag.length > 20) {
+          errors.nameOnlinktag = 'Name must be < 20 characters.'
         }
 
         if (values.comment && values.comment.length > 50) {

@@ -40,11 +40,11 @@ function PrivateKeyCard ({ randkey }) {
         Do you really want to <strong>reset your LinkTag Private Key</strong>?
         You will need to reconfigure your USB loaders, etc!
       </ConfirmationModal>
-      <Card.Header className='h5'>RiiTag Private Key</Card.Header>
+      <Card.Header className='h5'>linktag Private Key</Card.Header>
       <Card.Body>
         <Alert variant='warning'>
           Do not share this key with anyone, as it can be used to update your
-          RiiTag!
+          linktag!
         </Alert>
         <hr />
         <PrivateKey randkey={key} toggleModal={toggleModal} />

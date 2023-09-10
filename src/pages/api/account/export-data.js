@@ -19,7 +19,7 @@ async function exportData (request, response) {
       },
       select: {
         username: true,
-        name_on_riitag: true,
+        display_name: true,
         image: true,
         randkey: true,
         coins: true,

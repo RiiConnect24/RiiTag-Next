@@ -2,7 +2,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { React, useState } from 'react'
 import { NextSeo } from 'next-seo'
-import { getGameLeaderboard, getGameLeaderboardSearch } from '@/lib/riitag/leaderboard'
+import { getGameLeaderboard, getGameLeaderboardSearch } from '@/lib/linktag/leaderboard'
 import GameLeaderboardCard from '@/components/leaderboard/GameLeaderboardCard'
 import { TOTAL_GAMES_ON_LEADERBOARD } from '@/lib/constants/miscConstants'
 import Pagination from '@/components/shared/Pagination'
@@ -85,7 +85,7 @@ function GameLeaderboardPage ({ page, totalPages, leaderboard }) {
     <Container>
       <NextSeo
         title='Leaderboard'
-        description='See what people have played the most while connected to their RiiTag!'
+        description='See what people have played the most while connected to their linktag!'
         canonical={`${ENV.BASE_URL}/game-leaderboard?page=${currentPage}&search=${searchQuery}`}
         openGraph={{
           url: `${ENV.BASE_URL}/game-leaderboard?page=${currentPage}&search=${searchQuery}`

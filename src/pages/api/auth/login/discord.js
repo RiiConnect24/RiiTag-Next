@@ -126,7 +126,7 @@ async function oAuthCallback (request, response) {
     user = await prisma.user.create({
       data: {
         username: authInfo.user.id,
-        name_on_riitag: authInfo.user.username,
+        display_name: authInfo.user.username,
         image: imageUrl,
         randkey: generateRandomKey(128),
         accounts: {

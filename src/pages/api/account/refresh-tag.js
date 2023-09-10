@@ -1,11 +1,11 @@
 import HTTP_CODE from '@/lib/constants/httpStatusCodes'
-// import { renderTag } from '@/lib/riitag/neo/renderer';
+// import { renderTag } from '@/lib/linktag/neo/renderer';
 import logger from '@/lib/logger'
 import prisma from '@/lib/db'
 import { ncWithSession } from '@/lib/routing'
 import rateLimit from '@/lib/rate-limit'
 import ENV from '@/lib/constants/environmentVariables'
-import { renderTag } from '@/lib/riitag/neo/renderer'
+import { renderTag } from '@/lib/linktag/neo/renderer'
 
 const limiter = rateLimit({
   interval: ENV.IS_DEV ? 1 : 30_000, // 30 Seconds

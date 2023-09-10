@@ -1,6 +1,6 @@
-# RiiTag Next
+# linktag Next
 
-This is [RiiTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org/).
+This is [linktag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org/).
 
 ## Features
 

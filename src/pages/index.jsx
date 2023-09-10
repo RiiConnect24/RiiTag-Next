@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import useInfo from '@/lib/swr-hooks/useInfo'
 import prisma from '@/lib/db'
-import RiiTagCarousel from '@/components/index/RiiTagCarousel'
+import LinkTagCarousel from '@/components/index/LinkTagCarousel'
 import safeJsonStringify from 'safe-json-stringify'
 
 export async function getStaticProps () {
@@ -20,7 +20,7 @@ export async function getStaticProps () {
   `
   const playCount = Number(playCountResult[0]['SUM(coins)'])
   const randomUsers = await prisma.$queryRaw`
-      SELECT user.username, user.name_on_riitag, user.updated_at
+      SELECT user.username, user.display_name, user.updated_at
       FROM user
       WHERE user.coins > 10
       ORDER BY RAND()
@@ -76,7 +76,7 @@ function IndexPage ({ userCount, playCount, randomUsers }) {
                   </>
                 )}
                 <a
-                  href='https://wii.guide/riitag'
+                  href='https://wii.guide/linktag'
                   target='_blank'
                   rel='noreferrer noopener'
                 >
@@ -119,7 +119,7 @@ function IndexPage ({ userCount, playCount, randomUsers }) {
         randomUsers.length > 0 && (
           <Row className='text-center'>
             <Col>
-              <RiiTagCarousel randomUsers={randomUsers} />
+              <LinkTagCarousel randomUsers={randomUsers} />
             </Col>
           </Row>
         )

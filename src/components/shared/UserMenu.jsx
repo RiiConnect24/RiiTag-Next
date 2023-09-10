@@ -47,7 +47,7 @@ function UserMenu () {
         align='end'
         title={
           <span className='d-inline-flex align-items-center'>
-            <span className='me-1'>{user.name_on_riitag}</span>&nbsp;
+            <span className='me-1'>{user.display_name}</span>&nbsp;
             <img
               className='me-1 ms-auto'
               style={{ width: 25, height: 25, borderRadius: '50%' }}
@@ -81,7 +81,7 @@ function UserMenu () {
         <Link href='/edit' passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className='me-2' icon={faPen} />
-            <span>Edit RiiTag</span>
+            <span>Edit LinkTag</span>
           </NavDropdown.Item>
         </Link>
         <Link href='/mii' passHref legacyBehavior>

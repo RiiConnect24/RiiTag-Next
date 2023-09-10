@@ -36,7 +36,7 @@ export default function ExportButton () {
         ref={dlButton}
         className='d-none'
         href={exportUrl}
-        download='riitag-export.json'
+        download='linktag-export.json'
         rel='external'
       >
         Download exported data

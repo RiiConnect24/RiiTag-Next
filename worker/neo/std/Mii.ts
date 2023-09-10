@@ -4,7 +4,7 @@ import Canvas from 'canvas'
 import { CACHE, PUBLIC } from '../../../src/lib/constants/filePaths'
 import path from 'node:path'
 import fs from 'node:fs'
-import { getMiiFromHexData, getMiiHexDataFromCMOC } from '../../../src/lib/riitag/mii'
+import { getMiiFromHexData, getMiiHexDataFromCMOC } from '../../../src/lib/linktag/mii'
 import { saveFile } from '../../../src/lib/utils/fileUtils'
 import { user } from '@prisma/client'
 

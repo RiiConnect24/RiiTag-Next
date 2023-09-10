@@ -10,11 +10,11 @@ import { isValidCoin } from '@/lib/constants/forms/coins'
 import { isValidFont } from '@/lib/constants/forms/fonts'
 import logger from '@/lib/logger'
 import prisma from '@/lib/db'
-import { renderTag } from '@/lib/riitag/neo/renderer'
+import { renderTag } from '@/lib/linktag/neo/renderer'
 
 async function updateTagSettings (request, response) {
   const {
-    nameOnRiiTag,
+    nameOnlinktag,
     comment,
     coverRegion,
     coverType,
@@ -58,7 +58,7 @@ async function updateTagSettings (request, response) {
   }
 
   if (
-    isBlank(nameOnRiiTag) ||
+    isBlank(nameOnlinktag) ||
     isBlank(coverRegion) ||
     isBlank(coverType) ||
     isBlank(overlay) ||
@@ -66,7 +66,7 @@ async function updateTagSettings (request, response) {
     isBlank(flag) ||
     isBlank(coin) ||
     isBlank(font) ||
-    nameOnRiiTag.length > 20 ||
+    nameOnlinktag.length > 20 ||
     comment.length > 50 ||
     !isValidCoverType(coverType) ||
     !isValidCoverRegion(coverRegion) ||
@@ -89,7 +89,7 @@ async function updateTagSettings (request, response) {
         username
       },
       data: {
-        name_on_riitag: nameOnRiiTag,
+        display_name: nameOnlinktag,
         cover_region: coverRegion,
         cover_type: coverType,
         comment: isBlank(comment) ? null : comment,
