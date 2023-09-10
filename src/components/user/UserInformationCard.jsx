@@ -12,15 +12,21 @@ import { FLAGS } from '@/lib/constants/forms/flags'
 import { FONTS } from '@/lib/constants/forms/fonts'
 import { COVER_REGIONS } from '@/lib/constants/forms/coverRegions'
 import { COVER_TYPES } from '@/lib/constants/forms/coverTypes'
-import { Button, Card } from 'react-bootstrap'
+import { Badge, Button, Card, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import BanAccountButton from '../account/BanAccountButton'
+import ForceHiddenAccountButton from '../account/ForceHiddenAccountButton'
 
-function UserInformationCard ({ user, isLoggedIn, isAdmin }) {
+function UserInformationCard ({ user, isLoggedIn, isAdmin, isMod }) {
   return (
     <Card className='mb-3' bg='secondary' text='white'>
       <Card.Header as='h5'>User Information</Card.Header>
       <Card.Body>
+        {user.isBanned && (<Badge bg='danger' className='mb-2'>Banned</Badge>)}
+        {(user.publicOverride === false || (user.publicOverride === true && isMod)) && (<Badge bg='danger' className='mb-2'>Hidden</Badge>)}
+        {user.role === 'admin' && (<Badge bg='success' className='mb-2'>Administrator</Badge>)}
+        {user.role === 'mod' && (<Badge bg='success' className='mb-2'>Moderator</Badge>)}
         <ul className='list-unstyled m-0'>
           <li>
             <strong>Name:</strong> {user.display_name}
@@ -72,6 +78,14 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin }) {
                 </Button>
               </Link>
             </div>
+            {isMod && (
+              <div className='mt-3'>
+                <InputGroup>
+                  <BanAccountButton isBanned={user.isBanned} id={user.id} />
+                  <ForceHiddenAccountButton isHidden={user.publicOverride != null} id={user.id} />
+                </InputGroup>
+              </div>
+            )}
             {isAdmin && (
               <div className='mt-3'>
                 <Link href={`/user/${user.username}/admin`} passHref>
@@ -91,7 +105,8 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin }) {
 UserInformationCard.propTypes = {
   user: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
-  isAdmin: PropTypes.bool.isRequired
+  isAdmin: PropTypes.bool.isRequired,
+  isMod: PropTypes.bool.isRequired
 }
 
 export default UserInformationCard

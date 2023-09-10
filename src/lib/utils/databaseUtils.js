@@ -39,3 +39,16 @@ export async function userIsAdmin (username) {
 
   return user.role === 'admin'
 }
+
+export async function userIsMod (username) {
+  const user = await prisma.user.findFirst({
+    where: {
+      username
+    },
+    select: {
+      role: true
+    }
+  })
+
+  return user.role === 'admin' || user.role === 'mod'
+}

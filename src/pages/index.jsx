@@ -22,7 +22,7 @@ export async function getStaticProps () {
   const randomUsers = await prisma.$queryRaw`
       SELECT user.username, user.display_name, user.updated_at
       FROM user
-      WHERE user.coins > 10
+      WHERE user.coins > 10 AND user.isPublic = 1 AND user.publicOverride IS NULL
       ORDER BY RAND()
       LIMIT 5
   `
