@@ -15,11 +15,7 @@ export async function downloadSwitchTDB(req, res) {
 
     // Step 2: Unzip switchtdb.zip and save switchtdb.xml
     const zip = new AdmZip(response.body);
-    try {
-        zip.extractAllTo(path.resolve(DATA.IDS), true);
-    } catch (error) {
-        console.error('Error:', error);
-    }
+    zip.extractAllTo(path.resolve(DATA.IDS), true);
 
     // Step 3: Read and modify the XML
     const xmlData = await fs.readFile(path.resolve(DATA.IDS, 'switchtdb.xml'));
