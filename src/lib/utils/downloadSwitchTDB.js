@@ -6,7 +6,6 @@ import path from 'path';
 import { DATA } from '@/lib/constants/filePaths';
 
 export async function downloadSwitchTDB(req, res) {
-    // Step 1: Download switchtdb.zip
     const response = await fetch('https://www.gametdb.com/switchtdb.zip');
 
     if (response.status !== 200) {
@@ -16,13 +15,15 @@ export async function downloadSwitchTDB(req, res) {
 
     // Step 2: Unzip switchtdb.zip and save switchtdb.xml
     const zip = new AdmZip(response.body);
-    zip.extractEntryTo('switchtdb.xml', path.resolve(DATA.IDS, 'switchtdb.xml'));
+    try {
+        zip.extractAllTo(path.resolve(DATA.IDS), true);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 
     // Step 3: Read and modify the XML
     const xmlData = await fs.readFile(path.resolve(DATA.IDS, 'switchtdb.xml'));
     const jsonData = await xml2js.parseStringPromise(xmlData, { explicitArray: false });
-
-    // Scrubbing logic (modify jsonData as needed)
 
     // Step 4: Save the modified XML
     const builder = new xml2js.Builder();
@@ -33,8 +34,10 @@ export async function downloadSwitchTDB(req, res) {
     const gameData = jsonData.datafile.game;
     const gameMap = {};
 
+    console.log(gameData);
+
     gameData.forEach((game) => {
-        const name = game.name.replace(/\s*\([^)]*\)\s*/, '');
+        const name = game["$"].name.replace(/ \(EN\)$/, '');
         const id = game.id;
         if (!gameMap[name]) {
             gameMap[name] = [];
@@ -54,4 +57,4 @@ export async function downloadSwitchTDB(req, res) {
         path.resolve(DATA.IDS, 'switchtdb.json'),
         JSON.stringify(sortedGameMap, null, 2)
     );
-};
+}
