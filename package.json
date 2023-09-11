@@ -42,6 +42,8 @@
     "@tiptap/extension-link": "2.0.0-beta.209",
     "@tiptap/react": "2.0.0-beta.209",
     "@tiptap/starter-kit": "2.0.0-beta.209",
+    "adm-zip": "^0.5.10",
+    "axios": "^1.5.0",
     "bootstrap": "5.2.3",
     "canvas": "2.11.0",
     "dayjs": "1.11.7",
@@ -50,9 +52,10 @@
     "form-data": "4.0.0",
     "formidable": "2.1.1",
     "formik": "2.2.9",
+    "fs-extra": "^11.1.1",
     "iron-session": "6.3.1",
     "lru-cache": "7.14.1",
-    "next": "13.1.1",
+    "next": "^13.1.1",
     "next-connect": "0.13.0",
     "next-seo": "5.15.0",
     "nextjs-progressbar": "0.0.16",
@@ -67,7 +70,7 @@
     "safe-json-stringify": "1.2.0",
     "swr": "2.0.0",
     "twitter-lite": "1.1.0",
-    "xml2js": "^0.6.0"
+    "xml2js": "^0.6.2"
   },
   "browserslist": [
     "defaults",

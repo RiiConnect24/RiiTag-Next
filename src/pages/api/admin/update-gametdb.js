@@ -5,6 +5,7 @@ import logger from '@/lib/logger';
 import { saveFile } from '@/lib/utils/fileUtils';
 import { DATA } from '@/lib/constants/filePaths';
 import { userIsAdmin } from '@/lib/utils/databaseUtils';
+import { downloadSwitchTDB } from '@/lib/utils/downloadSwitchTDB';
 
 async function download(txtname) {
   const url = `https://www.gametdb.com/${txtname}.txt?LANG=ORIG`;
@@ -39,6 +40,7 @@ async function updateGameTdb(request, response) {
     download('wiitdb'),
     download('wiiutdb'),
     download('3dstdb'),
+    downloadSwitchTDB(),
   ]);
 
   return response.status(HTTP_CODE.OK).send('OK!');
