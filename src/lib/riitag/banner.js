@@ -110,7 +110,7 @@ export async function makeBanner(user) {
   const context = canvas.getContext('2d');
 
   // Background image
-  const bgPath = path.resolve(PUBLIC.BACKGROUND, user.background);
+  const bgPath = path.resolve(user.background_custom ? CACHE.BACKGROUNDS : PUBLIC.BACKGROUND, user.background);  
   if (!(await exists(bgPath))) {
     throw new Error(`Background ${user.background} does not exist`);
   }
