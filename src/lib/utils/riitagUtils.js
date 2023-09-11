@@ -25,8 +25,6 @@ export async function downloadSwitchTDB(req, res) {
   const xmlData = await fs.readFile(path.resolve(DATA.IDS, 'switchtdb.xml'));
   const jsonData = await xml2js.parseStringPromise(xmlData, { explicitArray: false });
 
-  // Scrubbing logic (modify jsonData as needed)
-
   // Step 4: Save the modified XML
   const builder = new xml2js.Builder();
   const modifiedXml = builder.buildObject(jsonData);
