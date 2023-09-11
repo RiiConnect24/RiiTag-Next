@@ -40,8 +40,9 @@ async function updateGameTdb(request, response) {
     download('wiitdb'),
     download('wiiutdb'),
     download('3dstdb'),
-    downloadSwitchTDB(),
   ]);
+
+  await downloadSwitchTDB();
 
   return response.status(HTTP_CODE.OK).send('OK!');
 }
