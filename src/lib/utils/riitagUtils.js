@@ -1,351 +1,66 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import readline from 'node:readline';
-import prisma from '@/lib/db';
+import axios from 'axios';
+import AdmZip from 'adm-zip';
+import xml2js from 'xml2js';
+import fs from 'fs-extra';
+import path from 'path';
 import { DATA } from '@/lib/constants/filePaths';
-import { exists } from '@/lib/utils/fileUtils';
-const xml2js = require('xml2js');
 
-function findSimilarKeys(targetKey, keys) {
-  const removePunctuation = key => key.replace(/[^\w\s]/g, '').replace(/™/g, ''); // Remove punctuation from key
-  const targetKeyWithoutPunctuation = removePunctuation(targetKey.toLowerCase());
-
-  return keys.filter(key => {
-    const keyWithoutPunctuation = removePunctuation(key.toLowerCase());
-    return keyWithoutPunctuation == targetKeyWithoutPunctuation;
-  });
-}
-
-export async function getGameNameFromTitlesTxt(txtname, gameId) {
-  const filepath = path.resolve(DATA.GAMETDB, txtname);
-
-  if (!(await exists(filepath))) {
-    return null;
-  }
-
-  gameId = gameId.toUpperCase();
-  const fileStream = fs.createReadStream(filepath, 'utf8');
-
-  const linereader = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Number.POSITIVE_INFINITY,
-  });
-
-  for await (const line of linereader) {
-    if (line.startsWith(gameId)) {
-      fileStream.close();
-      return line.split(' = ')[1];
-    }
-  }
-
-  fileStream.close();
-  return null;
-}
-
-export async function getWiiGameName(gameId) {
-  return getGameNameFromTitlesTxt('wiitdb.txt', gameId);
-}
-
-export async function getSwitchGameName(gameId) {
-  return getGameNameFromTitlesTxt('switchtdb.txt', gameId);
-}
-
-export async function get3DSGameName(gameId) {
-  return getGameNameFromTitlesTxt('3dstdb.txt', gameId);
-}
-
-export async function getWiiUGameName(gameId) {
-  return getGameNameFromTitlesTxt('wiiutdb.txt', gameId);
-}
-
-export function getSimilarKeys(ids, gameName, keys) {
-  let similarKeys = findSimilarKeys(gameName, keys);
-
-  for (const key of similarKeys) {
-    let foundIds = ids[key];
-    if (foundIds) {
-      return foundIds;
-    }
-  }
-}
-
-export async function getSwitchGameIdByNameAndRegion(gameName, region) {
-  const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
-  );
-
-  let foundIds = ids[gameName];
-
-  if (!foundIds) {
-    foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
-
-    if (!foundIds) {
-      return null;
-    }
-  }
-
+export async function downloadSwitchTDB(req, res) {
   try {
-    const data = await fs.promises.readFile(
-      path.resolve(DATA.IDS, 'switchtdb.xml'),
-      'utf-8'
-    );
+    const response = await fetch('https://www.gametdb.com/switchtdb.zip');
 
-    const result = await new Promise((resolve, reject) => {
-      xml2js.parseString(data, (parseErr, parseResult) => {
-        if (parseErr) {
-          reject(parseErr);
-        } else {
-          resolve(parseResult);
-        }
-      });
+    if (response.status !== 200) {
+      logger.error(`Failed downloading ${txtname}.txt`);
+      return Promise.reject();
+    }
+
+    // Step 2: Unzip switchtdb.zip and save switchtdb.xml
+    const zip = new AdmZip(response.body);
+    try {
+      zip.extractAllTo(path.resolve(DATA.IDS), true);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    // Step 3: Read and modify the XML
+    const xmlData = await fs.readFile(path.resolve(DATA.IDS, 'switchtdb.xml'));
+    const jsonData = await xml2js.parseStringPromise(xmlData, { explicitArray: false });
+
+    // Scrubbing logic (modify jsonData as needed)
+
+    // Step 4: Save the modified XML
+    const builder = new xml2js.Builder();
+    const modifiedXml = builder.buildObject(jsonData);
+    await fs.writeFile(path.resolve(DATA.IDS, 'switchtdb.xml'), modifiedXml);
+
+    // Step 5: Create switchtdb.json
+    const gameData = jsonData.datafile.game;
+    const gameMap = {};
+
+    console.log(gameData);
+
+    gameData.forEach((game) => {
+      const name = game["$"].name.replace(/ \(EN\)$/, '');
+      const id = game.id;
+      if (!gameMap[name]) {
+        gameMap[name] = [];
+      }
+      gameMap[name].push(id);
     });
 
-    const games = result.datafile.game;
-
-    function findRegionByGameId(gameId) {
-      let regions = null;
-      games.forEach(game => {
-        if (game.id[0] === gameId) {
-          regions = game.region[0].split(',').map(region => region.trim());
-        }
+    // Step 6: Sort the keys alphabetically
+    const sortedGameMap = {};
+    Object.keys(gameMap)
+      .sort()
+      .forEach((key) => {
+        sortedGameMap[key] = gameMap[key];
       });
-      return regions;
-    }
 
-    for (const gameId of foundIds) {
-      const region = findRegionByGameId(gameId);
-
-      for (const gameRegion of region) {
-        // Europe
-        if (region === "FR" && gameRegion === "FRA") {
-          return gameId;
-        }
-        if (region === "DE" && gameRegion === "DEU") {
-          return gameId;
-        }
-        if (region === "ES" && gameRegion === "ESP") {
-          return gameId;
-        }
-        if (region === "AU" && gameRegion === "AUS") {
-          return gameId;
-        }
-        if (region === "EN" || region === "FR" || region === "DE" || region === "ES" || region === "IT" || region === "NL" || region === "PT" || region === "SE" || region === "DK" || region === "NO" || region === "FI" && gameRegion === "EUR") {
-          return gameId;
-        }
-        if (region === "KO" && gameRegion === "KOR") {
-          return gameId;
-        }
-        if (region === "TW" && gameRegion === "TWN") {
-          return gameId;
-        }
-
-        // Japan
-        if (region === "JP" && gameRegion === "JPN") {
-          return gameId;
-        }
-
-        // USA
-        if (region === "EN" && gameRegion === "USA") {
-          return gameId;
-        }
-
-        if (gameRegion === "ALL") {
-          return gameId;
-        }
-      }
-    }
-
-    return null; // Game ID not found
+    await fs.writeFile(
+      path.resolve(DATA.IDS, 'switchtdb.json'),
+      JSON.stringify(sortedGameMap, null, 2)
+    );
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error('Error:', error);
   }
-}
-
-export async function get3DSGameIdByNameAndRegion(gameName, region) {
-  const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
-  );
-
-  let foundIds = ids[gameName];
-
-  if (!foundIds) {
-    foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
-
-    if (!foundIds) {
-      const ids = JSON.parse(
-        await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
-      );
-
-      foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
-
-      if (!foundIds) {
-        return null;
-      }
-    }
-  }
-
-  if (foundIds.length === 1) {
-    return foundIds[0];
-  }
-  // Region-free, don't care
-  if (foundIds[0].slice(-1) === 'A') {
-    return foundIds[0];
-  }
-
-  /*  Regions and Fallbacks
-        Europe: P with V Fallback, then X, Y or Z, then J.
-        America: E with X, Y, or Z fallback, then P
-        Japan: J with E fallback
-        Everything else: P Fallback
-
-        This should hopefully create a safety net where there's always some region avalible.
-        If not just return "ids[gameName][0]" to use the first entry for the game.
-    */
-  for (const gameID of foundIds) {
-    const gameRegion = gameID.slice(-1); // Last letter is the region
-
-    // Europe
-    if (region === 'FR' && gameRegion === 'F') {
-      return gameID;
-    }
-    if (region === 'DE' && gameRegion === 'D') {
-      return gameID;
-    }
-    if (region === 'ES' && gameRegion === 'S') {
-      return gameID;
-    }
-    if (region === 'IT' && gameRegion === 'I') {
-      return gameID;
-    }
-    if (region === 'NL' && gameRegion === 'H') {
-      return gameID;
-    }
-    if (region === 'KO' && gameRegion === 'K') {
-      return gameID;
-    }
-    if (region === 'TW' && gameRegion === 'W') {
-      return gameID;
-    }
-
-    // Japan
-    if (region === 'JP' && gameRegion === 'J') {
-      return gameID;
-    }
-    // Japan fallback to english
-    if (gameRegion === 'JP') {
-      region = 'EN';
-    }
-
-    // USA
-    if (region === 'EN' && gameRegion === 'E') {
-      return gameID;
-    }
-
-    // Fallbacks
-    if (gameRegion === 'P') {
-      return gameID;
-    }
-    if (gameRegion === 'V') {
-      return gameID;
-    }
-    if (gameRegion === 'X' || gameRegion === 'Y' || gameRegion === 'Z') {
-      return gameID;
-    }
-    if (gameRegion === 'E') {
-      return gameID;
-    }
-    if (gameRegion === 'J') {
-      return gameID;
-    }
-  }
-
-  // In case nothing was found, return the first ID.
-  return ids[gameName][0];
-}
-
-export async function getWiiUGameIdByNameAndRegion(gameName, region) {
-  const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'cemu.json'), 'utf8')
-  );
-
-  const gameRegionsArray = ids[gameName];
-  if (!gameRegionsArray) {
-    return null;
-  }
-
-  // Flatten the array and include only games, not DLCs, etc.
-  const gameRegions = {};
-  gameRegionsArray.forEach((value) => {
-    const key = Object.keys(value)[0];
-    if (value[key].startsWith('00050000')) {
-      gameRegions[key] = value[key];
-    }
-  });
-
-  if (Object.keys(gameRegions).length === 0) {
-    return null;
-  }
-
-  const europe = ['FR', 'DE', 'ES', 'IT', 'NL', 'KO', 'TW'];
-
-  // Europe
-  if (europe.includes(region) && gameRegions.EUR) {
-    return gameRegions.EUR;
-  }
-
-  // Japan
-  if (region === 'JP' && gameRegions.JPN) {
-    return gameRegions.JPN;
-  }
-
-  // USA and Fallback
-  return gameRegions.USA ?? null;
-}
-
-export async function updateRiiTag(user, gameId, gameName, gameConsole) {
-  gameId = gameId.toUpperCase();
-
-  const [, updatedUser] = await prisma.$transaction([
-    prisma.game.upsert({
-      where: {
-        game_id_console: {
-          game_id: gameId,
-          console: gameConsole,
-        },
-      },
-      create: {
-        game_id: gameId,
-        console: gameConsole,
-        name: gameName,
-        playlog: {
-          create: {
-            user_id: user.id,
-          },
-        },
-      },
-      update: {
-        name: gameName,
-        playcount: {
-          increment: 1,
-        },
-        playlog: {
-          create: {
-            user_id: user.id,
-          },
-        },
-      },
-    }),
-    prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        coins: {
-          increment: 1,
-        },
-      },
-    }),
-  ]);
-  return updatedUser;
 }
