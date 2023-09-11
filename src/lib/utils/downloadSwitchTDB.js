@@ -34,7 +34,7 @@ export default async (req, res) => {
         const gameMap = {};
 
         gameData.forEach((game) => {
-            const name = game.name.replace(/ \(EN\)$/, '');
+            const name = game.name.replace(/\s*\([^)]*\)\s*/, '');
             const id = game.id;
             if (!gameMap[name]) {
                 gameMap[name] = [];
