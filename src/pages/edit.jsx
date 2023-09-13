@@ -19,9 +19,22 @@ import GeneralCard from '@/components/edit/GeneralCard'
 import FontCard from '@/components/edit/FontCard'
 import ImagesCard from '@/components/edit/ImagesCard'
 import ENV from '@/lib/constants/environmentVariables'
+import LanguageContext from '@/components/shared/LanguageContext'
+import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username
+
+  const loggedInUser = username != null
+    ? await prisma.user.findUnique({
+      where: {
+        username
+      },
+      select: {
+        language: true
+      }
+    })
+    : { role: 'guest' }
 
   if (!username) {
     return {
@@ -51,162 +64,166 @@ export const getServerSideProps = withSession(async ({ req }) => {
     }
   })
 
-  return { props: { tagInfo } }
+  return { props: { tagInfo, language: loggedInUser?.language || 'en' } }
 })
 
-function EditPage ({ tagInfo }) {
+function EditPage ({ tagInfo, language }) {
   return (
-    <Formik
-      initialValues={{
-        nameOnlinktag: tagInfo.display_name,
-        comment: tagInfo.comment === null ? '' : tagInfo.comment,
-        coverRegion: tagInfo.cover_region,
-        coverType: tagInfo.cover_type,
-        showAvatar: tagInfo.show_avatar,
-        showMii: tagInfo.show_mii,
-        overlay: tagInfo.overlay,
-        background: tagInfo.background,
-        flag: tagInfo.flag,
-        coin: tagInfo.coin,
-        font: tagInfo.font
-      }}
-      validate={(values) => {
-        const errors = {}
+    <LanguageContext.Helper.Provider value={language}>
+      <AppNavbar />
+      <Formik
+        initialValues={{
+          nameOnlinktag: tagInfo.display_name,
+          comment: tagInfo.comment === null ? '' : tagInfo.comment,
+          coverRegion: tagInfo.cover_region,
+          coverType: tagInfo.cover_type,
+          showAvatar: tagInfo.show_avatar,
+          showMii: tagInfo.show_mii,
+          overlay: tagInfo.overlay,
+          background: tagInfo.background,
+          flag: tagInfo.flag,
+          coin: tagInfo.coin,
+          font: tagInfo.font
+        }}
+        validate={(values) => {
+          const errors = {}
 
-        if (!values.nameOnlinktag) {
-          errors.nameOnlinktag = 'Required'
-        } else if (values.nameOnlinktag.length > 20) {
-          errors.nameOnlinktag = 'Name must be < 20 characters.'
-        }
-
-        if (values.comment && values.comment.length > 50) {
-          errors.comment = 'Comment must be < 50 characters.'
-        }
-
-        if (!values.coverRegion) {
-          errors.coverRegion = 'Required'
-        } else if (isValidCoverRegion(values.coverRegion) === false) {
-          errors.coverRegion = 'Invalid Cover Region'
-        }
-
-        if (!values.coverType) {
-          errors.coverType = 'Required'
-        } else if (isValidCoverType(values.coverType) === false) {
-          errors.coverType = 'Invalid Cover Type'
-        }
-
-        if (!values.overlay) {
-          errors.overlay = 'Required'
-        } else if (isValidOverlay(values.overlay) === false) {
-          errors.overlay = 'Invalid Overlay'
-        }
-
-        if (!values.background) {
-          errors.background = 'Required'
-        } else if (BACKGROUNDS.includes(values.background) === false) {
-          errors.background = 'Invalid Background'
-        }
-
-        if (!values.flag) {
-          errors.flag = 'Required'
-        } else if (isValidFlag(values.flag) === false) {
-          errors.flag = 'Invalid Flag'
-        }
-
-        if (!values.coin) {
-          errors.coin = 'Required'
-        } else if (isValidCoin(values.coin) === false) {
-          errors.coin = 'Invalid Coin'
-        }
-
-        if (!values.font) {
-          errors.font = 'Required'
-        } else if (isValidFont(values.font) === false) {
-          errors.font = 'Invalid Font'
-        }
-
-        return errors
-      }}
-      onSubmit={async (values, { setSubmitting }) => {
-        await toast.promise(
-          fetch('/api/account/tag', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
-          }),
-          {
-            pending: 'Updating & regenerating your tag...',
-            success: {
-              render ({ data, toastProps }) {
-                if (data.status !== 200) {
-                  toastProps.type = 'error'
-                  return 'An error occured, please try again later'
-                }
-                return 'Saved!'
-              }
-            },
-            error: 'An error occured, please try again later.'
+          if (!values.nameOnlinktag) {
+            errors.nameOnlinktag = 'Required'
+          } else if (values.nameOnlinktag.length > 20) {
+            errors.nameOnlinktag = 'Name must be < 20 characters.'
           }
-        )
 
-        setSubmitting(false)
-      }}
-    >
-      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Container>
-            <NextSeo
-              title='Edit LinKTag'
-              openGraph={{
-                url: `${ENV.BASE_URL}/edit`
-              }}
-            />
-            <Button
-              className='rounded-circle shadow position-fixed'
-              disabled={isSubmitting}
-              type='submit'
-              variant='success'
-              style={{
-                bottom: '7%',
-                right: '5%',
-                width: 70,
-                height: 70,
-                fontSize: '2rem',
-                zIndex: 99
-              }}
-            >
-              <FontAwesomeIcon icon={faSave} />
-            </Button>
-            <Row>
-              <Col lg={6}>
-                <GeneralCard
-                  values={values}
-                  errors={errors}
-                  handleChange={handleChange}
-                />
+          if (values.comment && values.comment.length > 50) {
+            errors.comment = 'Comment must be < 50 characters.'
+          }
 
-                <FontCard values={values} errors={errors} />
-              </Col>
+          if (!values.coverRegion) {
+            errors.coverRegion = 'Required'
+          } else if (isValidCoverRegion(values.coverRegion) === false) {
+            errors.coverRegion = 'Invalid Cover Region'
+          }
 
-              <Col lg={6}>
-                <ImagesCard
-                  values={values}
-                  errors={errors}
-                  handleChange={handleChange}
-                />
-              </Col>
-            </Row>
-          </Container>
-        </Form>
-      )}
-    </Formik>
+          if (!values.coverType) {
+            errors.coverType = 'Required'
+          } else if (isValidCoverType(values.coverType) === false) {
+            errors.coverType = 'Invalid Cover Type'
+          }
+
+          if (!values.overlay) {
+            errors.overlay = 'Required'
+          } else if (isValidOverlay(values.overlay) === false) {
+            errors.overlay = 'Invalid Overlay'
+          }
+
+          if (!values.background) {
+            errors.background = 'Required'
+          } else if (BACKGROUNDS.includes(values.background) === false) {
+            errors.background = 'Invalid Background'
+          }
+
+          if (!values.flag) {
+            errors.flag = 'Required'
+          } else if (isValidFlag(values.flag) === false) {
+            errors.flag = 'Invalid Flag'
+          }
+
+          if (!values.coin) {
+            errors.coin = 'Required'
+          } else if (isValidCoin(values.coin) === false) {
+            errors.coin = 'Invalid Coin'
+          }
+
+          if (!values.font) {
+            errors.font = 'Required'
+          } else if (isValidFont(values.font) === false) {
+            errors.font = 'Invalid Font'
+          }
+
+          return errors
+        }}
+        onSubmit={async (values, { setSubmitting }) => {
+          await toast.promise(
+            fetch('/api/account/tag', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(values)
+            }),
+            {
+              pending: 'Updating & regenerating your tag...',
+              success: {
+                render ({ data, toastProps }) {
+                  if (data.status !== 200) {
+                    toastProps.type = 'error'
+                    return 'An error occured, please try again later'
+                  }
+                  return 'Saved!'
+                }
+              },
+              error: 'An error occured, please try again later.'
+            }
+          )
+
+          setSubmitting(false)
+        }}
+      >
+        {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Container>
+              <NextSeo
+                title='Edit LinkTag'
+                openGraph={{
+                  url: `${ENV.BASE_URL}/edit`
+                }}
+              />
+              <Button
+                className='rounded-circle shadow position-fixed'
+                disabled={isSubmitting}
+                type='submit'
+                variant='success'
+                style={{
+                  bottom: '7%',
+                  right: '5%',
+                  width: 70,
+                  height: 70,
+                  fontSize: '2rem',
+                  zIndex: 99
+                }}
+              >
+                <FontAwesomeIcon icon={faSave} />
+              </Button>
+              <Row>
+                <Col lg={6}>
+                  <GeneralCard
+                    values={values}
+                    errors={errors}
+                    handleChange={handleChange}
+                  />
+
+                  <FontCard values={values} errors={errors} />
+                </Col>
+
+                <Col lg={6}>
+                  <ImagesCard
+                    values={values}
+                    errors={errors}
+                    handleChange={handleChange}
+                  />
+                </Col>
+              </Row>
+            </Container>
+          </Form>
+        )}
+      </Formik>
+    </LanguageContext.Helper.Provider>
   )
 }
 
 EditPage.propTypes = {
-  tagInfo: PropTypes.object.isRequired
+  tagInfo: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired
 }
 
 export default EditPage

@@ -93,6 +93,7 @@ model user {
   isBanned       Boolean     @default(false)
   isPublic       Boolean     @default(true)
   publicOverride Boolean?
+  language       String      @default("en") @db.VarChar(11)
   accounts       account[]
   following      following[]
   playlog        playlog[]

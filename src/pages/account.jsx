@@ -9,6 +9,8 @@ import PrivateKeyCard from '@/components/account/PrivateKeyCard'
 import OAuthAccountsCard from '@/components/account/OAuthAccountsCard'
 import AccountCard from '@/components/account/AccountCard'
 import ENV from '@/lib/constants/environmentVariables'
+import AppNavbar from '@/components/shared/AppNavbar'
+import LanguageContext from '@/components/shared/LanguageContext'
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username
@@ -21,6 +23,17 @@ export const getServerSideProps = withSession(async ({ req }) => {
       }
     }
   }
+
+  const loggedInUser = username != null
+    ? await prisma.user.findUnique({
+      where: {
+        username
+      },
+      select: {
+        language: true
+      }
+    })
+    : { role: 'guest' }
 
   const accountInfo = await prisma.user.findFirst({
     where: {
@@ -38,11 +51,13 @@ export const getServerSideProps = withSession(async ({ req }) => {
     }
   })
 
-  return { props: { accountInfo: JSON.parse(safeJsonStringify(accountInfo)) } }
+  return { props: { accountInfo: JSON.parse(safeJsonStringify(accountInfo)), language: loggedInUser.language } }
 })
 
-function AccountPage ({ accountInfo }) {
+function AccountPage ({ accountInfo, language }) {
   return (
+    <LanguageContext.Helper.Provider value={language}>
+    <AppNavbar />
     <Container>
       <NextSeo
         title='Account'
@@ -60,11 +75,13 @@ function AccountPage ({ accountInfo }) {
         </Col>
       </Row>
     </Container>
+    </LanguageContext.Helper.Provider>
   )
 }
 
 AccountPage.propTypes = {
-  accountInfo: PropTypes.object.isRequired
+  accountInfo: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired
 }
 
 export default AccountPage

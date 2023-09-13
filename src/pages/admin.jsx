@@ -9,6 +9,8 @@ import PrivacyPolicyCard from '@/components/admin/PrivacyPolicyCard'
 import TermsOfServiceCard from '@/components/admin/TermsOfServiceCard'
 import ENV from '@/lib/constants/environmentVariables'
 import AboutCard from '@/components/admin/AboutCard'
+import LanguageContext from '@/components/shared/LanguageContext'
+import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req }) => {
   const username = req.session?.username
@@ -58,6 +60,8 @@ export const getServerSideProps = withSession(async ({ req }) => {
 
 function AdminPage ({ systemInfo }) {
   return (
+    <LanguageContext.Helper.Provider value='en'>
+    <AppNavbar />
     <Container>
       <NextSeo
         title='Admin'
@@ -84,6 +88,7 @@ function AdminPage ({ systemInfo }) {
         </Col>
       </Row>
     </Container>
+    </LanguageContext.Helper.Provider>
   )
 }
 

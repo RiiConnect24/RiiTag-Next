@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify'
 import NextNProgress from 'nextjs-progressbar'
 import { DefaultSeo } from 'next-seo'
 import { SSRProvider } from 'react-bootstrap'
-import AppNavbar from '@/components/shared/AppNavbar'
 import AppFooter from '@/components/shared/AppFooter'
 import ENV from '@/lib/constants/environmentVariables'
 
@@ -20,7 +19,6 @@ function App ({ Component, pageProps }) {
         }}
       >
         <NextNProgress />
-        <AppNavbar />
         <DefaultSeo
           title={undefined}
           titleTemplate='Linktag | %s'

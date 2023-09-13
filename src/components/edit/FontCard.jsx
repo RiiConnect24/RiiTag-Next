@@ -4,11 +4,12 @@ import { FONTS } from '@/lib/constants/forms/fonts'
 import SelectFontModal from '@/components/edit/SelectFontModal'
 import { Alert, Card, Col, Row } from 'react-bootstrap'
 import { Field } from 'formik'
+import LocalizedString from '../shared/LocalizedString'
 
 function FontCard ({ values, errors }) {
   return (
     <Card className='mb-3' bg='secondary' text='white'>
-      <Card.Header as='h5'>Font</Card.Header>
+      <Card.Header as='h5'><LocalizedString string='font'/></Card.Header>
       <Card.Body>
         <Row>
           <Col md={5} className='mb-3'>

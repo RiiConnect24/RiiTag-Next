@@ -1,0 +1,50 @@
+{
+    "welcome": "Welcome to LinkTag!",
+    "join_others": "Join {0} other gamers that have played games {1} times!",
+    "credits": "Credits",
+    "discord": "Login with Discord",
+    "carasol_linktag": "<a href='user/{0}'>{1}</a>'s LinkTag",
+    "supported_platforms": "Supported Platforms",
+    "banned_reason": "This account has been banned. Reason: {0}",
+    "game_id": "Game / ID",
+    "play_time": "Play Time",
+    "last_played": "Last Played",
+    "play_count": "Play Count",
+    "user_info": "User Information",
+    "banned": "Banned",
+    "hidden": "Hidden",
+    "administrator": "Administrator",
+    "moderator": "Moderator",
+    "play_log": "Play Log",
+
+    "registered_on": "<strong>Registered</strong>",
+    "overlay": "<strong>Overlay</strong>",
+    "background": "<strong>Background</strong>",
+    "coin": "<strong>Coin</strong>",
+    "font": "<strong>Font</strong>",
+    "flag": "<strong>Flag</strong>",
+    "cover_region": "<strong>Cover Region</strong>",
+    "cover_type": "<strong>Cover Type</strong>",
+
+    "edit_tag": "Edit Tag",
+
+    "general": "General",
+    "display_name": "<string>Display Name</strong>",
+    "friend_code": "<strong>Friend Code</strong>",
+
+    "cover_region_explanation": "Linktag will try the game&apos;s region and fallback to English\nif it can&apos;t find a cover.",
+    "show_avatar": "Show Avatar",
+
+    "select_overlay": "Select Overlay",
+    "select_background": "Select Background",
+    "select_coin": "Select Coin",
+    "select_font": "Select Font",
+
+    "images": "Images",
+
+    "home": "Home",
+    "profile": "Profile",
+    "account": "My Account",
+    "edit_mii": "Edit Mii",
+    "logout": "Logout"
+}

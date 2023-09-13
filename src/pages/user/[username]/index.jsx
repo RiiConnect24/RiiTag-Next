@@ -11,6 +11,9 @@ import ShowYourTagCard from '@/components/user/ShowYourTagCard'
 import ENV from '@/lib/constants/environmentVariables'
 import PlayLog from '@/components/user/PlayLog'
 import PlayingStatus from '@/components/user/PlayingStatus'
+import LanguageContext from '@/components/shared/LanguageContext'
+import LocalizedString from '@/components/shared/LocalizedString'
+import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req, query }) => {
   const { username } = query
@@ -99,7 +102,8 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
         username: loggedInUsername
       },
       select: {
-        role: true
+        role: true,
+        language: true
       }
     })
     : { role: 'guest' }
@@ -113,6 +117,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       user: JSON.parse(safeJsonStringify(user)),
       isLoggedIn: user.username === loggedInUsername,
       loggedInUser,
+      language: loggedInUser?.language || 'en',
       banReason: JSON.parse(safeJsonStringify(banReason)),
       event: JSON.parse(safeJsonStringify(event)),
       playlog: JSON.parse(safeJsonStringify(playlog)),
@@ -122,56 +127,59 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
   }
 })
 
-function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlog, session, game }) {
+function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlog, language, session, game }) {
   return (
-    <Container>
-      <NextSeo
-        title={user.display_name}
-        description={`See what ${user.display_name} has played`}
-        openGraph={{
-          url: `${ENV.BASE_URL}/user/${user.username}`,
-          images: [
-            {
-              url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(
-                user.updated_at
-              ).getTime()}`,
-              width: 1200,
-              height: 450,
-              alt: `linktag of ${user.display_name}`,
-              type: 'image/png'
+    <LanguageContext.Helper.Provider value={language}>
+      <AppNavbar />
+      <Container>
+        <NextSeo
+          title={user.display_name}
+          description={`See what ${user.display_name} has played`}
+          openGraph={{
+            url: `${ENV.BASE_URL}/user/${user.username}`,
+            images: [
+              {
+                url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(
+                  user.updated_at
+                ).getTime()}`,
+                width: 1200,
+                height: 450,
+                alt: `linktag of ${user.display_name}`,
+                type: 'image/png'
+              }
+            ],
+            profile: {
+              username: user.display_name
             }
-          ],
-          profile: {
-            username: user.display_name
-          }
-        }}
-      />
-      <Row>
-        {user.isBanned === true ? <Alert variant='danger'>This account has been banned. Reason: {banReason.reason}</Alert> : ''}
+          }}
+        />
+        <Row>
+          {user.isBanned === true ? <Alert variant='danger'><LocalizedString string='banned_reason' values={[banReason.reason]}/></Alert> : ''}
 
-        {user.isBanned === false
-          ? <Col lg={7}>
-          <div className='mb-3'>
-            <LinkTag
-              username={user.username}
-              name={user.display_name}
-              updated_at={user.updated_at}
-            />
-          </div>
+          {user.isBanned === false
+            ? <Col lg={7}>
+              <div className='mb-3'>
+                <LinkTag
+                  username={user.username}
+                  name={user.display_name}
+                  updated_at={user.updated_at}
+                />
+              </div>
 
-          <PlayLog playlog={playlog} current={game} />
-        </Col>
-          : ''}
+              <PlayLog playlog={playlog} current={game} />
+            </Col>
+            : ''}
 
-        <Col lg={user.isBanned ? 12 : 5}>
-          { event && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert> }
-          { session && <PlayingStatus session={session} game={game} /> }
+          <Col lg={user.isBanned ? 12 : 5}>
+            {event && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert>}
+            {session && <PlayingStatus session={session} game={game} />}
 
-          <UserInformationCard user={user} isLoggedIn={isLoggedIn} isAdmin={loggedInUser.role === 'admin'} isMod={loggedInUser.role === 'admin' || loggedInUser.role === 'mod'} />
-          {isLoggedIn && <ShowYourTagCard username={user.username} />}
-        </Col>
-      </Row>
-    </Container>
+            <UserInformationCard user={user} isLoggedIn={isLoggedIn} isAdmin={loggedInUser.role === 'admin'} isMod={loggedInUser.role === 'admin' || loggedInUser.role === 'mod'} />
+            {isLoggedIn && <ShowYourTagCard username={user.username} />}
+          </Col>
+        </Row>
+      </Container>
+    </LanguageContext.Helper.Provider>
   )
 }
 
@@ -179,6 +187,7 @@ ProfilePage.propTypes = {
   user: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   loggedInUser: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired,
   event: PropTypes.object.isRequired,
   banReason: PropTypes.object.isRequired,
   playlog: PropTypes.array.isRequired,

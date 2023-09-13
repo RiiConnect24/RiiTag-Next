@@ -1,0 +1,49 @@
+{
+    "welcome": "LinkTagへようこそ！",
+    "join_others": "ゲームを{0}回プレイしたことがある他の{1}人のゲーマーに参加しよう！",
+    "discord": "Discordでログイン",
+    "carasol_linktag": "<a href='user/{0}'>{1}</a>のLinkTag",
+    "supported_platforms": "対応プラットホーム",
+    "banned_reason": "このユーザは追放されました。 理由: {0}",
+    "game_id": "ゲーム / ID",
+    "play_time": "プレイタイム",
+    "last_played": "最後にプレイした",
+    "play_count": "プレイ回数",
+    "user_info": "ユーザー情報",
+    "banned": "追放",
+    "hidden": "非表示",
+    "administrator": "管理者",
+    "moderator": "モデレーター",
+    "play_log": "プレイログ",
+
+    "registered_on": "<strong>登録日</strong>",
+    "overlay": "<strong>オーバーレイ</strong>",
+    "background": "<strong>背景</strong>",
+    "coin": "<strong>コイン</strong>",
+    "font": "<strong>フォント</strong>",
+    "flag": "<strong>国旗</strong>",
+    "cover_region": "<strong>カバー地域</strong>",
+    "cover_type": "<strong>カバータイプ</strong>",
+
+    "edit_tag": "タグを編集",
+
+    "general": "一般",
+    "display_name": "<strong>表示名</strong>",
+    "friend_code": "<strong>フレンドコード</strong>",
+
+    "cover_region_explanation": "カバー地域は、ゲームのカバーに表示される地域です。データベースで無かったら英語にします",
+    "show_avatar": "アバターを表示",
+
+    "select_overlay": "オーバーレイを選択",
+    "select_background": "背景を選択",
+    "select_coin": "コインを選択",
+    "select_font": "フォントを選択",
+
+    "images": "画像",
+    
+    "home": "ホーム",
+    "profile": "プロファイル",
+    "account": "マイアカウント",
+    "edit_mii": "Miiを編集",
+    "logout": "ログアウト"
+}

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { withSession } from '@/lib/iron-session'
 import prisma from '@/lib/db'
 import GeneralUserAdminCard from '@/components/user/admin/GeneralUserAdminCard'
+import LanguageContext from '@/components/shared/LanguageContext'
+import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req, query }) => {
   const { username } = query
@@ -52,11 +54,14 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
 
 function ProfileAdminPage ({ user, isLoggedIn }) {
   return (
-    <Container>
-      <GeneralUserAdminCard
-        user={user}
-      />
-    </Container>
+    <LanguageContext.Helper.Provider value='en'>
+      <AppNavbar />
+      <Container>
+        <GeneralUserAdminCard
+          user={user}
+        />
+      </Container>
+    </LanguageContext.Helper.Provider>
   )
 }
 

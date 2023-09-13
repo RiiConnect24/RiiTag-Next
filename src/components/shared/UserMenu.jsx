@@ -14,6 +14,8 @@ import useRouterRefresh from '../../hooks/useRefreshRoute'
 import { Button, Nav, NavDropdown } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import LanguageContext from './LanguageContext'
+import LocalizedString from './LocalizedString'
 
 function UserMenu () {
   const { user, isLoading, isError, mutate } = useInfo()
@@ -42,61 +44,65 @@ function UserMenu () {
   }
 
   return (
-    <Nav>
-      <NavDropdown
-        align='end'
-        title={
-          <span className='d-inline-flex align-items-center'>
-            <span className='me-1'>{user.display_name}</span>&nbsp;
-            <img
-              className='me-1 ms-auto'
-              style={{ width: 25, height: 25, borderRadius: '50%' }}
-              src={user.image}
-              alt='User Avatar'
-            />
-          </span>
-        }
-      >
-        <Link href={`/user/${user.username}`} passHref legacyBehavior>
-          <NavDropdown.Item>
-            <FontAwesomeIcon className='me-2' icon={faUser} />
-            <span>Profile</span>
-          </NavDropdown.Item>
-        </Link>
-        <Link href='/account' passHref legacyBehavior>
-          <NavDropdown.Item>
-            <FontAwesomeIcon className='me-2' icon={faKey} />
-            <span>Account</span>
-          </NavDropdown.Item>
-        </Link>
-        {user.role === 'admin' && (
-          <Link href='/admin' passHref legacyBehavior>
-            <NavDropdown.Item>
-              <FontAwesomeIcon className='me-2' icon={faCog} />
-              <span>Administration</span>
+    <LanguageContext.Helper.Consumer>
+      {(lang) => (
+        <Nav>
+          <NavDropdown
+            align='end'
+            title={
+              <span className='d-inline-flex align-items-center'>
+                <span className='me-1'>{user.display_name}</span>&nbsp;
+                <img
+                  className='me-1 ms-auto'
+                  style={{ width: 25, height: 25, borderRadius: '50%' }}
+                  src={user.image}
+                  alt='User Avatar'
+                />
+              </span>
+            }
+          >
+            <Link href={`/user/${user.username}`} passHref legacyBehavior>
+              <NavDropdown.Item>
+                <FontAwesomeIcon className='me-2' icon={faUser} />
+                <span><LocalizedString string='profile' /></span>
+              </NavDropdown.Item>
+            </Link>
+            <Link href='/account' passHref legacyBehavior>
+              <NavDropdown.Item>
+                <FontAwesomeIcon className='me-2' icon={faKey} />
+                <span><LocalizedString string='account' /></span>
+              </NavDropdown.Item>
+            </Link>
+            {user.role === 'admin' && (
+              <Link href='/admin' passHref legacyBehavior>
+                <NavDropdown.Item>
+                  <FontAwesomeIcon className='me-2' icon={faCog} />
+                  <span>Administration</span>
+                </NavDropdown.Item>
+              </Link>
+            )}
+            <NavDropdown.Divider />
+            <Link href='/edit' passHref legacyBehavior>
+              <NavDropdown.Item>
+                <FontAwesomeIcon className='me-2' icon={faPen} />
+                <span><LocalizedString string='edit_tag' /></span>
+              </NavDropdown.Item>
+            </Link>
+            <Link href='/mii' passHref legacyBehavior>
+              <NavDropdown.Item>
+                <FontAwesomeIcon className='me-2' icon={faImage} />
+                <span><LocalizedString string='edit_mii' /></span>
+              </NavDropdown.Item>
+            </Link>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={logout}>
+              <FontAwesomeIcon className='me-2' icon={faSignOutAlt} />
+              <span><LocalizedString string='logout' /></span>
             </NavDropdown.Item>
-          </Link>
-        )}
-        <NavDropdown.Divider />
-        <Link href='/edit' passHref legacyBehavior>
-          <NavDropdown.Item>
-            <FontAwesomeIcon className='me-2' icon={faPen} />
-            <span>Edit LinkTag</span>
-          </NavDropdown.Item>
-        </Link>
-        <Link href='/mii' passHref legacyBehavior>
-          <NavDropdown.Item>
-            <FontAwesomeIcon className='me-2' icon={faImage} />
-            <span>Edit Mii</span>
-          </NavDropdown.Item>
-        </Link>
-        <NavDropdown.Divider />
-        <NavDropdown.Item onClick={logout}>
-          <FontAwesomeIcon className='me-2' icon={faSignOutAlt} />
-          <span>Log Out</span>
-        </NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
+          </NavDropdown>
+        </Nav>
+      )}
+    </LanguageContext.Helper.Consumer>
   )
 }
 

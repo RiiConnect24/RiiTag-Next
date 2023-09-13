@@ -4,6 +4,8 @@ import { createOptionNodes } from '@/lib/utils/utils'
 import { COVER_REGIONS } from '@/lib/constants/forms/coverRegions'
 import { COVER_TYPES } from '@/lib/constants/forms/coverTypes'
 import { Card, Col, Form, Row } from 'react-bootstrap'
+import LocalizedString from '../shared/LocalizedString'
+import LanguageContext from '../shared/LanguageContext'
 
 const coverRegions = createOptionNodes(COVER_REGIONS)
 const coverTypes = createOptionNodes(COVER_TYPES)
@@ -11,12 +13,12 @@ const coverTypes = createOptionNodes(COVER_TYPES)
 function GeneralCard ({ values, errors, handleChange }) {
   return (
     <Card className='mb-3' bg='secondary' text='white'>
-      <Card.Header as='h5'>General</Card.Header>
+      <Card.Header as='h5'><LocalizedString string='general' values={[]} /></Card.Header>
       <Card.Body>
         <Row>
           <Col>
             <Form.Group className='mb-3' controlId='name'>
-              <Form.Label>Name on linktag</Form.Label>
+              <Form.Label><LocalizedString string='display_name' /></Form.Label>
               <Form.Control
                 required
                 type='text'
@@ -36,7 +38,7 @@ function GeneralCard ({ values, errors, handleChange }) {
         <Row>
           <Col>
             <Form.Group className='mb-3' controlId='comment'>
-              <Form.Label>Comment / Friend Code</Form.Label>
+              <Form.Label><LocalizedString string='friend_code' /></Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Comment / Friend Code'
@@ -55,7 +57,7 @@ function GeneralCard ({ values, errors, handleChange }) {
         <Row>
           <Col md={6}>
             <Form.Group className='mb-3' controlId='coverType'>
-              <Form.Label>Cover Type</Form.Label>
+              <Form.Label><LocalizedString string='cover_type' /></Form.Label>
               <Form.Select
                 required
                 placeholder='Cover Type'
@@ -73,7 +75,7 @@ function GeneralCard ({ values, errors, handleChange }) {
           </Col>
           <Col md={6}>
             <Form.Group className='mb-3' controlId='coverRegion'>
-              <Form.Label>Cover Region</Form.Label>
+              <Form.Label><LocalizedString string='cover_region' /></Form.Label>
               <Form.Select
                 required
                 placeholder='Cover Region'
@@ -88,48 +90,51 @@ function GeneralCard ({ values, errors, handleChange }) {
                 {errors.coverRegion}
               </Form.Control.Feedback>
               <Form.Text className='text-muted'>
-                linktag will try the game&apos;s region and fallback to English
-                if it can&apos;t find a cover.
+                <LocalizedString string='cover_region_explanation' values={[]} />
               </Form.Text>
             </Form.Group>
           </Col>
         </Row>
 
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId='showAvatar'>
-              <Form.Check
-                type='checkbox'
-                label='Show Avatar'
-                name='showAvatar'
-                onChange={handleChange}
-                checked={values.showAvatar}
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId='showMii'>
-              <Form.Check
-                type='checkbox'
-                label='Show your Mii'
-                name='showMii'
-                onChange={handleChange}
-                checked={values.showMii}
-              />
-              <Form.Text className='text-muted'>
-                You can edit it your Mii on the &quot;
-                <a
-                  href='/mii'
-                  target='_blank'
-                  title="Open 'Edit Mii' page in a new tab"
-                >
-                  Edit Mii
-                </a>
-                &quot; page.
-              </Form.Text>
-            </Form.Group>
-          </Col>
-        </Row>
+        <LanguageContext.Helper.Consumer>
+          {(lang) => (
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId='showAvatar'>
+                  <Form.Check
+                    type='checkbox'
+                    label={LanguageContext.languages[lang].show_avatar}
+                    name='showAvatar'
+                    onChange={handleChange}
+                    checked={values.showAvatar}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId='showMii'>
+                  <Form.Check
+                    type='checkbox'
+                    label='Show your Mii'
+                    name='showMii'
+                    onChange={handleChange}
+                    checked={values.showMii}
+                  />
+                  <Form.Text className='text-muted'>
+                    You can edit it your Mii on the &quot;
+                    <a
+                      href='/mii'
+                      target='_blank'
+                      title="Open 'Edit Mii' page in a new tab"
+                    >
+                      Edit Mii
+                    </a>
+                    &quot; page.
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
+          )}
+        </LanguageContext.Helper.Consumer>
       </Card.Body>
     </Card>
   )
