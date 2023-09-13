@@ -2,23 +2,45 @@ import prisma from '@/lib/db'
 
 export async function getGameLeaderboard (page, limit) {
   return prisma.$transaction([
-    prisma.game.count({
+    prisma.playlog.count({
       where: {
-        playcount: {
+        play_time: {
           gt: 5
         }
       }
     }),
-    prisma.game.findMany({
+    prisma.playlog.findMany({
+      // only show playlogs with the same game_id once
+      distinct: ['game_pk'],
       where: {
-        playcount: {
+        play_time: {
           gt: 5
+        }
+      },
+      select: {
+        play_time: true,
+        play_count: true,
+        user: {
+          select: {
+            display_name: true,
+            username: true,
+            image: true
+          }
+        },
+        game: {
+          select: {
+            name: true,
+            game_id: true,
+            console: true,
+            playcount: true,
+            first_played: true
+          }
         }
       },
       take: limit,
       skip: limit * (page - 1),
       orderBy: {
-        playcount: 'desc'
+        play_time: 'desc'
       }
     })
   ])
@@ -26,29 +48,50 @@ export async function getGameLeaderboard (page, limit) {
 
 export async function getGameLeaderboardSearch (page, limit, search) {
   return prisma.$transaction([
-    prisma.game.count({
+    prisma.playlog.count({
       where: {
-        name: {
-          contains: search
-        },
-        playcount: {
+        play_time: {
           gt: 5
+        },
+        game: {
+          name: {
+            contains: search
+          }
         }
       }
     }),
-    prisma.game.findMany({
+    prisma.playlog.findMany({
       where: {
-        name: {
-          contains: search
+        game: {
+          name: {
+            contains: search
+          }
+        }
+      },
+      select: {
+        play_time: true,
+        play_count: true,
+        user: {
+          select: {
+            display_name: true,
+            username: true,
+            image: true
+          }
         },
-        playcount: {
-          gt: 5
+        game: {
+          select: {
+            name: true,
+            game_id: true,
+            console: true,
+            playcount: true,
+            first_played: true
+          }
         }
       },
       take: limit,
       skip: limit * (page - 1),
       orderBy: {
-        playcount: 'desc'
+        play_time: 'desc'
       }
     })
   ])

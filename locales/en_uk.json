@@ -1,5 +1,5 @@
 {
-    "name": "English (Simplified)",
+    "name": "English (Traditional)",
     
     "welcome": "Welcome to LinkTag!",
     "join_others": "Join {0} other gamers that have played games {1} times!",
@@ -57,5 +57,5 @@
     "playtimes_since": "Played <strong>{0}</strong> times since {1}",
     "total_playtime": "Played <strong>{0}</strong> total",
 
-    "date_format": "MM/DD/YYYY"
+    "date_format": "DD/MM/YYYY"
 }

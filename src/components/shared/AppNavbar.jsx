@@ -8,6 +8,7 @@ import LocalizedString from './LocalizedString'
 
 const flags = {
   en: '/img/flag/us.png',
+  en_uk: '/img/flag/eu.png',
   jp: '/img/flag/jp.png'
 }
 
@@ -45,22 +46,22 @@ function AppNavbar () {
                 <Link href='/' passHref legacyBehavior>
                   <Nav.Link active={router.pathname === '/'}><LocalizedString string='home' /></Nav.Link>
                 </Link>
+                <Link href='/game-leaderboard' passHref legacyBehavior>
+                  <Nav.Link active={router.pathname === '/game-leaderboard'}>Leaderboard</Nav.Link>
+                </Link>
               </Nav>
               <Nav className='ms-auto'>
                 <Nav>
                   <NavDropdown
                     align='end'
                     title={<img src={flags[lang]} width='24' />}>
-                    <Link href='#' onClick={() => updateLanguage('en')}>
-                      <NavDropdown.Item>
-                        <img src='/img/flag/us.png' width='24' /> English
-                      </NavDropdown.Item>
-                    </Link>
-                    <Link href='#' onClick={() => updateLanguage('jp')}>
-                      <NavDropdown.Item>
-                        <img src='/img/flag/jp.png' width='24' /> 日本語
-                      </NavDropdown.Item>
-                    </Link>
+                    {Object.entries(flags).map((entry, index) => (
+                      <Link href='#' onClick={() => updateLanguage(entry[0])} key={entry[0]}>
+                        <NavDropdown.Item>
+                          <img src={entry[1]} width='24' /> {LanguageContext.languages[entry[0]].name}
+                        </NavDropdown.Item>
+                      </Link>
+                    ))}
                   </NavDropdown>
                 </Nav>
                 <UserMenu />

@@ -1,4 +1,6 @@
 {
+    "name": "日本語",
+    
     "welcome": "LinkTagへようこそ！",
     "join_others": "ゲームを{0}回プレイしたことがある他の{1}人のゲーマーに参加しよう！",
     "discord": "Discordでログイン",
@@ -42,8 +44,20 @@
     "images": "画像",
     
     "home": "ホーム",
+    "leaderboard": "リーダーボード",
+
     "profile": "プロファイル",
     "account": "マイアカウント",
     "edit_mii": "Miiを編集",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+
+    "search": "検索",
+    "previous": "前",
+    "next": "次",
+
+    "playtimes_since": "<strong>{1}</strong>から<strong>{0}</strong>回遊びました",
+    "total_playtime": "合計<strong>{0}</strong>",
+
+    "date_format": "YYYY年MM月DD日"
+
 }

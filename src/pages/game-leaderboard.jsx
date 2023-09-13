@@ -7,10 +7,27 @@ import GameLeaderboardCard from '@/components/leaderboard/GameLeaderboardCard'
 import { TOTAL_GAMES_ON_LEADERBOARD } from '@/lib/constants/miscConstants'
 import Pagination from '@/components/shared/Pagination'
 import ENV from '@/lib/constants/environmentVariables'
+import LanguageContext from '@/components/shared/LanguageContext'
+import AppNavbar from '@/components/shared/AppNavbar'
+import { withSession } from '@/lib/iron-session'
+import prisma from '@/lib/db'
+import LocalizedString from '@/components/shared/LocalizedString'
 
 const limit = TOTAL_GAMES_ON_LEADERBOARD
 
-export async function getServerSideProps ({ query }) {
+export const getServerSideProps = withSession(async ({ req, query }) => {
+  // Get user session and their language
+  const session = req.session?.username
+
+  const sessionUser = await prisma.user.findUnique({
+    where: {
+      username: session
+    },
+    select: {
+      language: true
+    }
+  })
+
   let { page, search } = query
 
   page = Number.parseInt(page, 10) || 1
@@ -18,15 +35,7 @@ export async function getServerSideProps ({ query }) {
   if (Number.isNaN(page) || page <= 0) page = 1
 
   // Add logic for the search handler
-  let leaderboard, totalGames
-
-  if (search) {
-    // Call your search function here and pass the search parameter
-    [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search)
-  } else {
-    // Call the game leaderboard function here
-    [totalGames, leaderboard] = await getGameLeaderboard(page, limit)
-  }
+  const [totalGames, leaderboard] = search ? await getGameLeaderboardSearch(page, limit, search) : await getGameLeaderboard(page, limit)
 
   const totalPages = Math.ceil(totalGames / limit)
 
@@ -34,12 +43,13 @@ export async function getServerSideProps ({ query }) {
     props: {
       page,
       totalPages,
+      language: sessionUser?.language ?? 'en',
       leaderboard: JSON.parse(JSON.stringify(leaderboard))
     }
   }
-}
+})
 
-function GameLeaderboardPage ({ page, totalPages, leaderboard }) {
+function GameLeaderboardPage ({ page, totalPages, language, leaderboard }) {
   const [currentPage] = useState(page)
   const [games] = useState(leaderboard)
   const [total] = useState(totalPages)
@@ -54,34 +64,28 @@ function GameLeaderboardPage ({ page, totalPages, leaderboard }) {
 
   const [searchQuery, setSearchQuery] = useState('')
 
-  const updateURLParameter = (query) => {
+  function updateURLPageParameter (search, page) {
     const params = new URLSearchParams(window.location.search)
-    params.set('search', query)
-    const newURL = window.location.pathname + '?' + params.toString()
-    window.history.replaceState({}, '', newURL)
-    window.location.reload()
-  }
 
-  const updateURLPageParameter = (page, search) => {
-    const params = new URLSearchParams(window.location.search)
     params.set('page', page)
     params.set('search', search)
-    const newURL = window.location.pathname + '?' + params.toString()
-    window.history.replaceState({}, '', newURL)
+
+    window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`)
     window.location.reload()
   }
 
-  const handleFormSubmit = (event) => {
+  function handleFormSubmit (event) {
     event.preventDefault()
-    updateURLParameter(searchQuery)
-    // Perform search logic or other actions
+    updateURLPageParameter(searchQuery, currentPage)
   }
 
-  const handleInputChange = (event) => {
+  function handleInputChange (event) {
     setSearchQuery(event.target.value)
   }
 
   return (
+    <LanguageContext.Helper.Provider value={language}>
+    <AppNavbar />
     <Container>
       <NextSeo
         title='Leaderboard'
@@ -98,49 +102,39 @@ function GameLeaderboardPage ({ page, totalPages, leaderboard }) {
               type='text'
               value={searchQuery}
               onChange={handleInputChange}
-              placeholder='Search...'
+              placeholder={LanguageContext.languages[language].search + '...'}
             />
-            <button type='submit'>Search</button>
+            <button type='submit'><LocalizedString string='search'/></button>
           </form>
         </Col>
       </Row>
 
       <br />
 
-      {games.length === 0
-        ? (
-          <Row>
-            <Col className='text-center'>
-              <p className='h2'>No games were played yet!</p>
-            </Col>
-          </Row>
-          )
-        : (
-          <>
-            <Row className='mb-4 row-cols-1 row-cols-xl-3 row-cols-md-2 g-4'>
-              {games.map((game, index) => (
-                <GameLeaderboardCard
-                  key={game.game_pk}
-                  game={game}
-                  position={limit * (currentPage - 1) + index + 1}
-                />
-              ))}
-            </Row>
+      <Row className='mb-4 row-cols-1 row-cols-xl-3 row-cols-md-2 g-4'>
+        {games.map((game, index) => (
+          <GameLeaderboardCard
+            key={game.game_pk}
+            game={game}
+            position={limit * (currentPage - 1) + index + 1}
+          />
+        ))}
+      </Row>
 
-            <Pagination
-              currentPage={currentPage - 1}
-              handlePageClick={handlePageClick}
-              totalPages={total}
-            />
-          </>
-          )}
+      <Pagination
+        currentPage={currentPage - 1}
+        handlePageClick={handlePageClick}
+        totalPages={total}
+      />
     </Container>
+    </LanguageContext.Helper.Provider>
   )
 }
 
 GameLeaderboardPage.propTypes = {
   page: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
+  language: PropTypes.string.isRequired,
   leaderboard: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
