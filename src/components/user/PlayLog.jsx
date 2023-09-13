@@ -11,6 +11,10 @@ function PlayLog ({ playlog, current }) {
     return duration.humanize()
   }
 
+  function isPlaying (gameId) {
+    return current && current.some((session) => session.game.game_id === gameId)
+  }
+
   const [hydrated, setHydrated] = React.useState(false)
   React.useEffect(() => {
     // This forces a rerender, so the date is rendered
@@ -43,7 +47,7 @@ function PlayLog ({ playlog, current }) {
                     <td>{log.game.name === null ? log.game.game_id : log.game.name}</td>
                     <td>{log.play_time > 0 ? `${getTimeStamp(log.play_time)}` : 'Not Tracked'}</td>
                     <td>{log.play_count} times</td>
-                    <td>{current && current.game_id === log.game.game_id ? 'Now' : moment(log.played_on).from()}</td>
+                    <td>{current.length > 0 && isPlaying(log.game.game_id) ? 'Now' : moment(log.played_on).from()}</td>
                   </tr>
                 ))}
               </tbody>

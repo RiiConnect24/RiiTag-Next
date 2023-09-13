@@ -23,14 +23,15 @@ model account {
 }
 
 model game {
-  game_pk      Int       @id @default(autoincrement()) @db.UnsignedInt
-  game_id      String    @db.VarChar(50)
-  console      String    @db.VarChar(9)
-  name         String?   @db.VarChar(255)
-  playcount    Int       @default(1) @db.UnsignedInt
-  first_played DateTime  @default(now())
-  last_played  DateTime  @default(now()) @updatedAt
-  playlog      playlog[]
+  game_pk       Int             @id @default(autoincrement()) @db.UnsignedInt
+  game_id       String          @db.VarChar(50)
+  console       String          @db.VarChar(9)
+  name          String?         @db.VarChar(255)
+  playcount     Int             @default(1) @db.UnsignedInt
+  first_played  DateTime        @default(now())
+  last_played   DateTime        @default(now()) @updatedAt
+  game_sessions game_sessions[]
+  playlog       playlog[]
 
   @@unique([game_id, console], map: "game_id_console")
   @@index([console], map: "console")
@@ -67,35 +68,37 @@ model following {
 }
 
 model user {
-  id             Int         @id @default(autoincrement())
-  username       String      @unique @db.VarChar(50)
-  role           String      @default("user") @db.VarChar(25)
-  display_name   String?     @db.VarChar(255)
-  image          String?     @db.VarChar(255)
-  randkey        String?     @unique @db.VarChar(200)
-  coins          Int         @default(0) @db.UnsignedInt
-  cover_region   String      @default("EN") @db.VarChar(6)
-  cover_type     String      @default("cover3D") @db.VarChar(10)
-  comment        String?     @db.VarChar(50)
-  overlay        String      @default("overlay1") @db.VarChar(20)
-  background     String      @default("riiconnect241.png") @db.VarChar(120)
-  flag           String      @default("rc24") @db.VarChar(20)
-  coin           String      @default("mario") @db.VarChar(20)
-  font           String      @default("default") @db.VarChar(50)
-  show_avatar    Boolean     @default(false)
-  show_mii       Boolean     @default(false)
-  mii_type       String      @default("guest") @db.VarChar(10)
-  mii_data       String?     @db.VarChar(8192)
-  cmoc_entry_no  String?     @db.VarChar(12)
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @default(now()) @updatedAt
-  badge          String?     @db.VarChar(50)
-  isBanned       Boolean     @default(false)
-  isPublic       Boolean     @default(true)
+  id             Int             @id @default(autoincrement())
+  username       String          @unique @db.VarChar(50)
+  role           String          @default("user") @db.VarChar(25)
+  display_name   String?         @db.VarChar(255)
+  image          String?         @db.VarChar(255)
+  randkey        String?         @unique @db.VarChar(200)
+  coins          Int             @default(0) @db.UnsignedInt
+  cover_region   String          @default("EN") @db.VarChar(6)
+  cover_type     String          @default("cover3D") @db.VarChar(10)
+  comment        String?         @db.VarChar(50)
+  overlay        String          @default("overlay1") @db.VarChar(20)
+  background     String          @default("riiconnect241.png") @db.VarChar(120)
+  flag           String          @default("rc24") @db.VarChar(20)
+  coin           String          @default("mario") @db.VarChar(20)
+  font           String          @default("default") @db.VarChar(50)
+  show_avatar    Boolean         @default(false)
+  show_mii       Boolean         @default(false)
+  mii_type       String          @default("guest") @db.VarChar(10)
+  mii_data       String?         @db.VarChar(8192)
+  cmoc_entry_no  String?         @db.VarChar(12)
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @default(now()) @updatedAt
+  badge          String?         @db.VarChar(50)
+  isBanned       Boolean         @default(false)
+  isPublic       Boolean         @default(true)
   publicOverride Boolean?
-  language       String      @default("en") @db.VarChar(11)
+  language       String          @default("en") @db.VarChar(11)
   accounts       account[]
+  banned_user    banned_user?
   following      following[]
+  game_sessions  game_sessions[]
   playlog        playlog[]
 }
 
@@ -109,9 +112,14 @@ model events {
 
 model game_sessions {
   id         Int      @id @unique(map: "game_sessions_id_uindex") @default(autoincrement())
-  user_id    String   @db.VarChar(64)
-  game_id    String   @db.VarChar(50)
+  user_id    Int
+  game_id    Int      @db.UnsignedInt
   start_time DateTime @default(now()) @db.DateTime(0)
+  game       game     @relation(fields: [game_id], references: [game_pk], onUpdate: Restrict, map: "game_sessions_game_game_pk_fk")
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "game_sessions_user_id_fk")
+
+  @@index([user_id], map: "game_sessions_user_id_fk")
+  @@index([game_id], map: "game_sessions_game_game_pk_fk")
 }
 
 model banned_user {
@@ -120,6 +128,7 @@ model banned_user {
   ip_address  String   @db.VarChar(64)
   reason      String   @db.VarChar(255)
   action_time DateTime @default(now()) @db.DateTime(0)
+  user        user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "banned_user_user_id_fk")
 }
 
 model moderation_log {

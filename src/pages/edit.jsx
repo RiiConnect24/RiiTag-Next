@@ -23,20 +23,32 @@ import LanguageContext from '@/components/shared/LanguageContext'
 import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req }) => {
-  const username = req.session?.username
+  // get the current user session
+  const sessionAccount = req.session?.username
 
-  const loggedInUser = username != null
+  const session = sessionAccount != null
     ? await prisma.user.findUnique({
       where: {
-        username
+        username: sessionAccount
       },
       select: {
-        language: true
+        language: true,
+        display_name: true,
+        cover_region: true,
+        cover_type: true,
+        comment: true,
+        overlay: true,
+        background: true,
+        flag: true,
+        coin: true,
+        font: true,
+        show_avatar: true,
+        show_mii: true
       }
     })
-    : { role: 'guest' }
+    : null
 
-  if (!username) {
+  if (!sessionAccount) {
     return {
       redirect: {
         destination: '/',
@@ -45,26 +57,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
     }
   }
 
-  const tagInfo = await prisma.user.findUnique({
-    where: {
-      username
-    },
-    select: {
-      display_name: true,
-      cover_region: true,
-      cover_type: true,
-      comment: true,
-      overlay: true,
-      background: true,
-      flag: true,
-      coin: true,
-      font: true,
-      show_avatar: true,
-      show_mii: true
-    }
-  })
-
-  return { props: { tagInfo, language: loggedInUser?.language || 'en' } }
+  return { props: { tagInfo: session, language: session?.language || 'en' } }
 })
 
 function EditPage ({ tagInfo, language }) {

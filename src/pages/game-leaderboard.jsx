@@ -12,14 +12,14 @@ const limit = TOTAL_GAMES_ON_LEADERBOARD
 
 export async function getServerSideProps ({ query }) {
   let { page, search } = query
-  page = page === undefined ? 1 : Number.parseInt(page, 10)
-  if (Number.isNaN(page) || page <= 0) {
-    page = 1
-  }
+
+  page = Number.parseInt(page, 10) || 1
+
+  if (Number.isNaN(page) || page <= 0) page = 1
 
   // Add logic for the search handler
-  let leaderboard
-  let totalGames
+  let leaderboard, totalGames
+
   if (search) {
     // Call your search function here and pass the search parameter
     [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search)

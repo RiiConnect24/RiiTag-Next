@@ -17,8 +17,10 @@ import AppNavbar from '@/components/shared/AppNavbar'
 
 export const getServerSideProps = withSession(async ({ req, query }) => {
   const { username } = query
-  const loggedInUsername = req.session?.username
+  // Get the logged in user. This can be null.
+  const session = req.session?.username
 
+  // get user and ban reason
   const user = await prisma.user.findUnique({
     where: {
       username: username.toString()
@@ -29,7 +31,6 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       image: true,
       display_name: true,
       created_at: true,
-      updated_at: true,
       overlay: true,
       background: true,
       coin: true,
@@ -40,15 +41,32 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       role: true,
       isBanned: true,
       isPublic: true,
-      publicOverride: true
+      publicOverride: true,
+      banned_user: true,
+      playlog: {
+        select: {
+          game: true,
+          play_time: true,
+          play_count: true,
+          played_on: true
+        },
+        orderBy: {
+          played_on: 'desc'
+        }
+      },
+      game_sessions: {
+        select: {
+          game: true,
+          start_time: true
+        }
+      }
     }
   })
 
-  const banReason = await prisma.banned_user.findFirst({
-    where: {
-      user_id: user.id
-    }
-  })
+  // If there's no user, don't continue from here.
+  if (!user) {
+    return { notFound: true }
+  }
 
   const event = await prisma.events.findFirst({
     where: {
@@ -61,45 +79,10 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     }
   })
 
-  const playlog = await prisma.playlog.findMany({
-    where: {
-      user: {
-        username: username.toString()
-      }
-    },
-    select: {
-      play_time: true,
-      play_count: true,
-      played_on: true,
-      game: {
-        select: {
-          game_id: true,
-          name: true
-        }
-      }
-    },
-    orderBy: {
-      played_on: 'desc'
-    },
-    take: 10
-  })
-
-  const session = await prisma.game_sessions.findFirst({
-    where: {
-      user_id: user.username
-    }
-  })
-
-  const sessionGame = await prisma.game.findFirst({
-    where: {
-      game_id: session?.game_id || '0'
-    }
-  })
-
-  const loggedInUser = loggedInUsername != null
+  const loggedInUser = session != null
     ? await prisma.user.findUnique({
       where: {
-        username: loggedInUsername
+        username: session
       },
       select: {
         role: true,
@@ -108,26 +91,21 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     })
     : { role: 'guest' }
 
-  if (!user) {
-    return { notFound: true }
-  }
-
   return {
     props: {
       user: JSON.parse(safeJsonStringify(user)),
-      isLoggedIn: user.username === loggedInUsername,
+      isLoggedIn: user.username === session,
       loggedInUser,
       language: loggedInUser?.language || 'en',
-      banReason: JSON.parse(safeJsonStringify(banReason)),
+      banReason: JSON.parse(safeJsonStringify(user.banned_user)),
       event: JSON.parse(safeJsonStringify(event)),
-      playlog: JSON.parse(safeJsonStringify(playlog)),
-      session: JSON.parse(safeJsonStringify(session)),
-      game: JSON.parse(safeJsonStringify(sessionGame))
+      playlog: JSON.parse(safeJsonStringify(user.playlog)),
+      session: JSON.parse(safeJsonStringify(user.game_sessions))
     }
   }
 })
 
-function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlog, language, session, game }) {
+function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlog, language, session }) {
   return (
     <LanguageContext.Helper.Provider value={language}>
       <AppNavbar />
@@ -166,13 +144,13 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
                 />
               </div>
 
-              <PlayLog playlog={playlog} current={game} />
+              <PlayLog playlog={playlog} current={session} />
             </Col>
             : ''}
 
           <Col lg={user.isBanned ? 12 : 5}>
             {event && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert>}
-            {session && <PlayingStatus session={session} game={game} />}
+            {session && <PlayingStatus session={session} games={session} />}
 
             <UserInformationCard user={user} isLoggedIn={isLoggedIn} isAdmin={loggedInUser.role === 'admin'} isMod={loggedInUser.role === 'admin' || loggedInUser.role === 'mod'} />
             {isLoggedIn && <ShowYourTagCard username={user.username} />}
