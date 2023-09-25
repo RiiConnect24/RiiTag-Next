@@ -64,7 +64,7 @@ export const COINS = Object.freeze([
     label: 'Rhythm Heaven (DS) Tutorial Coin',
   },
   {
-    value: 'galaxy',
+    value: 'mariogalaxy',
     label: 'Mario Galaxy Star Bit'
   }
 ]);
