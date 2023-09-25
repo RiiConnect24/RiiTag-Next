@@ -63,6 +63,10 @@ export const COINS = Object.freeze([
     value: 'rhythmheaven',
     label: 'Rhythm Heaven (DS) Tutorial Coin',
   },
+  {
+    value: 'galaxy',
+    label: 'Mario Galaxy Star Bit'
+  }
 ]);
 
 export const isValidCoin = (value) =>
