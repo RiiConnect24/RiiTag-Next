@@ -2,13 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import COVER_TYPE from '@/lib/constants/coverType';
 import CONSOLE from '@/lib/constants/console';
-import { CACHE } from '@/lib/constants/filePaths';
-import { DATA } from '@/lib/constants/filePaths';
+import { CACHE, DATA } from '@/lib/constants/filePaths';
 import { exists, saveFile } from '@/lib/utils/fileUtils';
-import { isBlank } from '@/lib/utils/utils';
 import logger from '@/lib/logger';
-import { getUserByRandKey } from '@/lib/utils/databaseUtils';
-const xml2js = require('xml2js');
+import xml2js from 'xml2js';
 
 function getCoverUrl(gameConsole, coverType, region, gameId, extension) {
   return `https://art.gametdb.com/${gameConsole}/${coverType}/${region}/${gameId}.${extension}`;
@@ -67,21 +64,27 @@ function get3DSGameRegion(gameId) {
   }
 }
 
-export async function getSwitchGameRegion(gameId) {
-  const ids = JSON.parse(
-    await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
-  );
+async function findRegionByGameId(games, gameId) {
+  let regions = null;
+  games.forEach(game => {
+    if (game.id[0] === gameId) {
+      regions = game.region[0].split(',').map(region => region.trim());
+    }
+  });
+  return regions;
+}
 
+export async function getSwitchGameRegion(gameId) {
   try {
     const data = await fs.promises.readFile(
       path.resolve(DATA.IDS, 'switchtdb.xml'),
-      'utf-8'
+      'utf8'
     );
 
     const result = await new Promise((resolve, reject) => {
-      xml2js.parseString(data, (parseErr, parseResult) => {
-        if (parseErr) {
-          reject(parseErr);
+      xml2js.parseString(data, (parseError, parseResult) => {
+        if (parseError) {
+          reject(parseError);
         } else {
           resolve(parseResult);
         }
@@ -90,17 +93,7 @@ export async function getSwitchGameRegion(gameId) {
 
     const games = result.datafile.game;
 
-    async function findRegionByGameId(gameId) {
-      let regions = null;
-      games.forEach(game => {
-        if (game.id[0] === gameId) {
-          regions = game.region[0].split(',').map(region => region.trim());
-        }
-      });
-      return regions;
-    }
-
-    const region = await findRegionByGameId(gameId);
+    const region = await findRegionByGameId(games, gameId);
 
     for (const gameRegion of region) {
       // Europe
@@ -142,8 +135,7 @@ export async function getSwitchGameRegion(gameId) {
     }
 
     return null; // Game ID not found
-  } catch (error) {
-    console.error(error);
+  } catch {
     return null;
   }
 }

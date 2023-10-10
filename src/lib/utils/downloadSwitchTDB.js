@@ -1,15 +1,13 @@
-import axios from 'axios';
 import AdmZip from 'adm-zip';
 import xml2js from 'xml2js';
 import fs from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
 import { DATA } from '@/lib/constants/filePaths';
 
-export async function downloadSwitchTDB(req, res) {
+export async function downloadSwitchTDB() {
     const response = await fetch('https://www.gametdb.com/switchtdb.zip');
 
     if (response.status !== 200) {
-        logger.error(`Failed downloading ${txtname}.txt`);
         return Promise.reject();
     }
 
@@ -30,11 +28,9 @@ export async function downloadSwitchTDB(req, res) {
     const gameData = jsonData.datafile.game;
     const gameMap = {};
 
-    console.log(gameData);
-
     gameData.forEach((game) => {
-        const name = game["$"].name.replace(/ \(EN\)$/, '');
-        const id = game.id;
+        const name = game.$.name.replace(/ \(EN\)$/, '');
+        const { id } = game;
         if (!gameMap[name]) {
             gameMap[name] = [];
         }
@@ -53,4 +49,6 @@ export async function downloadSwitchTDB(req, res) {
         path.resolve(DATA.IDS, 'switchtdb.json'),
         JSON.stringify(sortedGameMap, null, 2)
     );
+
+    return null;
 }

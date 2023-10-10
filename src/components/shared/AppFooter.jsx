@@ -14,8 +14,7 @@ function AppFooter() {
             href="https://rc24.xyz"
             rel="external noopener noreferrer"
             target="_blank"
-          >
-          </a>{' '}
+           />{' '}
           -{' '}
           <Link href="/credits" className="text-muted">
             Credits

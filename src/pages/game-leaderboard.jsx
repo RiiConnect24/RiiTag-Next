@@ -22,12 +22,12 @@ export async function getServerSideProps({ query }) {
   // Add logic for the search handler
   let leaderboard;
   let totalGames;
-  if (search != "null") {
-    // Call your search function here and pass the search parameter
-    [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search);
-  } else {
+  if (search == "null") {
     // Call the game leaderboard function here
     [totalGames, leaderboard] = await getGameLeaderboard(page, limit);
+  } else {
+    // Call your search function here and pass the search parameter
+    [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search);
   }
 
   const totalPages = Math.ceil(totalGames / limit);
@@ -48,8 +48,8 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
 
   const handlePageClick = async (event) => {
     const newPage = event.selected + 1;
-    const searchParams = new URLSearchParams(window.location.search);
-    const searchQuery = searchParams.get("search");
+    const searchParameters = new URLSearchParams(window.location.search);
+    const searchQuery = searchParameters.get("search");
 
     updateURLPageParameter(newPage, searchQuery);
   };
@@ -57,18 +57,18 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const updateURLParameter = (query) => {
-    const params = new URLSearchParams(window.location.search);
-    params.set('search', query);
-    const newURL = window.location.pathname + '?' + params.toString();
+    const parameters = new URLSearchParams(window.location.search);
+    parameters.set('search', query);
+    const newURL = `${window.location.pathname  }?${  parameters.toString()}`;
     window.history.replaceState({}, '', newURL);
     window.location.reload();
   };
 
   const updateURLPageParameter = (page, search) => {
-    const params = new URLSearchParams(window.location.search);
-    params.set('page', page);
-    params.set('search', search);
-    const newURL = window.location.pathname + '?' + params.toString();
+    const parameters = new URLSearchParams(window.location.search);
+    parameters.set('page', page);
+    parameters.set('search', search);
+    const newURL = `${window.location.pathname  }?${  parameters.toString()}`;
     window.history.replaceState({}, '', newURL);
     window.location.reload();
   };
@@ -107,7 +107,7 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
         </Col>
       </Row>
 
-      <br></br>
+      <br />
 
       {games.length === 0 ? (
         <Row>
