@@ -10,31 +10,19 @@ function OAuthAccountsCard({ accounts }) {
   const getProvider = ({ created_at, provider_id }) => (
     <Row key={provider_id}>
       <Col>
-        {provider_id === 'discord' ? (
-          <>
-            <FontAwesomeIcon className="me-1" icon={faDiscord} />
-            <strong>Discord</strong>
-          </>
-        ) : (
-          <>
-            <FontAwesomeIcon className="me-1" icon={faQuestion} />
-            <strong>{provider_id} (Unsupported)</strong>
-          </>
-        )}{' '}
+        <>
+          <FontAwesomeIcon className="me-1" icon={faDiscord} />
+          <strong>Discord</strong>
+        </>
         - Linked on {dayjs(created_at).format(DATE_FORMAT)}
-        {accounts.length === 1 && (
-          <>
-            <br />
-            <i>You cannot unlink your only account.</i>
-          </>
-        )}
+        {accounts.length}
       </Col>
     </Row>
   );
 
   return (
     <Card className="mb-3" bg="secondary" text="white">
-      <Card.Header className="h5">Linked accounts</Card.Header>
+      <Card.Header className="h5">Linked Discord Account</Card.Header>
       <Card.Body>
         {accounts.map((account) => getProvider(account))}
         {/* <hr /> */}
