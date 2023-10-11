@@ -25,7 +25,7 @@ function UserInformationCard({ user, isLoggedIn }) {
           <li>
             <strong>Name:</strong> {user.name_on_riitag}
           </li>
-          {dayjs(user.created_at).format(DATE_FORMAT) !== "4th August 2022" ? (<li><strong>Registered:</strong>{' '} {dayjs(user.created_at).format(DATE_FORMAT)}</li>) : ("")}
+          {dayjs(user.created_at).format(DATE_FORMAT) === "4th August 2022" ? ("") : (<li><strong>Registered:</strong>{' '} {dayjs(user.created_at).format(DATE_FORMAT)}</li>)}
           <li>
             <strong>Overlay:</strong>{' '}
             {OVERLAYS.find((overlay) => overlay.value === user.overlay).label}

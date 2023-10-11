@@ -4,15 +4,27 @@ import readline from 'node:readline';
 import prisma from '@/lib/db';
 import { DATA } from '@/lib/constants/filePaths';
 import { exists } from '@/lib/utils/fileUtils';
-const xml2js = require('xml2js');
+import xml2js from 'xml2js';
+
+const removePunctuation = key => key.replace(/[^\s\w]/g, '').replace(/™/g, ''); // Remove punctuation from key
+
+
+function findRegionByGameId(games, gameId) {
+  let regions = null;
+  games.forEach(game => {
+    if (game.id[0] === gameId) {
+      regions = game.region[0].split(',').map(region => region.trim());
+    }
+  });
+  return regions;
+}
 
 function findSimilarKeys(targetKey, keys) {
-  const removePunctuation = key => key.replace(/[^\w\s]/g, '').replace(/™/g, ''); // Remove punctuation from key
   const targetKeyWithoutPunctuation = removePunctuation(targetKey.toLowerCase());
 
   return keys.filter(key => {
     const keyWithoutPunctuation = removePunctuation(key.toLowerCase());
-    return keyWithoutPunctuation == targetKeyWithoutPunctuation;
+    return keyWithoutPunctuation === targetKeyWithoutPunctuation;
   });
 }
 
@@ -59,17 +71,19 @@ export async function getWiiUGameName(gameId) {
 }
 
 export function getSimilarKeys(ids, gameName, keys) {
-  let similarKeys = findSimilarKeys(gameName, keys);
+  const similarKeys = findSimilarKeys(gameName, keys);
 
   for (const key of similarKeys) {
-    let foundIds = ids[key];
+    const foundIds = ids[key];
     if (foundIds) {
       return foundIds;
     }
   }
+
+  return null;
 }
 
-export async function getSwitchGameIdByNameAndRegion(gameName, region) {
+export async function getSwitchGameIdByNameAndRegion(gameName) {
   const ids = JSON.parse(
     await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
   );
@@ -87,13 +101,13 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
   try {
     const data = await fs.promises.readFile(
       path.resolve(DATA.IDS, 'switchtdb.xml'),
-      'utf-8'
+      'utf8'
     );
 
     const result = await new Promise((resolve, reject) => {
-      xml2js.parseString(data, (parseErr, parseResult) => {
-        if (parseErr) {
-          reject(parseErr);
+      xml2js.parseString(data, (parseError, parseResult) => {
+        if (parseError) {
+          reject(parseError);
         } else {
           resolve(parseResult);
         }
@@ -102,18 +116,8 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
 
     const games = result.datafile.game;
 
-    function findRegionByGameId(gameId) {
-      let regions = null;
-      games.forEach(game => {
-        if (game.id[0] === gameId) {
-          regions = game.region[0].split(',').map(region => region.trim());
-        }
-      });
-      return regions;
-    }
-
     for (const gameId of foundIds) {
-      const region = findRegionByGameId(gameId);
+      const region = findRegionByGameId(games, gameId);
 
       for (const gameRegion of region) {
         // Europe
@@ -156,28 +160,27 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
     }
 
     return null; // Game ID not found
-  } catch (error) {
-    console.error(error);
+  } catch {
     return null;
   }
 }
 
 export async function get3DSGameIdByNameAndRegion(gameName, region) {
-  const ids = JSON.parse(
+  const threeds_ids = JSON.parse(
     await fs.promises.readFile(path.resolve(DATA.IDS, 'citra.json'), 'utf8')
   );
 
-  let foundIds = ids[gameName];
+  let foundIds = threeds_ids[gameName];
 
   if (!foundIds) {
-    foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
+    foundIds = getSimilarKeys(threeds_ids, gameName, Object.keys(threeds_ids));
 
     if (!foundIds) {
-      const ids = JSON.parse(
+      const threeds_ids1 = JSON.parse(
         await fs.promises.readFile(path.resolve(DATA.IDS, '3dstdb.json'), 'utf8')
       );
 
-      foundIds = getSimilarKeys(ids, gameName, Object.keys(ids));
+      foundIds = getSimilarKeys(threeds_ids1, gameName, Object.keys(threeds_ids1));
 
       if (!foundIds) {
         return null;
@@ -261,7 +264,7 @@ export async function get3DSGameIdByNameAndRegion(gameName, region) {
   }
 
   // In case nothing was found, return the first ID.
-  return ids[gameName][0];
+  return threeds_ids[gameName][0];
 }
 
 export async function getWiiUGameIdByNameAndRegion(gameName, region) {
