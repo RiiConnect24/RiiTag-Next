@@ -14,6 +14,7 @@ function GameLeaderboardCard({ game, position }) {
           <img
             alt={game.name === null ? 'Unknown Game' : game.name}
             src={`/api/cover/${game.console}/${game.game_id}`}
+            height="225"
           />
         </Card.Body>
         <Card.Footer>

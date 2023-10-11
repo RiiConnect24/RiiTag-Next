@@ -65,9 +65,7 @@ You can set yourself as an administrator by chaing the "role" column to "admin" 
 | DATABASE_URL              | Connection String                                               | mysql://USER:PASSWORD@127.0.0.1:3306/DATABASE  |
 | IRON_SECRET               | Secret for Iron to encrypt the cookie                           | stringwithatleast64chars                       |
 | DISCORD_CLIENT_ID         | Discord Client ID                                               |                                                |
-| DISCORD_CLIENT_SECRET     | Discord Client Secret                                           |                                                |
-| TWITTER_API_KEY           | Twitter API Key                                                 |                                                |
-| TWITTER_API_SECRET_KEY    | Twitter API Secret Key                                          |                                                |
+| DISCORD_CLIENT_SECRET     | Discord Client Secret                                            |                                                |
 | WEBPACK_ANALYZE           | Runs Webpack Analyzer on start                                  | true                                           |
 | NEXT_PUBLIC_LOGGING_LEVEL | Logging Level                                                   | TRACE, DEBUG, INFO, WARNING, ERROR or CRITICAL |
 | NEXT_PUBLIC_STAGING       | If the instance is a staging instance where data may be deleted | true                                           |
