@@ -29,7 +29,7 @@ export async function downloadSwitchTDB() {
     const gameMap = {};
 
     gameData.forEach((game) => {
-        const name = game.$.name.replace(/ \(EN\)$/, '');
+        const name = game.$.name.split(/ \(/)[0];
         const { id } = game;
         if (!gameMap[name]) {
             gameMap[name] = [];
