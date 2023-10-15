@@ -151,7 +151,7 @@ export async function getGameRegion(gameConsole, gameId) {
       return getWiiGameRegion(gameId);
     }
     case CONSOLE.SWITCH: {
-      return getSwitchGameRegion(gameId);
+      return await getSwitchGameRegion(gameId);
     }
     default: {
       throw new Error('Console must be one of wii, wiiu, 3ds, switch');
