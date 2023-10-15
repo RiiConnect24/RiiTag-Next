@@ -154,7 +154,7 @@ export async function getGameRegion(gameConsole, gameId) {
       return getSwitchGameRegion(gameId);
     }
     default: {
-      throw new Error('Console must be one of wii, wiiu, 3ds');
+      throw new Error('Console must be one of wii, wiiu, 3ds, switch');
     }
   }
 }
@@ -220,7 +220,7 @@ export async function getCover(gameConsole, coverType, gameId, region) {
       } catch {
         // Fallback to US
         logger.debug('Cover DL: Falling back to US');
-        return downloadCover(gameConsole, coverType, 'US', gameId);
+        return await downloadCover(gameConsole, coverType, 'US', gameId);
       }
     }
   } else {
@@ -268,7 +268,7 @@ export async function getCover(gameConsole, coverType, gameId, region) {
         } catch {
           // Fallback to US
           logger.debug('Cover DL: Falling back to US');
-          return downloadCover(gameConsole, coverType, 'US', gameId);
+          return await downloadCover(gameConsole, coverType, 'US', gameId);
         }
       }
     }
