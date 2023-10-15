@@ -257,7 +257,7 @@ export async function getCover(gameConsole, coverType, gameId, region) {
         return await downloadCover(
           gameConsole,
           coverType,
-          getGameRegion(gameConsole, gameId),
+          await getGameRegion(gameConsole, gameId),
           gameId
         );
       } catch {
