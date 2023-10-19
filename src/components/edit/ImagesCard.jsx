@@ -16,7 +16,7 @@ const backgrounds = BACKGROUNDS.map((background) => ({
   label: background,
 }));
 
-function ImagesCard({ values, errors, handleChange }) {
+function ImagesCard({ values, errors, handleChange, username }) {
   return (
     <Card className="mb-3" bg="secondary" text="white">
       <Card.Header as="h5">Images</Card.Header>
@@ -67,12 +67,37 @@ function ImagesCard({ values, errors, handleChange }) {
                 {errors.background}
               </Alert>
             )}
+            <br></br>
+            <br></br>
+            <p>Upload Background</p>
+            <Form.Control
+              id="fileInput"
+              accept=".png"
+              name="file"
+              type="file"
+              onChange={(event) => {
+                const formData = new FormData();
+                formData.append('file', event.currentTarget.files[0]);
+
+                values.background = username + ".png";
+
+                return fetch('/api/account/background-upload', {
+                  method: 'POST',
+                  body: formData,
+                });
+              }}
+            />
+            <p>
+              <small className="text-muted">
+                Please ensure that your image is 1200x450 and is in PNG format.
+              </small>
+            </p>
           </Col>
           <Col md={7}>
             <img
               alt="Background Preview"
               className="img-thumbnail mx-auto d-block"
-              src={`/img/background/${values.background}`}
+              src={!Number.isNaN(Number(values.background.replace(/.*\//, '').replace(/\.png$/, ''))) ? `api/account/uploaded-background` : `/img/background/${values.background}`}
             />
           </Col>
         </Row>

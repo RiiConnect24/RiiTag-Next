@@ -39,7 +39,6 @@ async function updateTagSettings(request, response) {
     isBlank(coverRegion) ||
     isBlank(coverType) ||
     isBlank(overlay) ||
-    isBlank(background) ||
     isBlank(flag) ||
     isBlank(coin) ||
     isBlank(font) ||
@@ -48,7 +47,6 @@ async function updateTagSettings(request, response) {
     !isValidCoverType(coverType) ||
     !isValidCoverRegion(coverRegion) ||
     !isValidOverlay(overlay) ||
-    BACKGROUNDS.includes(background) === false ||
     !isValidFlag(flag) ||
     !isValidCoin(coin) ||
     !isValidFont(font) ||

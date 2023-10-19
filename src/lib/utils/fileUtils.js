@@ -11,11 +11,14 @@ export async function saveFile(filepath, file) {
     await fs.promises.mkdir(path.dirname(filepath), { recursive: true });
   }
 
+  console.log(file)
+
   const fileStream = fs.createWriteStream(filepath);
 
-  await new Promise((resolve, reject) => {
-    file.pipe(fileStream);
-    file.on('error', reject);
-    fileStream.on('finish', resolve);
-  });
+  try {
+    await fs.promises.writeFile(filepath, file);
+    logger.info('File saved successfully');
+  } catch (error) {
+    logger.error('Error saving the file:', error);
+  }
 }

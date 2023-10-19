@@ -36,6 +36,7 @@ export const getServerSideProps = withSession(async ({ req }) => {
       username,
     },
     select: {
+      username: true,
       name_on_riitag: true,
       cover_region: true,
       cover_type: true,
@@ -102,8 +103,6 @@ function EditPage({ tagInfo }) {
 
         if (!values.background) {
           errors.background = 'Required';
-        } else if (BACKGROUNDS.includes(values.background) === false) {
-          errors.background = 'Invalid Background';
         }
 
         if (!values.flag) {
@@ -194,6 +193,7 @@ function EditPage({ tagInfo }) {
                   values={values}
                   errors={errors}
                   handleChange={handleChange}
+                  username={tagInfo.username}
                 />
               </Col>
             </Row>
