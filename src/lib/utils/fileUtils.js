@@ -11,8 +11,6 @@ export async function saveFile(filepath, file) {
     await fs.promises.mkdir(path.dirname(filepath), { recursive: true });
   }
 
-  console.log(file)
-
   const fileStream = fs.createWriteStream(filepath);
 
   try {

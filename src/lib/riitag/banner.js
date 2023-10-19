@@ -111,7 +111,6 @@ export async function makeBanner(user) {
 
   // Background image
   const bgPath = path.resolve(!Number.isNaN(Number(user.background.replace(/.*\//, '').replace(/\.png$/, ''))) ? CACHE.BACKGROUNDS : PUBLIC.BACKGROUND, user.background);
-  console.log(bgPath);
   if (!(await exists(bgPath))) {
     throw new Error(`Background ${user.background} does not exist`);
   }
