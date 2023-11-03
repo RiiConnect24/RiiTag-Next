@@ -2,6 +2,7 @@ import AdmZip from 'adm-zip';
 import xml2js from 'xml2js';
 import fs from 'fs-extra';
 import path from 'node:path';
+import { saveFile } from '@/lib/utils/fileUtils';
 import { DATA } from '@/lib/constants/filePaths';
 
 export async function downloadSwitchTDB() {
@@ -11,9 +12,13 @@ export async function downloadSwitchTDB() {
         return Promise.reject();
     }
 
+    saveFile(path.resolve(DATA.IDS, 'switchtdb.zip'), response.body);
+
     // Step 2: Unzip switchtdb.zip and save switchtdb.xml
-    const zip = new AdmZip(response.body);
+    const zip = new AdmZip(path.resolve(DATA.IDS, 'switchtdb.zip'));
     zip.extractAllTo(path.resolve(DATA.IDS), true);
+
+    fs.remove(path.resolve(DATA.IDS, 'switchtdb.zip'));
 
     // Step 3: Read and modify the XML
     const xmlData = await fs.readFile(path.resolve(DATA.IDS, 'switchtdb.xml'));
