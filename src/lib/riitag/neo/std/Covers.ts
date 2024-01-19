@@ -130,15 +130,16 @@ export default class Covers extends ModuleBase {
     return `https://art.gametdb.com/${console}/${type}/${region}/${gameId}.${extention}`
   }
 
-  async downloadCover (console: string, type: string, gameId: string, region: string): Promise<string> {
+  async downloadCover (gameConsole: string, type: string, gameId: string, region: string): Promise<string> {
     // Determine if a cache already exists, if so, return it.
-    const filepath = path.resolve(CACHE.COVER, console, type, region, `${gameId}.${this.getExtension(type, console)}`)
+    const filepath = path.resolve(CACHE.COVER, gameConsole, type, region, `${gameId}.${this.getExtension(type, gameConsole)}`)
     if (fs.existsSync(filepath)) return filepath
 
     // Fetch the the cover directly from the coverDB.
-    const response = await fetch(this.getBaseURL(console, type, region, gameId, this.getExtension(type, console)))
+    const response = await fetch(this.getBaseURL(gameConsole, type, region, gameId, this.getExtension(type, gameConsole)))
     if (!response.ok) return null
 
+    console.log(response.body)
     // Save to a cache and return it.
     await saveFile(filepath, await response.body)
     return filepath
@@ -246,6 +247,7 @@ export default class Covers extends ModuleBase {
     // Load the final cover with the y-offset applied
     // Y-offset is arbitrarily defined based on relative scale of box/cover.
     function loadFinalCover (xOffset: number, yOffset: number, coverPath: string, width: number, height: number) {
+      console.log(coverPath)
       Canvas.loadImage(coverPath).then((image) => {
         context.drawImage(image, object.x + xOffset, (object.y + yOffset))
       })

@@ -371,10 +371,8 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
 
   const game = await prisma.game.findFirst({
     where: {
-      game_id_console: {
-        game_id: gameId,
-        console: gameConsole
-      }
+      game_id: gameId,
+      console: gameConsole
     }
   })
 
@@ -395,12 +393,10 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
   } else {
     await prisma.game.create({
       data: {
-        game_id_console: {
-          game_id: gameId,
-          console: gameConsole
-        },
         name: gameName,
-        playcount: 1
+        playcount: 1,
+        game_id: gameId,
+        console: gameConsole
       }
     })
   }
@@ -414,10 +410,10 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
   if (playlog) {
     await prisma.playlog.update({
       where: {
-        playlog_pk: playlog.playlog_pk
+        playlog_id: playlog.playlog_id
       },
       data: {
-        playtime: {
+        play_time: {
           increment: playtime
         },
         play_count: {
@@ -443,7 +439,7 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
       },
       data: {
         coins: {
-          increment: value.bonus_coins
+          increment: value?.bonus_coins || 1
         }
       }
     })

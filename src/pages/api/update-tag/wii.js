@@ -44,11 +44,12 @@ async function addWiiGame (request, response) {
     })
   }
 
+  console.log(user)
   const gameName = await getWiiGameName(game)
 
   try {
-    const updatedUser = await updateriitag(user, game, gameName, CONSOLE.WII, truePlaytime)
-    renderTag(updatedUser)
+    await updateriitag(user, game, gameName, CONSOLE.WII, truePlaytime)
+    renderTag(user)
   } catch (error) {
     logger.error(error)
     return response
