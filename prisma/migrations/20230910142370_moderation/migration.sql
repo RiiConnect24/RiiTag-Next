@@ -1,9 +1,9 @@
 -- AlterTable
-ALTER TABLE `user` ADD COLUMN `isBanned` boolean NOT NULL DEFAULT false;
-ALTER TABLE `user` ADD COLUMN `isPublic` boolean NOT NULL DEFAULT true;
-ALTER TABLE `user` ADD COLUMN `publicOverride` boolean NULL;
+ALTER TABLE `user` ADD COLUMN IF NOT EXISTS `isBanned` boolean NOT NULL DEFAULT false;
+ALTER TABLE `user` ADD COLUMN IF NOT EXISTS `isPublic` boolean NOT NULL DEFAULT true;
+ALTER TABLE `user` ADD COLUMN IF NOT EXISTS `publicOverride` boolean NULL;
 
-create table riitag.moderation_log
+create table if not exists riitag.moderation_log
 (
     id         int auto_increment
         primary key,
@@ -12,7 +12,7 @@ create table riitag.moderation_log
     action_time datetime default current_timestamp() not null
 );
 
-create table riitag.banned_user
+create table if not exists riitag.banned_user
 (
     id         int auto_increment
         primary key,

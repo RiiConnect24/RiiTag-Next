@@ -16,9 +16,14 @@ async function exportData (request, response) {
   if (
     isBlank(reason) || isBlank(String(user)) || isBlank(String(shadow))
   ) {
+    const fields = []
+    if (isBlank(reason)) fields.push('reason')
+    if (isBlank(String(user))) fields.push('user')
+    if (isBlank(String(shadow))) fields.push('shadow')
+
     return response
       .status(HTTP_CODE.BAD_REQUEST)
-      .send({ error: 'Invalid data' })
+      .send({ error: 'Invalid data', fields })
   }
 
   if (!loggedInUser) {

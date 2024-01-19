@@ -19,14 +19,18 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
   // Get user session and their language
   const session = req.session?.username
 
-  const sessionUser = await prisma.user.findUnique({
-    where: {
-      username: session
-    },
-    select: {
-      language: true
-    }
-  })
+  let sessionUser
+
+  if (session) {
+    await prisma.user.findUnique({
+      where: {
+        username: session
+      },
+      select: {
+        language: true
+      }
+    })
+  }
 
   let { page, search } = query
 

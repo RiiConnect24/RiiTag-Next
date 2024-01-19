@@ -53,14 +53,18 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     skip
   })
 
-  const sessionUser = await prisma.user.findUnique({
-    where: {
-      username: session
-    },
-    select: {
-      language: true
-    }
-  })
+  let sessionUser
+
+  if (session) {
+    await prisma.user.findUnique({
+      where: {
+        username: session
+      },
+      select: {
+        language: true
+      }
+    })
+  }
 
   return {
     props: {

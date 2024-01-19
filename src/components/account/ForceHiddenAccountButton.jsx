@@ -29,12 +29,17 @@ export default function ForceHiddenAccountButton ({ isHidden, id }) {
         user: id
       })
     })
+    response.data = await response.json()
     if (response.status === 200) {
       toast.success('The account has been hidden.')
       mutate()
       router.reload()
     } else {
-      toast.error('An error occured, please try again later.')
+      if (response.data.fields.includes('reason')) {
+        toast.error('Please provide a reason.')
+      } else {
+        toast.error('An error occured, please try again later.')
+      }
     }
   }
 
