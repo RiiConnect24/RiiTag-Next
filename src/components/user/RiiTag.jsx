@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function LinkTag ({ username, name, updated_at: updatedAt }) {
+function RiiTag ({ username, name, updated_at: updatedAt }) {
   let source = `/${username}/tag.max.png`
 
   if (updatedAt) {
@@ -12,7 +12,7 @@ function LinkTag ({ username, name, updated_at: updatedAt }) {
     <a href={`/${username}/tag.max.png`}>
       <img
         className='img-fluid'
-        alt={`LinkTag of ${name}`}
+        alt={`RiiTag of ${name}`}
         src={source}
         height={450}
         width={1200}
@@ -21,14 +21,14 @@ function LinkTag ({ username, name, updated_at: updatedAt }) {
   )
 }
 
-LinkTag.propTypes = {
+RiiTag.propTypes = {
   username: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   updated_at: PropTypes.string
 }
 
-LinkTag.defaultProps = {
+RiiTag.defaultProps = {
   updated_at: null
 }
 
-export default LinkTag
+export default RiiTag

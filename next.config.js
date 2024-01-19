@@ -29,11 +29,11 @@ const nextConfig = {
     return [
       {
         source: '/:id/tag.png',
-        destination: '/api/linktag/:id*'
+        destination: '/api/riitag/:id*'
       },
       {
         source: '/:id/tag.max.png',
-        destination: '/api/linktag/:id*?max=true'
+        destination: '/api/riitag/:id*?max=true'
       },
       {
         source: '/wii',

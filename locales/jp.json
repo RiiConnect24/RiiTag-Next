@@ -1,10 +1,10 @@
 {
     "name": "日本語",
     
-    "welcome": "LinkTagへようこそ！",
+    "welcome": "RiiTagへようこそ！",
     "join_others": "ゲームを{0}回プレイしたことがある他の{1}人のゲーマーに参加しよう！",
     "discord": "Discordでログイン",
-    "carasol_linktag": "<a href='user/{0}'>{1}</a>のLinkTag",
+    "carasol_riitag": "<a href='user/{0}'>{1}</a>のRiiTag",
     "supported_platforms": "対応プラットホーム",
     "banned_reason": "このユーザは追放されました。 理由: {0}",
     "game_id": "ゲーム / ID",

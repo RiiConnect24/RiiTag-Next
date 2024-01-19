@@ -5,7 +5,7 @@ import prisma from '@/lib/db'
 import { CACHE, DATA } from '@/lib/constants/filePaths'
 import { exists } from '@/lib/utils/fileUtils'
 import { Socket } from 'node:net'
-import { doRender } from '../linktag/neo/renderer'
+import { doRender } from '../riitag/neo/renderer'
 const xml2js = require('xml2js')
 
 const workers = []
@@ -355,7 +355,7 @@ export async function getWiiUGameIdByNameAndRegion (gameName, region) {
   return gameRegions.USA ?? null
 }
 
-export async function updatelinktag (user, gameId, gameName, gameConsole, playtime) {
+export async function updateriitag (user, gameId, gameName, gameConsole, playtime) {
   gameId = gameId.toUpperCase()
 
   const value = await prisma.events.findFirst({

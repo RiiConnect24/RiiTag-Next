@@ -2,11 +2,11 @@ import { ncWithSession } from '@/lib/routing'
 import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import { isBlank } from '@/lib/utils/utils'
 import prisma from '@/lib/db'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 import { isValidMiiType, MII_TYPE } from '@/lib/constants/miiType'
 import { isValidGuestMii } from '@/lib/constants/forms/guestMiis'
 import logger from '@/lib/logger'
-import { getMiiHexDataFromCMOC } from '@/lib/linktag/mii'
+import { getMiiHexDataFromCMOC } from '@/lib/riitag/mii'
 
 async function updateMii (request, response) {
   const { miiType, guestMii, cmocEntryNo } = request.body

@@ -1,7 +1,7 @@
 -- AlterTable
 ALTER TABLE `playlog` ADD COLUMN `play_count` int NULL DEFAULT 0;
 
-create table linktag.game_sessions
+create table riitag.game_sessions
 (
     id         int auto_increment
         primary key,

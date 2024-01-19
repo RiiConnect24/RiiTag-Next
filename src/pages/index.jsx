@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import useInfo from '@/lib/swr-hooks/useInfo'
 import prisma from '@/lib/db'
-import LinkTagCarousel from '@/components/index/LinkTagCarousel'
+import RiiTagCarousel from '@/components/index/RiiTagCarousel'
 import safeJsonStringify from 'safe-json-stringify'
 import { withSession } from '@/lib/iron-session'
 import LanguageContext from '@/components/shared/LanguageContext'
@@ -112,7 +112,7 @@ function IndexPage ({ userCount, playCount, language, randomUsers }) {
                     </>
                   )}
                   <a
-                    href='https://wii.guide/linktag'
+                    href='https://wii.guide/riitag'
                     target='_blank'
                     rel='noreferrer noopener'
                   >
@@ -153,7 +153,7 @@ function IndexPage ({ userCount, playCount, language, randomUsers }) {
           randomUsers.length > 0 && (
             <Row className='text-center'>
               <Col>
-                <LinkTagCarousel randomUsers={randomUsers} />
+                <RiiTagCarousel randomUsers={randomUsers} />
               </Col>
             </Row>
           )

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { NextSeo } from 'next-seo'
 import { withSession } from '@/lib/iron-session'
 import prisma from '@/lib/db'
-import LinkTag from '@/components/user/LinkTag'
+import RiiTag from '@/components/user/RiiTag'
 import UserInformationCard from '@/components/user/UserInformationCard'
 import ShowYourTagCard from '@/components/user/ShowYourTagCard'
 import ENV from '@/lib/constants/environmentVariables'
@@ -122,7 +122,7 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
                 ).getTime()}`,
                 width: 1200,
                 height: 450,
-                alt: `linktag of ${user.display_name}`,
+                alt: `riitag of ${user.display_name}`,
                 type: 'image/png'
               }
             ],
@@ -137,7 +137,7 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
           {user.isBanned === false
             ? <Col lg={7}>
               <div className='mb-3'>
-                <LinkTag
+                <RiiTag
                   username={user.username}
                   name={user.display_name}
                   updated_at={user.updated_at}

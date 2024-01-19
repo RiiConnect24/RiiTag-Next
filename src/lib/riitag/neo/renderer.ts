@@ -6,7 +6,7 @@ import { saveFile } from '@/lib/utils/fileUtils'
 import ModuleBase from './ModuleBase'
 import logger from '@/lib/logger'
 import { user } from '@prisma/client'
-import { setupWorkers, startWorkerRender } from '@/lib/utils/linktagUtils'
+import { setupWorkers, startWorkerRender } from '@/lib/utils/riitagUtils'
 
 async function loadFonts () {
   const fontJsons = readdirSync(DATA.FONTS)
@@ -45,7 +45,7 @@ export async function doRender (user: user): Promise<void> {
 
   // Load all renderable elements for the overlay
   const elements: ModuleBase[] = await Promise.all(overlay.draw_order.map(async (element) => {
-    const ModuleName = await import(`@/lib/linktag/neo/std/${element}`)
+    const ModuleName = await import(`@/lib/riitag/neo/std/${element}`)
     // eslint-disable-next-line new-cap
     const module: ModuleBase = new ModuleName.default(overlay)
     logger.info(`Building render element: ${element}; for ${user.username}`)

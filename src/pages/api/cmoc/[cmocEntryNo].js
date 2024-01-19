@@ -6,7 +6,7 @@ import { CACHE, PUBLIC } from '@/lib/constants/filePaths'
 import { exists, saveFile } from '@/lib/utils/fileUtils'
 import { setFileHeaders } from '@/lib/utils/utils'
 import logger from '@/lib/logger'
-import { getMiiFromHexData, getMiiHexDataFromCMOC } from '@/lib/linktag/mii'
+import { getMiiFromHexData, getMiiHexDataFromCMOC } from '@/lib/riitag/mii'
 
 /* Endpoint examples:
  * /api/cmoc/3362-4305-0645

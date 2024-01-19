@@ -2,7 +2,7 @@ import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import { nc } from '@/lib/routing'
 import prisma from '@/lib/db'
 import ENV from '@/lib/constants/environmentVariables'
-import { getGameRegion } from '@/lib/linktag/cover'
+import { getGameRegion } from '@/lib/riitag/cover'
 
 async function getUserByUsername (request, response) {
   const { username } = request.query

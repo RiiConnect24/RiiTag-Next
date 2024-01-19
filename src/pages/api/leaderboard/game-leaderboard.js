@@ -1,6 +1,6 @@
 import { nc } from '@/lib/routing'
 import HTTP_CODE from '@/lib/constants/httpStatusCodes'
-import { getGameLeaderboard } from '@/lib/linktag/leaderboard'
+import { getGameLeaderboard } from '@/lib/riitag/leaderboard'
 import { TOTAL_GAMES_ON_LEADERBOARD } from '@/lib/constants/miscConstants'
 
 const limit = TOTAL_GAMES_ON_LEADERBOARD

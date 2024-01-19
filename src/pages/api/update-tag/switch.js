@@ -6,12 +6,12 @@ import { isBlank } from '@/lib/utils/utils'
 import {
   getSwitchGameIdByNameAndRegion,
   getSwitchGameName,
-  updatelinktag
-} from '@/lib/utils/linktagUtils'
+  updateriitag
+} from '@/lib/utils/riitagUtils'
 import CONSOLE from '@/lib/constants/console'
 import logger from '@/lib/logger'
 import { getUserByRandKey } from '@/lib/utils/databaseUtils'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 
 const limiter = rateLimit({
   interval: ENV.IS_DEV ? 1 : 60_000, // 60 Seconds
@@ -57,7 +57,7 @@ async function addSwitchGame (request, response) {
   const gameTitle = await getSwitchGameName(gameId)
 
   try {
-    const updatedUser = await updatelinktag(
+    const updatedUser = await updateriitag(
       user,
       gameId,
       gameTitle,

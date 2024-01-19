@@ -37,7 +37,7 @@ function AppNavbar () {
         >
           <Container fluid>
             <Link href='/' passHref>
-              <Navbar.Brand>LinkTag
+              <Navbar.Brand>RiiTag
               </Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls='navbar' />

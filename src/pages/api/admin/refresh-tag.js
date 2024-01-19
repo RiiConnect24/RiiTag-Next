@@ -3,7 +3,7 @@ import { isBlank } from '@/lib/utils/utils'
 import { getUserByUsername, userIsAdmin } from '@/lib/utils/databaseUtils'
 import logger from '@/lib/logger'
 import { ncWithSession } from '@/lib/routing'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 
 async function refreshTag (request, response) {
   const { username } = request.body

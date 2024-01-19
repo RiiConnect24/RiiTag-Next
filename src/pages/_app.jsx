@@ -21,10 +21,10 @@ function App ({ Component, pageProps }) {
         <NextNProgress />
         <DefaultSeo
           title={undefined}
-          titleTemplate='Linktag | %s'
-          defaultTitle='LinkTag'
-          description='LinkTag is the new generation of gamer tags for Wii.'
-          additionalLinkTags={[
+          titleTemplate='RiiTag | %s'
+          defaultTitle='RiiTag'
+          description='RiiTag is the new generation of gamer tags for Wii.'
+          additionalRiiTags={[
             {
               rel: 'apple-touch-icon',
               href: `${ENV.BASE_URL}/img/apple-touch-icon.png`
@@ -56,13 +56,13 @@ function App ({ Component, pageProps }) {
             type: 'website',
             locale: 'en',
             url: ENV.BASE_URL,
-            site_name: 'LinkTag',
+            site_name: 'RiiTag',
             images: [
               {
-                url: `${ENV.BASE_URL}/img/linktag_back.png`,
+                url: `${ENV.BASE_URL}/img/riitag_back.png`,
                 width: 1920,
                 height: 1080,
-                alt: 'linktag',
+                alt: 'riitag',
                 type: 'image/png'
               }
             ]

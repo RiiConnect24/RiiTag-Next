@@ -1,6 +1,6 @@
 import { DATA } from '@/lib/constants/filePaths'
 import path from 'node:path'
-import Covers from '@/lib/linktag/neo/std/Covers'
+import Covers from '@/lib/riitag/neo/std/Covers'
 import logger from '@/lib/logger'
 import fs from 'node:fs'
 

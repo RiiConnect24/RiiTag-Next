@@ -43,7 +43,7 @@ function CreditsPage ({ display_name: wiitagName }) {
       />
       <Row className='mb-3'>
         <Col xs={9}>
-          <p className='h2'>Without these people, linktag would not exist:</p>
+          <p className='h2'>Without these people, RiiTag would not exist:</p>
           <ul>
             <Contributor name='Matthe815'>
               Lead Developer for RiiTag
@@ -52,7 +52,7 @@ function CreditsPage ({ display_name: wiitagName }) {
                 : ''}
             </Contributor>
             <Contributor name='Artuto'>
-              Added linktag support to the RiiConnect24 Bot
+              Added RiiTag support to the RiiConnect24 Bot
             </Contributor>
             <Contributor name='bendevnull'>
               Prior developer and designer of RiiTag
@@ -65,7 +65,7 @@ function CreditsPage ({ display_name: wiitagName }) {
             </Contributor>
             <Contributor name='daileon'>
               Created Wiinnertag (no longer available), which heavily inspired
-              linktag
+              RiiTag
             </Contributor>
             <Contributor name='dhtdht020'>
               Created some of the RiiTag overlays
@@ -112,7 +112,7 @@ function CreditsPage ({ display_name: wiitagName }) {
                 wiitagName === 'You' ? 'You' : `${wiitagName} (You)`
               }
             >
-              For using linktag!
+              For using RiiTag!
             </Contributor>
           </ul>
         </Col>

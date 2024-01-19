@@ -66,7 +66,7 @@ function EditPage ({ tagInfo, language }) {
       <AppNavbar />
       <Formik
         initialValues={{
-          nameOnlinktag: tagInfo.display_name,
+          nameOnriitag: tagInfo.display_name,
           comment: tagInfo.comment === null ? '' : tagInfo.comment,
           coverRegion: tagInfo.cover_region,
           coverType: tagInfo.cover_type,
@@ -81,10 +81,10 @@ function EditPage ({ tagInfo, language }) {
         validate={(values) => {
           const errors = {}
 
-          if (!values.nameOnlinktag) {
-            errors.nameOnlinktag = 'Required'
-          } else if (values.nameOnlinktag.length > 20) {
-            errors.nameOnlinktag = 'Name must be < 20 characters.'
+          if (!values.nameOnriitag) {
+            errors.nameOnriitag = 'Required'
+          } else if (values.nameOnriitag.length > 20) {
+            errors.nameOnriitag = 'Name must be < 20 characters.'
           }
 
           if (values.comment && values.comment.length > 50) {
@@ -166,7 +166,7 @@ function EditPage ({ tagInfo, language }) {
           <Form noValidate onSubmit={handleSubmit}>
             <Container>
               <NextSeo
-                title='Edit LinkTag'
+                title='Edit RiiTag'
                 openGraph={{
                   url: `${ENV.BASE_URL}/edit`
                 }}

@@ -1,8 +1,8 @@
 {
-  "name": "linktag",
+  "name": "riitag",
   "version": "2.0.0",
   "repository": {
-    "url": "https://github.com/WiiDatabase/linktag-Next"
+    "url": "https://github.com/WiiDatabase/riitagNext"
   },
   "license": "AGPL-3.0-only",
   "scripts": {
@@ -51,7 +51,7 @@
     "@tiptap/starter-kit": "2.0.0-beta.209",
     "axios": "^1.4.0",
     "bootstrap": "5.2.3",
-    "canvas": "2.11.0",
+    "canvas": "^2.11.2",
     "dayjs": "1.11.7",
     "decimal.js": "^10.4.3",
     "dotenv-cli": "6.0.0",

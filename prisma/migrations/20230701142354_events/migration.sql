@@ -1,4 +1,4 @@
-create table linktag.events
+create table riitag.events
 (
     id          int auto_increment
         primary key,

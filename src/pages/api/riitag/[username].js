@@ -5,11 +5,11 @@ import { nc } from '@/lib/routing'
 import prisma from '@/lib/db'
 import { CACHE } from '@/lib/constants/filePaths'
 import { exists } from '@/lib/utils/fileUtils'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 import logger from '@/lib/logger'
 import { setFileHeaders } from '@/lib/utils/utils'
 
-async function getLinktag (request, response) {
+async function getRiiTag (request, response) {
   const { username } = request.query
   const max = request.query.max === 'true'
 
@@ -21,7 +21,7 @@ async function getLinktag (request, response) {
 
   if (user === null) {
     response.setHeader('Content-Type', 'image/png')
-    setFileHeaders(response, `linktag-${username}.png`)
+    setFileHeaders(response, `riitag-${username}.png`)
     return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile(max ? 'public/img/tag/tagnotfound.max.png' : 'public/tagnotfound.png'))
   }
 
@@ -36,16 +36,16 @@ async function getLinktag (request, response) {
     } catch (error) {
       logger.error(error)
       response.setHeader('Content-Type', 'image/png')
-      setFileHeaders(response, `linktag-${username}.png`)
+      setFileHeaders(response, `riitag-${username}.png`)
       return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send(await fs.promises.readFile(max ? 'public/img/tag/error.max.png' : 'public/error.png'))
     }
   }
 
   response.setHeader('Content-Type', 'image/png')
-  setFileHeaders(response, `linktag-${username}.png`)
+  setFileHeaders(response, `riitag-${username}.png`)
   return response.status(200).send(await fs.promises.readFile(filepath))
 }
 
-const handler = nc().get(getLinktag)
+const handler = nc().get(getRiiTag)
 
 export default handler

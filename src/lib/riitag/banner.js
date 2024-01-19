@@ -8,8 +8,8 @@ import prisma from '@/lib/db'
 import CONSOLE from '@/lib/constants/console'
 import COVER_TYPE from '@/lib/constants/coverType'
 import { isBlank } from '@/lib/utils/utils'
-import { getCover } from '@/lib/linktag/cover'
-import { getMiiFromHexData, getMiiHexDataFromCMOC } from '@/lib/linktag/mii'
+import { getCover } from '@/lib/riitag/cover'
+import { getMiiFromHexData, getMiiHexDataFromCMOC } from '@/lib/riitag/mii'
 
 async function loadFonts () {
   const fontJsons = await fs.promises.readdir(DATA.FONTS)

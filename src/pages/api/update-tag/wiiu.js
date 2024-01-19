@@ -9,11 +9,11 @@ import {
   getWiiGameName,
   getWiiUGameIdByNameAndRegion,
   getWiiUGameName,
-  updatelinktag
-} from '@/lib/utils/linktagUtils'
+  updateriitag
+} from '@/lib/utils/riitagUtils'
 import { DATA } from '@/lib/constants/filePaths'
 import CONSOLE from '@/lib/constants/console'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 import logger from '@/lib/logger'
 import { getUserByRandKey } from '@/lib/utils/databaseUtils'
 
@@ -93,13 +93,13 @@ async function addWiiUGame (request, response) {
   }
 
   try {
-    const updatedUser = await updatelinktag(user, id6, gameName, gameConsole)
+    const updatedUser = await updateriitag(user, id6, gameName, gameConsole)
     renderTag(updatedUser)
   } catch (error) {
     logger.error(error)
     return response
       .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Error updating linktag' })
+      .json({ error: 'Error updating riitag' })
   }
 
   return response.status(HTTP_CODE.OK).send()

@@ -3,7 +3,7 @@ ALTER TABLE `user` ADD COLUMN `isBanned` boolean NOT NULL DEFAULT false;
 ALTER TABLE `user` ADD COLUMN `isPublic` boolean NOT NULL DEFAULT true;
 ALTER TABLE `user` ADD COLUMN `publicOverride` boolean NULL;
 
-create table linktag.moderation_log
+create table riitag.moderation_log
 (
     id         int auto_increment
         primary key,
@@ -12,7 +12,7 @@ create table linktag.moderation_log
     action_time datetime default current_timestamp() not null
 );
 
-create table linktag.banned_user
+create table riitag.banned_user
 (
     id         int auto_increment
         primary key,

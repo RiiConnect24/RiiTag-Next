@@ -1,6 +1,6 @@
 import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import logger from '@/lib/logger'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 import { ncWithSession } from '@/lib/routing'
 import { userIsAdmin } from '@/lib/utils/databaseUtils'
 import { isBlank } from '@/lib/utils/utils'

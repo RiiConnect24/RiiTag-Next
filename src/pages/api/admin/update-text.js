@@ -46,7 +46,7 @@ async function updateText (request, response) {
     logger.error(error)
     return response
       .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Error updating linktag' })
+      .json({ error: 'Error updating riitag' })
   }
 
   return response.status(HTTP_CODE.OK).json({ success: 'Text updated.' })

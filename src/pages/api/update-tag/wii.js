@@ -3,10 +3,10 @@ import rateLimit from '@/lib/rate-limit'
 import ENV from '@/lib/constants/environmentVariables'
 import HTTP_CODE from '@/lib/constants/httpStatusCodes'
 import { isBlank } from '@/lib/utils/utils'
-import { getWiiGameName, updatelinktag } from '@/lib/utils/linktagUtils'
+import { getWiiGameName, updateriitag } from '@/lib/utils/riitagUtils'
 import CONSOLE from '@/lib/constants/console'
 import logger from '@/lib/logger'
-import { renderTag } from '@/lib/linktag/neo/renderer'
+import { renderTag } from '@/lib/riitag/neo/renderer'
 import { getUserByRandKey } from '@/lib/utils/databaseUtils'
 
 const limiter = rateLimit({
@@ -47,13 +47,13 @@ async function addWiiGame (request, response) {
   const gameName = await getWiiGameName(game)
 
   try {
-    const updatedUser = await updatelinktag(user, game, gameName, CONSOLE.WII, truePlaytime)
+    const updatedUser = await updateriitag(user, game, gameName, CONSOLE.WII, truePlaytime)
     renderTag(updatedUser)
   } catch (error) {
     logger.error(error)
     return response
       .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Error updating linktag' })
+      .json({ error: 'Error updating riitag' })
   }
 
   return response.status(HTTP_CODE.OK).send()

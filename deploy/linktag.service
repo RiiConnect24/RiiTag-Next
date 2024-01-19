@@ -1,17 +1,17 @@
 [Unit]
-Description=linktag
+Description=RiiTag
 
 [Service]
 ExecStart=node ./node_modules/.bin/next start -p 20010
 Restart=always
-User=linktag
-Group=linktag
+User=riitag
+Group=riitag
 Environment=NODE_ENV=production
-# Following line is optional, but needed when linktag is a system user
+# Following line is optional, but needed when RiiTag is a system user
 # w/o a home directory
 Environment=DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/sharpii
-WorkingDirectory=/srv/http/linktag.example.com/linktag
-StandardOutput=append:/var/log/node/linktag/common.log
+WorkingDirectory=/srv/http/riitag.example.com/riitag
+StandardOutput=append:/var/log/node/riitag/common.log
 StandardError=inherit
 
 [Install]
