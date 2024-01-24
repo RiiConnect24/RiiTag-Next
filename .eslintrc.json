@@ -16,6 +16,9 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "globals": {
+        "NodeJS": true
+    },
     "plugins": [
         "react"
     ],
