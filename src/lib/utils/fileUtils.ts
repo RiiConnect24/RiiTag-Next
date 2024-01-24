@@ -15,3 +15,11 @@ export async function saveFile (filepath, file: ReadableStream<Uint8Array> | nul
   fileStream.write(file)
   fileStream.end()
 }
+
+export async function readStreamIntoArray (stream: unknown[]) {
+  const chunks = []
+  for await (const chunk of stream) {
+    chunks.push(chunk)
+  }
+  return chunks
+}
