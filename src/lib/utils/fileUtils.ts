@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import logger from '@/lib/logger';
+import logger from '@/lib/logger'
 
 export const exists = async (filename) =>
   !!(await fs.promises.stat(filename).catch(() => null))
