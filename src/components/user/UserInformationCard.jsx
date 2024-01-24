@@ -36,9 +36,6 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin, isMod }) {
                 <LocalizedString string='display_name'/>: {user.display_name}
               </li>
               <li>
-                <LocalizedString string='registered_on'/>: {dayjs(user.created_at).format(DATE_FORMAT)}
-              </li>
-              <li>
                 <LocalizedString string='overlay'/>: {OVERLAYS.find((overlay) => overlay.value === user.overlay).label}
               </li>
               <li>

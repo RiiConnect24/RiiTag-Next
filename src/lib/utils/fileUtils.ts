@@ -11,6 +11,7 @@ export async function saveFile (filepath, file: ReadableStream<Uint8Array> | nul
     await fs.promises.mkdir(path.dirname(filepath), { recursive: true })
   }
 
+  file.getReader().read().then(({ done, value }) => { console.log(value) })
   const fileStream = fs.createWriteStream(filepath)
   fileStream.write(file)
   fileStream.end()
