@@ -27,7 +27,7 @@ async function getRiiTag (request, response) {
 
   const filepath = path.resolve(
     CACHE.TAGS,
-    max ? `${user.username}.max.png` : `${user.username}.png`
+    max ? `${user.username}.png` : `${user.username}.png`
   )
 
   if (!(await exists(filepath))) {

@@ -37,7 +37,14 @@ function AppNavbar () {
         >
           <Container fluid>
             <Link href='/' passHref>
-              <Navbar.Brand>RiiTag
+              <Navbar.Brand>
+              <img
+                alt="RiiTag Logo"
+                className="d-inline-block align-text-top no-shadow"
+                height={46}
+                src="/logo.svg"
+                width={128}
+              />
               </Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls='navbar' />

@@ -1,8 +1,7 @@
 import path from 'node:path'
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, createWriteStream } from 'node:fs'
 import Canvas from 'canvas'
 import { CACHE, DATA } from '@/lib/constants/filePaths'
-import { saveFile } from '@/lib/utils/fileUtils'
 import ModuleBase from './ModuleBase'
 import logger from '@/lib/logger'
 import { user } from '@prisma/client'
@@ -62,6 +61,6 @@ export async function doRender (user: user): Promise<void> {
     logger.info(`Finished: ${finished}/${overlay.draw_order.length}`)
   }
 
-  await saveFile(path.resolve(CACHE.TAGS, `${user.username}.png`), canvas.createPNGStream())
-  await saveFile(path.resolve(CACHE.TAGS, `${user.username}.max.png`), canvas.createPNGStream())
+  const tagFileStream = createWriteStream(path.resolve(CACHE.TAGS, `${user.username}.png`))
+  canvas.createPNGStream().pipe(tagFileStream)
 }
