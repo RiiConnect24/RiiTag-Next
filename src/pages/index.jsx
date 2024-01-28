@@ -30,7 +30,17 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     }
   })
 
-  const skip = Math.floor(Math.random() * totalCounts._count.username)
+  const applicableUsers = await prisma.user.count({
+    where: {
+      coins: {
+        gt: 10
+      },
+      isPublic: true,
+      publicOverride: null
+    }
+  })
+
+  const skip = Math.floor(Math.random() * applicableUsers)
 
   // get random users with 5 or more coins and is public.
   const randomUsers = await prisma.user.findMany({
