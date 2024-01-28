@@ -31,7 +31,7 @@
     "edit_tag": "Edit Tag",
 
     "general": "General",
-    "display_name": "<string>Display Name</strong>",
+    "display_name": "<strong>Display Name</strong>",
     "friend_code": "<strong>Friend Code</strong>",
 
     "cover_region_explanation": "RiiTag will try the game&apos;s region and fallback to English\nif it can&apos;t find a cover.",
