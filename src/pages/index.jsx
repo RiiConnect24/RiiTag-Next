@@ -63,24 +63,23 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
     skip
   })
 
-  let sessionUser
-
-  if (session) {
-    await prisma.user.findUnique({
+  const loggedInUser = session != null
+    ? await prisma.user.findUnique({
       where: {
         username: session
       },
       select: {
+        role: true,
         language: true
       }
     })
-  }
+    : { role: 'guest' }
 
   return {
     props: {
       userCount: totalCounts._count.username,
       playCount: totalCounts._sum.coins,
-      language: sessionUser?.language || 'en',
+      language: loggedInUser?.language || 'en',
       randomUsers: JSON.parse(safeJsonStringify(randomUsers))
     }
   }
