@@ -30,6 +30,6 @@ export default class FriendCode extends ModuleBase {
   render (ctx: Canvas.CanvasRenderingContext2D, user: user): void {
     if (user.font !== 'default' && this.font.force === false) this.font.name = user.font
 
-    drawText(ctx, this.font, user.comment, this.x, this.y, this.align)
+    drawText(ctx, this.font, user.comment || '', this.x, this.y, this.align)
   }
 }
