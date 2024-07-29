@@ -118,7 +118,7 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
             url: `${ENV.BASE_URL}/user/${user.username}`,
             images: [
               {
-                url: `${ENV.BASE_URL}/${user.username}/tag.png?${new Date(
+                url: `${ENV.BASE_URL}/${user.username}/tag.max.png?${new Date(
                   user.updated_at
                 ).getTime()}`,
                 width: 1200,
