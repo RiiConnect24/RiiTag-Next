@@ -71,7 +71,7 @@ function CreditsPage ({ display_name: wiitagName }) {
               Created some of the LinkTag overlays
             </Contributor>
             <Contributor name='DismissedGuy'>
-              Created RiiTag-RPC for Discord
+              Created LinkTag-RPC for Discord
             </Contributor>
             <Contributor name='DLEDeviant'>
               Created the font&nbsp;
@@ -85,7 +85,7 @@ function CreditsPage ({ display_name: wiitagName }) {
               , one of the selectable fonts.
             </Contributor>
             <Contributor name='fledge68'>
-              Added RiiTag support to WiiFlow Lite
+              Added LinkTag support to WiiFlow Lite
             </Contributor>
             <Contributor name='Genwald'>Mii support</Contributor>
             <Contributor name='HEYimHeroic'>Mii support</Contributor>
@@ -93,26 +93,26 @@ function CreditsPage ({ display_name: wiitagName }) {
               Figured out how to decrypt Mii QR codes
             </Contributor>
             <Contributor name='Lustar'>
-              Creator and owner of GameTDB; the database of games that RiiTag
-              uses, also came up with the name RiiTag
+              Creator and owner of GameTDB; the database of games that LinkTag
+              uses, also came up with the name LinkTag
             </Contributor>
             <Contributor name='PF2M'>Mii support</Contributor>
             <Contributor name='ShadowPuppet'>
-              Created DUTag (no longer available), which heavily inspired RiiTag
+              Created DUTag (no longer available), which heavily inspired LinkTag
             </Contributor>
             <Contributor name='TheShadowEevee'>
               Additional developer of the project, and helped add Cemu and Citra
               support
             </Contributor>
             <Contributor name='twosecslater'>
-              Created U-Tag, the RiiTag plugin for Wii U
+              Created U-Tag, the LinkTag plugin for Wii U
             </Contributor>
             <Contributor
               name={
                 wiitagName === 'You' ? 'You' : `${wiitagName} (You)`
               }
             >
-              For using RiiTag!
+              For using LinkTag!
             </Contributor>
           </ul>
         </Col>

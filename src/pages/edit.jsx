@@ -169,7 +169,7 @@ function EditPage ({ tagInfo, language }) {
           <Form noValidate onSubmit={handleSubmit}>
             <Container>
               <NextSeo
-                title='Edit RiiTag'
+                title='Edit LinkTag'
                 openGraph={{
                   url: `${ENV.BASE_URL}/edit`
                 }}

@@ -56,13 +56,13 @@ function App ({ Component, pageProps }) {
             type: 'website',
             locale: 'en',
             url: ENV.BASE_URL,
-            site_name: 'RiiTag',
+            site_name: 'LinkTag',
             images: [
               {
                 url: `${ENV.BASE_URL}/img/riitag_back.png`,
                 width: 1920,
                 height: 1080,
-                alt: 'riitag',
+                alt: 'LinkTag',
                 type: 'image/png'
               }
             ]

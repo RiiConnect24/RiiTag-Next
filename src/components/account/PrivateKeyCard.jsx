@@ -44,7 +44,7 @@ function PrivateKeyCard ({ randkey }) {
       <Card.Body>
         <Alert variant='warning'>
           Do not share this key with anyone, as it can be used to update your
-          RiiTag!
+          LinkTag!
         </Alert>
         <hr />
         <PrivateKey randkey={key} toggleModal={toggleModal} />

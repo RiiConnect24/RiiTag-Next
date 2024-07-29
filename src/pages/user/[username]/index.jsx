@@ -122,7 +122,7 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
                 ).getTime()}`,
                 width: 1200,
                 height: 450,
-                alt: `riitag of ${user.display_name}`,
+                alt: `LinkTag of ${user.display_name}`,
                 type: 'image/png'
               }
             ],
