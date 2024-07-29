@@ -12,7 +12,7 @@ function AppFooter () {
         <Container fluid className='mt-auto py-2 bg-secondary'>
           <Row>
             <Col className='text-muted text-start'>
-              &copy; RiiTag 2020 - {new Date().getFullYear()}
+              &copy; LinkTag 2020 - {new Date().getFullYear()}
               {' '}
               -{' '}
               <Link href='/credits' className='text-muted'>
@@ -39,7 +39,7 @@ function AppFooter () {
               -{' '}
               <a
                 className='text-muted'
-                href='https://github.com/bennyman123abc/RiiTag-Next'
+                href='https://github.com/bennyman123abc/LinkTag-Next'
                 rel='external noopener noreferrer'
                 target='_blank'
               >

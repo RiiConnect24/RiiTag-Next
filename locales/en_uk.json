@@ -1,11 +1,11 @@
 {
     "name": "English (Traditional)",
-    
-    "welcome": "Welcome to RiiTag!",
+
+    "welcome": "Welcome to LinkTag!",
     "join_others": "Join {0} other gamers that have played games {1} times!",
     "credits": "Credits",
     "discord": "Login with Discord",
-    "carasol_riitag": "<a href='user/{0}'>{1}</a>'s RiiTag",
+    "carasol_LinkTag": "<a href='user/{0}'>{1}</a>'s LinkTag",
     "supported_platforms": "Supported Platforms",
     "banned_reason": "This account has been banned. Reason: {0}",
     "game_id": "Game / ID",
@@ -34,7 +34,7 @@
     "display_name": "<strong>Display Name</strong>",
     "friend_code": "<strong>Friend Code</strong>",
 
-    "cover_region_explanation": "RiiTag will try the game&apos;s region and fallback to English\nif it can&apos;t find a cover.",
+    "cover_region_explanation": "LinkTag will try the game&apos;s region and fallback to English\nif it can&apos;t find a cover.",
     "show_avatar": "Show Avatar",
 
     "select_overlay": "Select Overlay",

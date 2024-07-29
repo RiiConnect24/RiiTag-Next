@@ -1,15 +1,15 @@
 {
     "name": "日本語",
-    
-    "welcome": "RiiTagへようこそ！",
+
+    "welcome": "LinkTagへようこそ！",
     "join_others": "ゲームを{0}回プレイしたことがある他の{1}人のゲーマーに参加しよう！",
     "discord": "Discordでログイン",
-    "carasol_riitag": "<a href='user/{0}'>{1}</a>のRiiTag",
+    "carasol_LinkTag": "<a href='user/{0}'>{1}</a>のLinkTag",
     "supported_platforms": "対応プラットホーム",
     "banned_reason": "このユーザは追放されました。 理由: {0}",
     "game_id": "ゲーム / ID",
     "play_time": "プレイタイム",
-    "last_played": "最後にプレイした",
+    "last_played": "最後にプレイ",
     "play_count": "プレイ回数",
     "user_info": "ユーザー情報",
     "banned": "追放",
@@ -42,7 +42,7 @@
     "select_font": "フォントを選択",
 
     "images": "画像",
-    
+
     "home": "ホーム",
     "leaderboard": "リーダーボード",
 

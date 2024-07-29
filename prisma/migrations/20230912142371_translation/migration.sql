@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `user` ADD COLUMN IF NOT EXISTS `language` VARCHAR(11) NOT NULL DEFAULT 'en';

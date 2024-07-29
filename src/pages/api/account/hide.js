@@ -41,7 +41,7 @@ async function exportData (request, response) {
   try {
     await prisma.user.update({
       data: {
-        publicOverride: shadow
+        publicOverride: +shadow
       },
       where: {
         id: user
@@ -56,7 +56,7 @@ async function exportData (request, response) {
       }
     })
 
-    return response.status(HTTP_CODE.OK).send(null)
+    return response.status(HTTP_CODE.OK).send({ })
   } catch (error) {
     logger.error(error)
     return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send()

@@ -3,68 +3,103 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model account {
-  id                  Int      @id @default(autoincrement())
+model accounts {
+  id                  Int      @id(map: "account_pkey") @default(autoincrement())
   user_id             Int
   provider_id         String   @db.VarChar(255)
   provider_account_id String   @db.VarChar(255)
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now()) @updatedAt
-  user                user     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
+  updated_at          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
+  user                user     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "account_user_id_fkey")
 
-  @@unique([provider_id, provider_account_id], name: "provider_id_provider_account_id")
-  @@index([user_id], map: "FK_accounts_users")
+  @@unique([provider_id, provider_account_id], map: "account_provider_id_provider_account_id_key")
+  @@index([user_id], map: "fk_accounts_users")
   @@index([provider_account_id], map: "provider_account_id")
   @@index([provider_id], map: "provider_id")
 }
 
+model banned_user {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  ip_address  String   @db.VarChar(64)
+  reason      String   @db.VarChar(255)
+  action_time DateTime @default(now()) @db.Timestamp(6)
+  user        user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "banned_user_user_id_fk")
+}
+
+model events {
+  id          Int      @id(map: "events_id_uindex") @default(autoincrement())
+  name        String   @db.VarChar(128)
+  start_time  DateTime @db.Date
+  end_time    DateTime @db.Date
+  bonus_coins Int      @default(0)
+}
+
 model game {
-  game_pk       Int             @id @default(autoincrement()) @db.UnsignedInt
-  game_id       String          @db.VarChar(50)
+  game_pk       Int             @id @default(autoincrement())
+  game_id       String
   console       String          @db.VarChar(9)
   name          String?         @db.VarChar(255)
-  playcount     Int             @default(1) @db.UnsignedInt
-  first_played  DateTime        @default(now())
-  last_played   DateTime        @default(now()) @updatedAt
+  play_count    Int             @default(1)
+  play_time     Int             @default(0)
+  first_played  DateTime        @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
+  last_played   DateTime        @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
   game_sessions game_sessions[]
   playlog       playlog[]
 
   @@unique([game_id, console], map: "game_id_console")
   @@index([console], map: "console")
   @@index([game_id], map: "game_id")
-  @@index([playcount], map: "playcount")
+  @@index([play_count], map: "playcount")
+}
+
+model game_sessions {
+  id         Int      @id(map: "game_sessions_id_uindex") @default(autoincrement())
+  user_id    Int
+  game_id    Int
+  start_time DateTime @default(now()) @db.Timestamp(6)
+  game       game     @relation(fields: [game_id], references: [game_pk], onDelete: NoAction, onUpdate: NoAction, map: "game_sessions_game_game_pk_fk")
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "game_sessions_user_id_fk")
+}
+
+model moderation_log {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  reason      String   @db.VarChar(255)
+  action_time DateTime @default(now()) @db.Timestamp(6)
 }
 
 model playlog {
-  playlog_id Int      @id @default(autoincrement()) @db.UnsignedInt
+  playlog_id Int      @id @default(autoincrement())
   user_id    Int
-  game_pk    Int      @db.UnsignedInt
+  game_pk    Int
+  played_on  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
   play_time  Int?
-  played_on  DateTime @default(now())
-  play_count Int      @default(0)
-  game       game     @relation(fields: [game_pk], references: [game_pk], onUpdate: NoAction, map: "FK_playlog_game")
-  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_playlog_user")
+  play_count Int?     @default(0)
+  game       game     @relation(fields: [game_pk], references: [game_pk], onDelete: NoAction, onUpdate: NoAction, map: "fk_playlog_game")
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_playlog_user")
 
   @@index([game_pk], map: "game_pk")
   @@index([played_on], map: "played_on")
   @@index([user_id], map: "user_id")
 }
 
-model sys {
-  key   String @id @db.VarChar(50)
-  value String @db.Text
+model sessions {
+  id         Int      @id @default(autoincrement())
+  user_id    String   @db.VarChar(32)
+  token      String   @db.VarChar(120)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  device     String?
+  ip_address String   @db.VarChar(15)
 }
 
-model following {
-  id      Int  @id @default(autoincrement())
-  user_id Int
-  user    user @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_following_user")
-
-  @@index([user_id], map: "user_id")
+model sys {
+  key   String @id @db.VarChar(50)
+  value String
 }
 
 model user {
@@ -74,66 +109,29 @@ model user {
   display_name   String?         @db.VarChar(255)
   image          String?         @db.VarChar(255)
   randkey        String?         @unique @db.VarChar(200)
-  coins          Int             @default(0) @db.UnsignedInt
+  coins          Int             @default(0)
   cover_region   String          @default("EN") @db.VarChar(6)
   cover_type     String          @default("cover3D") @db.VarChar(10)
   comment        String?         @db.VarChar(50)
   overlay        String          @default("overlay1") @db.VarChar(20)
-  background     String          @default("riiconnect241.png") @db.VarChar(120)
+  background     String          @default("wii6.png") @db.VarChar(120)
   flag           String          @default("rc24") @db.VarChar(20)
   coin           String          @default("mario") @db.VarChar(20)
   font           String          @default("default") @db.VarChar(50)
-  show_avatar    Boolean         @default(false)
-  show_mii       Boolean         @default(false)
+  show_avatar    Int             @default(0) @db.SmallInt
+  show_mii       Int             @default(0) @db.SmallInt
   mii_type       String          @default("guest") @db.VarChar(10)
   mii_data       String?         @db.VarChar(8192)
   cmoc_entry_no  String?         @db.VarChar(12)
-  created_at     DateTime        @default(now())
-  updated_at     DateTime        @default(now()) @updatedAt
+  created_at     DateTime        @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
+  updated_at     DateTime        @default(dbgenerated("CURRENT_TIMESTAMP(3)"))
   badge          String?         @db.VarChar(50)
-  isBanned       Boolean         @default(false)
-  isPublic       Boolean         @default(true)
-  publicOverride Boolean?
+  isBanned       Int             @default(0) @db.SmallInt
+  isPublic       Int             @default(1) @db.SmallInt
+  publicOverride Int?            @db.SmallInt
   language       String          @default("en") @db.VarChar(11)
-  accounts       account[]
-  banned_user    banned_user?
-  following      following[]
+  accounts       accounts[]
+  banned_user    banned_user[]
   game_sessions  game_sessions[]
   playlog        playlog[]
-}
-
-model events {
-  id          Int      @id @unique(map: "events_id_uindex") @default(autoincrement())
-  name        String   @db.VarChar(128)
-  start_time  DateTime @db.Date
-  end_time    DateTime @db.Date
-  bonus_coins Int      @default(0)
-}
-
-model game_sessions {
-  id         Int      @id @unique(map: "game_sessions_id_uindex") @default(autoincrement())
-  user_id    Int
-  game_id    Int      @db.UnsignedInt
-  start_time DateTime @default(now()) @db.DateTime(0)
-  game       game     @relation(fields: [game_id], references: [game_pk], onUpdate: Restrict, map: "game_sessions_game_game_pk_fk")
-  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "game_sessions_user_id_fk")
-
-  @@index([user_id], map: "game_sessions_user_id_fk")
-  @@index([game_id], map: "game_sessions_game_game_pk_fk")
-}
-
-model banned_user {
-  id          Int      @id @default(autoincrement())
-  user_id     Int      @unique
-  ip_address  String   @db.VarChar(64)
-  reason      String   @db.VarChar(255)
-  action_time DateTime @default(now()) @db.DateTime(0)
-  user        user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "banned_user_user_id_fk")
-}
-
-model moderation_log {
-  id          Int      @id @default(autoincrement())
-  user_id     Int
-  reason      String   @db.VarChar(255)
-  action_time DateTime @default(now()) @db.DateTime(0)
 }

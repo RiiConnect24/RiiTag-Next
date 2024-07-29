@@ -39,10 +39,10 @@ function AppNavbar () {
             <Link href='/' passHref>
               <Navbar.Brand>
               <img
-                alt="RiiTag Logo"
+                alt="LinkTag Logo"
                 className="d-inline-block align-text-top no-shadow"
                 height={46}
-                src="/logo.svg"
+                src="/logo.png"
                 width={128}
               />
               </Navbar.Brand>

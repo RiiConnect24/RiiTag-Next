@@ -23,13 +23,13 @@ function GeneralCard ({ values, errors, handleChange }) {
                 required
                 type='text'
                 placeholder='Nickname'
-                name='nameOnriitag'
+                name='nameOnRiiTag'
                 onChange={handleChange}
-                value={values.nameOnriitag}
-                isInvalid={!!errors.nameOnriitag}
+                value={values.nameOnRiiTag}
+                isInvalid={!!errors.nameOnRiiTag}
               />
               <Form.Control.Feedback type='invalid'>
-                {errors.nameOnriitag}
+                {errors.nameOnRiiTag}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>

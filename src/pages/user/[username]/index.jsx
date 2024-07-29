@@ -132,9 +132,9 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
           }}
         />
         <Row>
-          {user.isBanned === true ? <Alert variant='danger'><LocalizedString string='banned_reason' values={[banReason.reason]}/></Alert> : ''}
+          {user.isBanned === 1 ? <Alert variant='danger'><LocalizedString string='banned_reason' values={[banReason.reason]}/></Alert> : ''}
 
-          {user.isBanned === false
+          {user.isBanned === 0
             ? <Col lg={7}>
               <div className='mb-3'>
                 <RiiTag
@@ -149,8 +149,8 @@ function ProfilePage ({ user, isLoggedIn, banReason, loggedInUser, event, playlo
             : ''}
 
           <Col lg={user.isBanned ? 12 : 5}>
-            {event && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert>}
-            {session && <PlayingStatus session={session} games={session} />}
+            {event != null && <Alert variant='info'>An event is currently ongoing: {event.name}.<br />Until {event.date}, you will recieve {event.bonus + 1}x more coins.</Alert>}
+            {session instanceof Object && <PlayingStatus session={session} games={session} />}
 
             <UserInformationCard user={user} isLoggedIn={isLoggedIn} isAdmin={loggedInUser.role === 'admin'} isMod={loggedInUser.role === 'admin' || loggedInUser.role === 'mod'} />
             {isLoggedIn && <ShowYourTagCard username={user.username} />}
@@ -166,10 +166,10 @@ ProfilePage.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   loggedInUser: PropTypes.object.isRequired,
   language: PropTypes.string.isRequired,
-  event: PropTypes.object.isRequired,
-  banReason: PropTypes.object.isRequired,
+  event: PropTypes.object,
+  banReason: PropTypes.object,
   playlog: PropTypes.array.isRequired,
-  session: PropTypes.object.isRequired,
+  session: PropTypes.object,
   game: PropTypes.object.isRequired
 }
 

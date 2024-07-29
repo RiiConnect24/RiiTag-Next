@@ -21,9 +21,9 @@ function App ({ Component, pageProps }) {
         <NextNProgress />
         <DefaultSeo
           title={undefined}
-          titleTemplate='RiiTag | %s'
-          defaultTitle='RiiTag'
-          description='RiiTag is the new generation of gamer tags for Wii.'
+          titleTemplate='LinkTag | %s'
+          defaultTitle='LinkTag'
+          description='LinkTag is the new generation of gamer tags for Wii.'
           additionalRiiTags={[
             {
               rel: 'apple-touch-icon',

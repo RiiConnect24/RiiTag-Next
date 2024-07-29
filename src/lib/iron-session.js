@@ -3,7 +3,7 @@ import { ironSession } from 'iron-session/express'
 import ENV from './constants/environmentVariables'
 
 const sessionOptions = {
-  cookieName: 'riitag-session',
+  cookieName: 'LinkTag-session',
   password: ENV.IRON_SECRET || '',
   cookieOptions: {
     httpOnly: true,

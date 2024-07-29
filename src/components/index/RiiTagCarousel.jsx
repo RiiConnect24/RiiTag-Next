@@ -4,7 +4,7 @@ import { Carousel } from 'react-bootstrap'
 import LanguageContext from '../shared/LanguageContext'
 import LocalizedString from '../shared/LocalizedString'
 
-function RiiTagCarousel ({ randomUsers }) {
+function LinkTagCarousel ({ randomUsers }) {
   return (
     <LanguageContext.Helper.Consumer>
       {(lang) => (
@@ -13,14 +13,14 @@ function RiiTagCarousel ({ randomUsers }) {
             <Carousel.Item key={randomUser.username}>
               <img
                 className='d-block w-75 mx-auto mt-2'
-                alt={`RiiTag of ${randomUser.display_name}`}
+                alt={`LinkTag of ${randomUser.display_name}`}
                 src={`/${randomUser.username}/tag.max.png?${new Date(
                   randomUser.updated_at
                 ).getTime()}`}
               />
               <Carousel.Caption className='mb-3 text-light'>
                 <p className='h4'>
-                  <LocalizedString string='carasol_riitag' values={[
+                  <LocalizedString string='carasol_LinkTag' values={[
                     randomUser.username,
                     randomUser.display_name
                   ]} />
@@ -34,8 +34,8 @@ function RiiTagCarousel ({ randomUsers }) {
   )
 }
 
-RiiTagCarousel.propTypes = {
+LinkTagCarousel.propTypes = {
   randomUsers: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-export default RiiTagCarousel
+export default LinkTagCarousel

@@ -43,32 +43,32 @@ function CreditsPage ({ display_name: wiitagName }) {
       />
       <Row className='mb-3'>
         <Col xs={9}>
-          <p className='h2'>Without these people, RiiTag would not exist:</p>
+          <p className='h2'>Without these people, LinkTag would not exist:</p>
           <ul>
             <Contributor name='Matthe815'>
-              Lead Developer for RiiTag
+              Lead Developer for LinkTag
               {Math.floor(Math.random() * 100_000) === 1
                 ? ' (and dominating the entire world!)'
                 : ''}
             </Contributor>
             <Contributor name='Artuto'>
-              Added RiiTag support to the RiiConnect24 Bot
+              Added LinkTag support to the RiiConnect24 Bot
             </Contributor>
             <Contributor name='bendevnull'>
-              Prior developer and designer of RiiTag
+              Prior developer and designer of LinkTag
             </Contributor>
             <Contributor name='blackb0x'>
-              Added official RiiTag support to his modification of USB Loader GX
+              Added official LinkTag support to his modification of USB Loader GX
             </Contributor>
             <Contributor name='Brawl345' link='https://wiidatabase.de'>
-              Completely rewrote RiiTag into version 2.0 (RiiTag-Next)
+              Completely rewrote LinkTag into version 2.0 (LinkTag-Next)
             </Contributor>
             <Contributor name='daileon'>
               Created Wiinnertag (no longer available), which heavily inspired
-              RiiTag
+              LinkTag
             </Contributor>
             <Contributor name='dhtdht020'>
-              Created some of the RiiTag overlays
+              Created some of the LinkTag overlays
             </Contributor>
             <Contributor name='DismissedGuy'>
               Created RiiTag-RPC for Discord

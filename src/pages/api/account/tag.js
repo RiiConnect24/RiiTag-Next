@@ -14,7 +14,7 @@ import { renderTag } from '@/lib/riitag/neo/renderer'
 
 async function updateTagSettings (request, response) {
   const {
-    nameOnriitag,
+    nameOnRiiTag,
     comment,
     coverRegion,
     coverType,
@@ -58,7 +58,7 @@ async function updateTagSettings (request, response) {
   }
 
   if (
-    isBlank(nameOnriitag) ||
+    isBlank(nameOnRiiTag) ||
     isBlank(coverRegion) ||
     isBlank(coverType) ||
     isBlank(overlay) ||
@@ -66,7 +66,7 @@ async function updateTagSettings (request, response) {
     isBlank(flag) ||
     isBlank(coin) ||
     isBlank(font) ||
-    nameOnriitag.length > 20 ||
+    nameOnRiiTag.length > 20 ||
     comment.length > 50 ||
     !isValidCoverType(coverType) ||
     !isValidCoverRegion(coverRegion) ||
@@ -89,7 +89,7 @@ async function updateTagSettings (request, response) {
         username
       },
       data: {
-        display_name: nameOnriitag,
+        display_name: nameOnRiiTag,
         cover_region: coverRegion,
         cover_type: coverType,
         comment: isBlank(comment) ? null : comment,
@@ -98,8 +98,8 @@ async function updateTagSettings (request, response) {
         flag,
         coin,
         font,
-        show_avatar: showAvatar,
-        show_mii: showMii
+        show_avatar: +showAvatar,
+        show_mii: +showMii
       }
     })
     await renderTag(user)

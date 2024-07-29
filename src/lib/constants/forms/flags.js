@@ -1,5 +1,9 @@
 export const FLAGS = Object.freeze([
   {
+    value: 'wiilink',
+    label: 'WiiLink24'
+  },
+  {
     value: 'us',
     label: 'United States'
   },

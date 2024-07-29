@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import useInfo from '@/lib/swr-hooks/useInfo'
 import prisma from '@/lib/db'
-import RiiTagCarousel from '@/components/index/RiiTagCarousel'
+import LinkTagCarousel from '@/components/index/RiiTagCarousel'
 import safeJsonStringify from 'safe-json-stringify'
 import { withSession } from '@/lib/iron-session'
 import LanguageContext from '@/components/shared/LanguageContext'
@@ -35,7 +35,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       coins: {
         gt: 10
       },
-      isPublic: true,
+      isPublic: 1,
       publicOverride: null
     }
   })
@@ -53,7 +53,7 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
       coins: {
         gt: 10
       },
-      isPublic: true,
+      isPublic: 1,
       publicOverride: null
     },
     orderBy: {
@@ -166,7 +166,7 @@ function IndexPage ({ userCount, playCount, language, randomUsers }) {
           randomUsers.length > 0 && (
             <Row className='text-center'>
               <Col>
-                <RiiTagCarousel randomUsers={randomUsers} />
+                <LinkTagCarousel randomUsers={randomUsers} />
               </Col>
             </Row>
           )

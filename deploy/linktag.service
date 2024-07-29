@@ -1,5 +1,5 @@
 [Unit]
-Description=RiiTag
+Description=LinkTag
 
 [Service]
 ExecStart=node ./node_modules/.bin/next start -p 20010

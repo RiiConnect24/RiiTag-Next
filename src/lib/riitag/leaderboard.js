@@ -32,7 +32,7 @@ export async function getGameLeaderboard (page, limit) {
             name: true,
             game_id: true,
             console: true,
-            playcount: true,
+            play_count: true,
             first_played: true
           }
         }
@@ -83,7 +83,7 @@ export async function getGameLeaderboardSearch (page, limit, search) {
             name: true,
             game_id: true,
             console: true,
-            playcount: true,
+            play_count: true,
             first_played: true
           }
         }

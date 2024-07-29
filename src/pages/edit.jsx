@@ -66,7 +66,7 @@ function EditPage ({ tagInfo, language }) {
       <AppNavbar />
       <Formik
         initialValues={{
-          nameOnriitag: tagInfo.display_name,
+          nameOnRiiTag: tagInfo.display_name,
           comment: tagInfo.comment === null ? '' : tagInfo.comment,
           coverRegion: tagInfo.cover_region,
           coverType: tagInfo.cover_type,
@@ -81,10 +81,10 @@ function EditPage ({ tagInfo, language }) {
         validate={(values) => {
           const errors = {}
 
-          if (!values.nameOnriitag) {
-            errors.nameOnriitag = 'Required'
-          } else if (values.nameOnriitag.length > 20) {
-            errors.nameOnriitag = 'Name must be < 20 characters.'
+          if (!values.nameOnRiiTag) {
+            errors.nameOnRiiTag = 'Required'
+          } else if (values.nameOnRiiTag.length > 20) {
+            errors.nameOnRiiTag = 'Name must be < 20 characters.'
           }
 
           if (values.comment && values.comment.length > 50) {
@@ -132,6 +132,9 @@ function EditPage ({ tagInfo, language }) {
           } else if (isValidFont(values.font) === false) {
             errors.font = 'Invalid Font'
           }
+
+          values.showAvatar = true
+          values.showMii = true
 
           return errors
         }}

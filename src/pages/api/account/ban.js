@@ -35,7 +35,7 @@ async function exportData (request, response) {
   try {
     await prisma.user.update({
       data: {
-        isBanned: true
+        isBanned: 1
       },
       where: {
         id: user

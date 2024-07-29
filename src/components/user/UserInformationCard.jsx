@@ -25,8 +25,8 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin, isMod }) {
         <Card className='mb-3' bg='secondary' text='white'>
           <Card.Header as='h5'><LocalizedString string='user_info'/></Card.Header>
           <Card.Body>
-            {user.isBanned && (<Badge bg='danger' className='mb-2'><LocalizedString string='banned'/></Badge>)}
-            {(user.publicOverride === false || (user.publicOverride === true && isMod)) && (<Badge bg='danger' className='mb-2'><LocalizedString string='hidden'/></Badge>)}
+            {user.isBanned === 1 && (<Badge bg='danger' className='mb-2'><LocalizedString string='banned'/></Badge>)}
+            {(user.publicOverride === 0 || (user.publicOverride === 1 && isMod)) && (<Badge bg='danger' className='mb-2'><LocalizedString string='hidden'/></Badge>)}
             {user.role === 'admin' && (<Badge bg='success' className='mb-2'><LocalizedString string='administrator'/></Badge>)}
             {user.role === 'mod' && (<Badge bg='success' className='mb-2'><LocalizedString string='moderator'/></Badge>)}
             <ul className='list-unstyled m-0'>
