@@ -22,12 +22,12 @@ async function getRiiTag (request, response) {
   if (user === null) {
     response.setHeader('Content-Type', 'image/png')
     setFileHeaders(response, `riitag-${username}.png`)
-    return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile(max ? 'public/img/tag/tagnotfound.max.png' : 'public/tagnotfound.png'))
+    return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile('public/img/tag/tagnotfound.max.png'))
   }
 
   const filepath = path.resolve(
     CACHE.TAGS,
-    max ? `${user.username}.png` : `${user.username}.png`
+    `${user.username}.png`
   )
 
   if (!(await exists(filepath))) {
@@ -37,7 +37,7 @@ async function getRiiTag (request, response) {
       logger.error(error)
       response.setHeader('Content-Type', 'image/png')
       setFileHeaders(response, `riitag-${username}.png`)
-      return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send(await fs.promises.readFile(max ? 'public/img/tag/error.max.png' : 'public/error.png'))
+      return response.status(HTTP_CODE.INTERNAL_SERVER_ERROR).send(await fs.promises.readFile('public/error.png'))
     }
   }
 
