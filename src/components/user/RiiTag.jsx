@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 function LinkTag ({ username, name, updated_at: updatedAt }) {
-  let source = `/${username}/tag.png`
+  let source = `/${username}/tag.max.png`
 
   if (updatedAt) {
     source += `?${new Date(updatedAt).getTime()}`
