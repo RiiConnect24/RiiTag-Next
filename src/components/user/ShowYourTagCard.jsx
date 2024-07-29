@@ -46,7 +46,7 @@ function ShowYourTagCard ({ username }) {
 
   return (
     <Card className='mb-3' bg='secondary' text='white'>
-      <Card.Header as='h5'>Show your RiiTag</Card.Header>
+      <Card.Header as='h5'>Show your LinkTag</Card.Header>
       <Card.Body>
         <Tabs
           id='embed-tabs'
