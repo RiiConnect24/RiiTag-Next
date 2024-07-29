@@ -385,7 +385,7 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
         }
       },
       data: {
-        playcount: {
+        play_count: {
           increment: 1
         }
       }
@@ -394,7 +394,7 @@ export async function updateriitag (user, gameId, gameName, gameConsole, playtim
     await prisma.game.create({
       data: {
         name: gameName,
-        playcount: 1,
+        play_count: 1,
         game_id: gameId,
         console: gameConsole
       }
