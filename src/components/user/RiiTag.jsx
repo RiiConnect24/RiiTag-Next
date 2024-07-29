@@ -9,7 +9,7 @@ function LinkTag ({ username, name, updated_at: updatedAt }) {
   }
 
   return (
-    <a href={`/${username}/tag.png`}>
+    <a href={`/${username}/tag.max.png`}>
       <img
         className='img-fluid'
         alt={`LinkTag of ${name}`}
