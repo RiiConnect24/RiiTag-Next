@@ -13,7 +13,7 @@ export async function getGameLeaderboard (page, limit) {
       // only show playlogs with the same game_id once
       distinct: ['game_pk'],
       where: {
-        play_time: {
+        play_count: {
           gt: 5
         }
       },
@@ -50,7 +50,7 @@ export async function getGameLeaderboardSearch (page, limit, search) {
   return prisma.$transaction([
     prisma.playlog.count({
       where: {
-        play_time: {
+        play_count: {
           gt: 5
         },
         game: {
@@ -61,6 +61,7 @@ export async function getGameLeaderboardSearch (page, limit, search) {
       }
     }),
     prisma.playlog.findMany({
+      distinct: ['user_id'],
       where: {
         game: {
           name: {
