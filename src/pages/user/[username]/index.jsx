@@ -52,7 +52,8 @@ export const getServerSideProps = withSession(async ({ req, query }) => {
         },
         orderBy: {
           played_on: 'desc'
-        }
+        },
+        distinct: ['game_pk']
       },
       game_sessions: {
         select: {
