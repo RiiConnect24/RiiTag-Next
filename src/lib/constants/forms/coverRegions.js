@@ -4,6 +4,10 @@ export const COVER_REGIONS = Object.freeze([
     label: 'English (General)'
   },
   {
+    value: 'US',
+    label: 'United States'
+  },
+  {
     value: 'AU',
     label: 'Australia'
   },
