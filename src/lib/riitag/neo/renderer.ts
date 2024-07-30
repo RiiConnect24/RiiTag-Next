@@ -68,6 +68,4 @@ export async function doRender (user: user): Promise<void> {
 
   const tagFileStream = createWriteStream(path.resolve(CACHE.TAGS, `${user.username}.max.png`))
   canvas.createPNGStream().pipe(tagFileStream)
-
-  context.clearRect()
 }
