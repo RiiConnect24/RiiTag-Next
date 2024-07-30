@@ -61,6 +61,9 @@ export const getServerSideProps = withSession(async ({ req }) => {
 })
 
 function EditPage ({ tagInfo, language }) {
+  tagInfo.show_avatar = Boolean(tagInfo.show_avatar)
+  tagInfo.show_mii = Boolean(tagInfo.show_mii)
+
   return (
     <LanguageContext.Helper.Provider value={language}>
       <AppNavbar />
@@ -132,9 +135,6 @@ function EditPage ({ tagInfo, language }) {
           } else if (isValidFont(values.font) === false) {
             errors.font = 'Invalid Font'
           }
-
-          values.showAvatar = true
-          values.showMii = true
 
           return errors
         }}
