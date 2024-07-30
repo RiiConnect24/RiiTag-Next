@@ -76,6 +76,7 @@ export default class Mii extends ModuleBase {
   }
 
   async render (ctx: Canvas.CanvasRenderingContext2D, user: user): Promise<void> {
+    return // temporarily disable Mii rendering -- 7/30/2024
     if (!user.show_mii) return
     if (!this.enabled) return
 
