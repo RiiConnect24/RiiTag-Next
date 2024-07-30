@@ -7,8 +7,12 @@ import logger from '@/lib/logger'
 import { user } from '@prisma/client'
 import { setupWorkers, startWorkerRender } from '@/lib/utils/riitagUtils'
 
+let fontsLoaded = false
+
 async function loadFonts () {
+  if (fontsLoaded) return
   const fontJsons = readdirSync(DATA.FONTS)
+  fontsLoaded = true
 
   await Promise.all(
     fontJsons.map(async (fontJson) => {
