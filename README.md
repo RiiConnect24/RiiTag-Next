@@ -1,6 +1,7 @@
-# Linktag
+# Linktag 
 
-This is [LinkTag](https://tag.rc24.xyz) rewritten in [Next.js](https://nextjs.org/).
+[LinkTag](https://tag.rc24.xyz), the old RiiTag, now improved and remade for the new era for WiiLink!
+> Written in [Next.js](https://nextjs.org/).
 
 ## Features
 
