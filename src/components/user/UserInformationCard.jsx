@@ -55,16 +55,17 @@ function UserInformationCard ({ user, isLoggedIn, isAdmin, isMod }) {
                 <LocalizedString string='cover_type' />: {COVER_TYPES.find((coverType) => coverType.value === user.cover_type).label}
               </li>
             </ul>
-            {(isLoggedIn || isAdmin) && (
+            {(isLoggedIn || isAdmin || isMod) && (
               <div>
                 <hr />
+                {(isLoggedIn) && (
                 <div className='d-flex justify-content-between'>
                   <Link href='/edit' passHref>
                     <Button variant='primary'>
                       <FontAwesomeIcon className='me-1' icon={faPen} /> <LocalizedString string='edit_tag'/>
                     </Button>
                   </Link>
-                </div>
+                </div>)}
                 {isMod && (
                   <div className='mt-3'>
                     <InputGroup>
