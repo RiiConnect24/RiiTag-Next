@@ -8,7 +8,7 @@ import { saveFile } from '@/lib/utils/fileUtils'
 import { user } from '@prisma/client'
 
 export default class Avatar extends ModuleBase {
-  enabled: boolean
+  enabled: boolean = true
   x: number
   y: number
   size: number
@@ -21,8 +21,6 @@ export default class Avatar extends ModuleBase {
       this.enabled = false
       return
     }
-
-    this.enabled = true
 
     this.x = overlay.avatar.x
     this.y = overlay.avatar.y
@@ -52,7 +50,7 @@ export default class Avatar extends ModuleBase {
     if (!(user.show_avatar && this.enabled)) return
 
     if (this.background) {
-      const background = await Canvas.loadImage(path.resolve(PUBLIC.OVERLAY_IMAGE, this.background.img))
+      const background: Canvas.Image = await Canvas.loadImage(path.resolve(PUBLIC.OVERLAY_IMAGE, this.background.img))
       logger.info('Background loaded')
       ctx.drawImage(background, this.background.x, this.background.y, this.background.width, this.background.height)
       logger.info('Avatar finished rendering')

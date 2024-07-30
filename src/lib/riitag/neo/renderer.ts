@@ -45,6 +45,7 @@ export async function doRender (user: user): Promise<void> {
 
   const canvas = new Canvas.Canvas(overlay.width, overlay.height)
   const context = canvas.getContext('2d')
+  context.globalAlpha = 0
 
   // Load all renderable elements for the overlay
   const elements: ModuleBase[] = await Promise.all(overlay.draw_order.map(async (element) => {
@@ -67,4 +68,6 @@ export async function doRender (user: user): Promise<void> {
 
   const tagFileStream = createWriteStream(path.resolve(CACHE.TAGS, `${user.username}.max.png`))
   canvas.createPNGStream().pipe(tagFileStream)
+
+  context.clearRect()
 }
