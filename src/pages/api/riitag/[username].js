@@ -11,7 +11,6 @@ import { setFileHeaders } from '@/lib/utils/utils'
 
 async function getRiiTag (request, response) {
   const { username } = request.query
-  const max = request.query.max === 'true'
 
   const user = await prisma.user.findUnique({
     where: {
@@ -22,12 +21,12 @@ async function getRiiTag (request, response) {
   if (user === null) {
     response.setHeader('Content-Type', 'image/png')
     setFileHeaders(response, `riitag-${username}.png`)
-    return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile('public/img/tag/tagnotfound.max.png'))
+    return response.status(HTTP_CODE.NOT_FOUND).send(await fs.promises.readFile('public/img/tag/tagnotfound.png'))
   }
 
   const filepath = path.resolve(
     CACHE.TAGS,
-    max ? `${user.username}.max.png` : `${user.username}.png`
+    `${user.username}.max.png`
   )
 
   if (!(await exists(filepath))) {

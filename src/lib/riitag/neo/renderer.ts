@@ -65,6 +65,6 @@ export async function doRender (user: user): Promise<void> {
     logger.info(`Finished: ${finished}/${overlay.draw_order.length}`)
   }
 
-  const tagFileStream = createWriteStream(path.resolve(CACHE.TAGS, `${user.username}.png`))
+  const tagFileStream = createWriteStream(path.resolve(CACHE.TAGS, `${user.username}.max.png`))
   canvas.createPNGStream().pipe(tagFileStream)
 }

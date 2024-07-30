@@ -33,7 +33,7 @@ async function updateTagSettings (request, response) {
       return true
     }
 
-    const friendCode = request.body.comment.replace(/-/g, '')
+    const friendCode = request.body.comment.replace(/- /g, '')
     if (friendCode.length !== 16) {
       return false
     }
