@@ -10,6 +10,8 @@
 - Game Leaderboards
 - Collect coins when you play a game and show everyone what you have been playing!
 - Shows every game with a cover from [GameTDB](https://gametdb.com)
+- Full moderation systems
+- An active playtime tracking playlog
 
 ## Requirements
 
